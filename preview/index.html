@@ -1,0 +1,976 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>แบบประเมินคุณภาพการนอน — Nong Hug</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { font-size: 16px; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    background: #f8fafc;
+    color: #1e293b;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+  }
+  #app {
+    width: 100%;
+    max-width: 560px;
+    min-height: 100vh;
+    background: #fff;
+    position: relative;
+  }
+
+  /* ── Utility ── */
+  .flex { display: flex; }
+  .flex-col { flex-direction: column; }
+  .items-center { align-items: center; }
+  .items-start { align-items: flex-start; }
+  .justify-center { justify-content: center; }
+  .gap-2 { gap: 8px; }
+  .gap-3 { gap: 12px; }
+  .w-full { width: 100%; }
+  .text-center { text-align: center; }
+  .font-bold { font-weight: 700; }
+  .font-semibold { font-weight: 600; }
+  .font-medium { font-weight: 500; }
+  .hidden { display: none !important; }
+  .mt-1 { margin-top: 4px; }
+  .mt-2 { margin-top: 8px; }
+  .mt-3 { margin-top: 12px; }
+  .mt-4 { margin-top: 16px; }
+  .mt-6 { margin-top: 24px; }
+  .mb-1 { margin-bottom: 4px; }
+  .mb-2 { margin-bottom: 8px; }
+  .mb-3 { margin-bottom: 12px; }
+  .mb-4 { margin-bottom: 16px; }
+  .mb-6 { margin-bottom: 24px; }
+
+  /* ── Screen base ── */
+  .screen {
+    padding: 28px 20px 32px;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+  }
+
+  /* ── Buttons ── */
+  .btn {
+    display: flex; align-items: center; justify-content: center;
+    min-height: 44px; border-radius: 16px; border: none;
+    font-size: 15px; font-weight: 600; cursor: pointer;
+    transition: background 0.15s, opacity 0.15s;
+    padding: 12px 20px; width: 100%;
+    font-family: inherit;
+  }
+  .btn:active { opacity: 0.85; }
+  .btn-primary { background: #1D9E75; color: #fff; }
+  .btn-primary:hover { background: #178a64; }
+  .btn-primary:disabled { background: #e2e8f0; color: #94a3b8; cursor: not-allowed; }
+  .btn-secondary {
+    background: #fff; color: #475569;
+    border: 2px solid #e2e8f0;
+    flex: none; padding: 12px 16px; width: auto;
+    font-weight: 500;
+  }
+  .btn-secondary:hover { background: #f8fafc; }
+  .btn-line { background: #06C755; color: #fff; }
+  .btn-line:hover { background: #05b34c; }
+  .btn-ghost {
+    background: #fff; color: #94a3b8;
+    border: 2px solid #e2e8f0;
+    font-weight: 500; font-size: 14px;
+  }
+  .btn-ghost:hover { background: #f8fafc; }
+
+  /* ── Cards ── */
+  .card {
+    border-radius: 16px; padding: 16px;
+    margin-bottom: 12px;
+  }
+  .card-teal { background: #f0fdf9; border: 1.5px solid #99e6cf; }
+  .card-gray { background: #f8fafc; border: 1.5px solid #e2e8f0; }
+
+  /* ── Intro ── */
+  .intro-icon {
+    width: 72px; height: 72px; border-radius: 50%;
+    background: #f0fdf9; display: flex; align-items: center; justify-content: center;
+    margin: 16px auto 20px; font-size: 36px;
+  }
+  .intro h1 { font-size: 22px; font-weight: 700; color: #0f172a; text-align: center; }
+  .intro .subtitle { font-size: 13px; color: #94a3b8; text-align: center; margin: 4px 0 20px; }
+  .card p { font-size: 14px; color: #334155; line-height: 1.6; }
+  .card .row { display: flex; align-items: center; gap: 10px; }
+  .card .row .icon { font-size: 22px; flex: none; }
+
+  /* ── Progress ── */
+  .progress-bar-wrap {
+    width: 100%; height: 5px; background: #f1f5f9; border-radius: 99px;
+    margin-bottom: 14px; overflow: hidden;
+  }
+  .progress-bar-fill {
+    height: 100%; background: #1D9E75; border-radius: 99px;
+    transition: width 0.3s ease;
+  }
+  .stepper-dots {
+    display: flex; gap: 6px; justify-content: center; margin-bottom: 22px;
+  }
+  .dot {
+    height: 6px; border-radius: 99px; transition: all 0.25s;
+    background: #e2e8f0;
+  }
+  .dot.past { width: 6px; background: #86efce; }
+  .dot.current { width: 16px; background: #1D9E75; }
+  .dot.future { width: 6px; background: #e2e8f0; }
+
+  /* ── Question header ── */
+  .q-label { font-size: 12px; font-weight: 600; color: #1D9E75; margin-bottom: 4px; }
+  .q-text { font-size: 17px; font-weight: 700; color: #0f172a; line-height: 1.4; }
+  .q-sub { font-size: 13px; color: #64748b; margin-top: 4px; }
+
+  /* ── Option buttons ── */
+  .options { display: flex; flex-direction: column; gap: 10px; }
+  .opt-btn {
+    width: 100%; text-align: left; padding: 14px 16px;
+    border-radius: 14px; border: 2px solid #e2e8f0;
+    background: #fff; cursor: pointer; transition: all 0.15s;
+    font-family: inherit; min-height: 44px;
+  }
+  .opt-btn:hover { border-color: #99e6cf; background: #f0fdf9; }
+  .opt-btn.selected { border-color: #1D9E75; background: #f0fdf9; }
+  .opt-btn .opt-label { font-size: 14px; font-weight: 500; color: #1e293b; }
+  .opt-btn.selected .opt-label { color: #0d6e50; }
+  .opt-btn .opt-sub { font-size: 12px; color: #94a3b8; margin-top: 2px; }
+
+  /* ── Time input ── */
+  .time-wrap { display: flex; align-items: center; justify-content: center; gap: 12px; margin: 8px 0 0; }
+  .time-col { display: flex; flex-direction: column; align-items: center; gap: 6px; }
+  .time-col label { font-size: 11px; color: #94a3b8; font-weight: 500; }
+  .time-select {
+    font-size: 26px; font-weight: 700; color: #0f172a;
+    background: #f8fafc; border: 2px solid #e2e8f0;
+    border-radius: 14px; padding: 10px 14px;
+    text-align: center; cursor: pointer; appearance: none;
+    min-height: 44px; font-family: inherit;
+    transition: border-color 0.15s;
+  }
+  .time-select:focus { outline: none; border-color: #1D9E75; }
+  .time-sep { font-size: 30px; font-weight: 700; color: #cbd5e1; padding-bottom: 4px; }
+  .time-display {
+    text-align: center; font-size: 18px; font-weight: 600;
+    color: #1D9E75; margin-top: 10px;
+  }
+
+  /* ── Disturbance grid ── */
+  .dist-table { width: 100%; border-collapse: collapse; }
+  .dist-table th {
+    font-size: 11px; color: #94a3b8; font-weight: 500;
+    padding: 4px 4px 8px; text-align: center;
+  }
+  .dist-table th:first-child { text-align: left; padding-left: 6px; }
+  .dist-table td { padding: 6px 4px; vertical-align: middle; }
+  .dist-table td:first-child {
+    font-size: 12px; color: #334155; line-height: 1.4;
+    padding-left: 6px; padding-right: 6px;
+  }
+  .dist-table tr:nth-child(even) td { background: #f8fafc; }
+  .dist-table tr:nth-child(even) td:first-child { border-radius: 8px 0 0 8px; }
+  .dist-table tr:nth-child(even) td:last-child { border-radius: 0 8px 8px 0; }
+  .radio-btn {
+    width: 32px; height: 32px; border-radius: 50%;
+    border: 2px solid #cbd5e1; background: #fff;
+    cursor: pointer; display: flex; align-items: center; justify-content: center;
+    margin: 0 auto; transition: all 0.15s; min-width: 32px;
+    /* ensure min tap target via padding trick on mobile */
+    position: relative;
+  }
+  .radio-btn::after {
+    content: ''; position: absolute;
+    top: -6px; left: -6px; right: -6px; bottom: -6px;
+  }
+  .radio-btn:hover { border-color: #86efce; }
+  .radio-btn.selected { border-color: #1D9E75; background: #1D9E75; }
+  .radio-btn.selected::before {
+    content: ''; width: 10px; height: 10px;
+    border-radius: 50%; background: #fff; display: block;
+  }
+  .dist-legend {
+    display: flex; flex-wrap: wrap; gap: 6px 16px;
+    margin-top: 10px;
+  }
+  .dist-legend span { font-size: 11px; color: #94a3b8; }
+
+  /* ── Chip select ── */
+  .chips-wrap { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 10px; }
+  .chip {
+    padding: 9px 16px; border-radius: 99px; border: 2px solid #e2e8f0;
+    background: #fff; font-size: 13px; font-weight: 500; color: #475569;
+    cursor: pointer; transition: all 0.15s; min-height: 44px;
+    display: flex; align-items: center; font-family: inherit;
+  }
+  .chip:hover { border-color: #99e6cf; }
+  .chip.selected { border-color: #1D9E75; background: #f0fdf9; color: #0d6e50; }
+
+  /* ── Nav row ── */
+  .nav-row { display: flex; gap: 10px; margin-top: 20px; }
+  .nav-row .btn-primary { flex: 1; }
+
+  /* ── Result ── */
+  .score-card {
+    border-radius: 18px; border: 2px solid; padding: 20px 22px;
+    display: flex; align-items: center; gap: 16px; margin-bottom: 20px;
+  }
+  .score-num { font-size: 52px; font-weight: 800; line-height: 1; }
+  .score-denom { font-size: 12px; font-weight: 400; margin-top: 2px; }
+  .score-label { font-size: 13px; }
+  .score-tier { font-size: 16px; font-weight: 700; margin-top: 4px; }
+  .score-note { font-size: 11px; margin-top: 4px; }
+
+  .tier-good .score-card { background: #f0fdf9; border-color: #99e6cf; color: #0d6e50; }
+  .tier-fair .score-card { background: #fffbeb; border-color: #fcd34d; color: #92400e; }
+  .tier-poor .score-card { background: #fff1ee; border-color: #fca89a; color: #9b1c1c; }
+
+  /* ── Details / breakdown ── */
+  details summary {
+    font-size: 13px; font-weight: 500; color: #475569;
+    cursor: pointer; list-style: none; display: flex; align-items: center; gap: 4px;
+    padding: 10px 0;
+  }
+  details summary::-webkit-details-marker { display: none; }
+  .components-grid {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-top: 8px;
+  }
+  .comp-card {
+    background: #f8fafc; border-radius: 12px; padding: 10px 14px;
+  }
+  .comp-card .comp-name { font-size: 11px; color: #94a3b8; }
+  .comp-card .comp-score {
+    font-size: 22px; font-weight: 700; color: #1e293b; margin-top: 2px;
+  }
+  .comp-card .comp-score span { font-size: 12px; font-weight: 400; color: #94a3b8; }
+
+  /* ── Action guide ── */
+  .action-guide {
+    border-radius: 16px; border: 2px solid; padding: 18px 18px 16px;
+    margin-bottom: 20px;
+  }
+  .action-guide .ag-title {
+    display: flex; align-items: center; gap: 8px;
+    font-size: 16px; font-weight: 700; margin-bottom: 6px;
+  }
+  .action-guide .ag-msg { font-size: 13px; font-weight: 600; margin-bottom: 14px; }
+  .action-guide ul { list-style: none; display: flex; flex-direction: column; gap: 10px; }
+  .action-guide li { display: flex; gap: 8px; font-size: 13px; color: #334155; line-height: 1.5; }
+  .action-guide li .num { font-weight: 700; flex: none; }
+
+  .ag-good { background: #f0fdf9; border-color: #99e6cf; }
+  .ag-good .ag-title, .ag-good .ag-msg, .ag-good li .num { color: #0d6e50; }
+  .ag-fair { background: #fffbeb; border-color: #fcd34d; }
+  .ag-fair .ag-title, .ag-fair .ag-msg, .ag-fair li .num { color: #92400e; }
+  .ag-poor { background: #fff1ee; border-color: #fca89a; }
+  .ag-poor .ag-title, .ag-poor .ag-msg, .ag-poor li .num { color: #9b1c1c; }
+
+  /* ── Chatbot CTA ── */
+  .chatbot-card {
+    background: #f8fafc; border-radius: 16px; padding: 16px;
+    margin-bottom: 12px;
+  }
+  .chatbot-card p { font-size: 13px; color: #475569; margin-bottom: 12px; }
+
+  .disclaimer {
+    font-size: 11px; color: #94a3b8; text-align: center;
+    margin-top: 16px; line-height: 1.5; padding: 0 4px;
+  }
+
+  /* ── Q9 section divider ── */
+  .section-divider {
+    border-top: 1px solid #f1f5f9; margin: 20px 0 16px; padding-top: 16px;
+  }
+  .section-label { font-size: 12px; font-weight: 600; color: #64748b; margin-bottom: 8px; }
+  .overflow-x { overflow-x: auto; }
+
+  /* ── Scrollable question content ── */
+  .q-content { flex: 1; overflow-y: auto; }
+</style>
+</head>
+<body>
+<div id="app"></div>
+
+<script>
+// ═══════════════════════════════════════════════════════════════
+// SCORING ENGINE (ported from psqiScoring.ts)
+// ═══════════════════════════════════════════════════════════════
+
+function parseTimeToMinutes(t) {
+  const [h, m] = t.split(':').map(Number);
+  return h * 60 + m;
+}
+
+function calcTimeInBedHours(bedtime, waketime) {
+  const bed = parseTimeToMinutes(bedtime);
+  const wake = parseTimeToMinutes(waketime);
+  const diff = wake >= bed ? wake - bed : 1440 - bed + wake;
+  return diff / 60;
+}
+
+function q4ScoreToHours(score) {
+  return [7.5, 6.5, 5.5, 4.5][score];
+}
+
+function calcC2(q2, q91) {
+  const s = q2 + q91;
+  if (s === 0) return 0;
+  if (s <= 2) return 1;
+  if (s <= 4) return 2;
+  return 3;
+}
+
+function calcC5(r) {
+  const s = r.q9_2 + r.q9_3 + r.q9_4 + r.q9_5 + r.q9_6 + r.q9_7 + r.q9_8 + r.q9_9;
+  if (s === 0) return 0;
+  if (s <= 9) return 1;
+  if (s <= 18) return 2;
+  return 3;
+}
+
+function calcC7(q7, q8) {
+  const s = q7 + q8;
+  if (s === 0) return 0;
+  if (s <= 2) return 1;
+  if (s <= 4) return 2;
+  return 3;
+}
+
+function calcPSQIScores(r) {
+  const C1 = r.q5_quality ?? 0;
+  const C2 = calcC2(r.q2_latency ?? 0, r.q9_1 ?? 0);
+  const C3 = r.q4_duration ?? 0;
+  const actualH = q4ScoreToHours(r.q4_duration ?? 0);
+  const tib = calcTimeInBedHours(r.q1_bedtime, r.q3_waketime);
+  const eff = tib > 0 ? (actualH / tib) * 100 : 0;
+  const C4 = eff >= 85 ? 0 : eff >= 75 ? 1 : eff >= 65 ? 2 : 3;
+  const C5 = calcC5(r);
+  const C6 = r.q6_medication ?? 0;
+  const C7 = calcC7(r.q7_sleepiness ?? 0, r.q8_motivation ?? 0);
+  const global = C1 + C2 + C3 + C4 + C5 + C6 + C7;
+  return { C1, C2, C3, C4, C5, C6, C7, global };
+}
+
+function getSleepTier(global) {
+  if (global <= 5) return 'good';
+  if (global <= 10) return 'fair';
+  return 'poor';
+}
+
+// ═══════════════════════════════════════════════════════════════
+// STATE
+// ═══════════════════════════════════════════════════════════════
+
+const STEPS = ['intro','q1','q2','q3','q4','q5','q6','q7','q8','q9','result'];
+const Q_STEPS = STEPS.filter(s => s !== 'intro' && s !== 'result');
+const TOTAL_Q = Q_STEPS.length;
+
+let state = {
+  step: 'intro',
+  responses: {
+    q1_bedtime: '22:00',
+    q2_latency: null,
+    q3_waketime: '06:00',
+    q4_duration: null,
+    q5_quality: null,
+    q6_medication: null,
+    q7_sleepiness: null,
+    q8_motivation: null,
+    q9_1: 0, q9_2: 0, q9_3: 0, q9_4: 0, q9_5: 0,
+    q9_6: 0, q9_7: 0, q9_8: 0, q9_9: 0,
+    q9_10_chips: [],
+  },
+  scores: null,
+  tier: null,
+};
+
+function goNext() {
+  const idx = STEPS.indexOf(state.step);
+  state.step = STEPS[idx + 1];
+  render();
+  window.scrollTo(0, 0);
+}
+
+function goBack() {
+  const idx = STEPS.indexOf(state.step);
+  if (idx > 0) { state.step = STEPS[idx - 1]; render(); window.scrollTo(0, 0); }
+}
+
+function submit() {
+  state.scores = calcPSQIScores(state.responses);
+  state.tier = getSleepTier(state.scores.global);
+  state.step = 'result';
+  render();
+  window.scrollTo(0, 0);
+}
+
+function reset() {
+  state = {
+    step: 'intro',
+    responses: {
+      q1_bedtime: '22:00', q2_latency: null, q3_waketime: '06:00', q4_duration: null,
+      q5_quality: null, q6_medication: null, q7_sleepiness: null, q8_motivation: null,
+      q9_1: 0, q9_2: 0, q9_3: 0, q9_4: 0, q9_5: 0,
+      q9_6: 0, q9_7: 0, q9_8: 0, q9_9: 0, q9_10_chips: [],
+    },
+    scores: null, tier: null,
+  };
+  render();
+}
+
+function setResponse(key, val) {
+  state.responses[key] = val;
+  render();
+}
+
+function toggleChip(val) {
+  const chips = state.responses.q9_10_chips;
+  if (chips.includes(val)) {
+    state.responses.q9_10_chips = chips.filter(c => c !== val);
+  } else {
+    state.responses.q9_10_chips = [...chips, val];
+  }
+  render();
+}
+
+function setDisturbance(key, val) {
+  state.responses[key] = val;
+  render();
+}
+
+// ═══════════════════════════════════════════════════════════════
+// HTML BUILDERS
+// ═══════════════════════════════════════════════════════════════
+
+function h(tag, attrs, ...children) {
+  const el = document.createElement(tag);
+  for (const [k, v] of Object.entries(attrs || {})) {
+    if (k === 'className') el.className = v;
+    else if (k === 'style') Object.assign(el.style, v);
+    else if (k.startsWith('on')) el.addEventListener(k.slice(2).toLowerCase(), v);
+    else el.setAttribute(k, v);
+  }
+  for (const child of children.flat()) {
+    if (child == null) continue;
+    if (typeof child === 'string' || typeof child === 'number') {
+      el.appendChild(document.createTextNode(String(child)));
+    } else {
+      el.appendChild(child);
+    }
+  }
+  return el;
+}
+
+function makeProgressHeader(stepIdx) {
+  const pct = (stepIdx / TOTAL_Q) * 100;
+  const dots = Q_STEPS.map((_, i) => {
+    let cls = 'dot ';
+    if (i + 1 < stepIdx) cls += 'past';
+    else if (i + 1 === stepIdx) cls += 'current';
+    else cls += 'future';
+    return h('div', { className: cls });
+  });
+  return [
+    h('div', { className: 'progress-bar-wrap' },
+      h('div', { className: 'progress-bar-fill', style: { width: pct + '%' } })
+    ),
+    h('div', { className: 'stepper-dots' }, ...dots),
+  ];
+}
+
+function makeNavRow(onBack, onNext, nextLabel = 'ถัดไป', nextDisabled = false) {
+  const row = h('div', { className: 'nav-row' });
+  if (onBack) {
+    row.appendChild(h('button', { className: 'btn btn-secondary', onClick: onBack }, '← ย้อนกลับ'));
+  }
+  const nextBtn = h('button', {
+    className: 'btn btn-primary',
+    onClick: onNext,
+  }, nextLabel);
+  if (nextDisabled) nextBtn.disabled = true;
+  row.appendChild(nextBtn);
+  return row;
+}
+
+// ── Option select ────────────────────────────────────────────────
+function makeOptions(opts, currentVal, key) {
+  return h('div', { className: 'options' }, ...opts.map(opt => {
+    const selected = currentVal === opt.value;
+    const btn = h('button', {
+      className: 'opt-btn' + (selected ? ' selected' : ''),
+      onClick: () => setResponse(key, opt.value),
+      role: 'radio',
+      'aria-checked': String(selected),
+    });
+    btn.appendChild(h('div', { className: 'opt-label' }, opt.label));
+    if (opt.sub) btn.appendChild(h('div', { className: 'opt-sub' }, opt.sub));
+    return btn;
+  }));
+}
+
+// ── Time input ────────────────────────────────────────────────────
+function makeTimeInput(key, value) {
+  const [hh, mm] = value.split(':');
+  const HOURS = Array.from({length: 24}, (_, i) => String(i).padStart(2, '0'));
+  const MINS = Array.from({length: 12}, (_, i) => String(i * 5).padStart(2, '0'));
+
+  function makeSelect(options, current, onChange) {
+    const sel = h('select', { className: 'time-select', onChange });
+    options.forEach(opt => {
+      const o = h('option', { value: opt }, opt);
+      if (opt === current) o.selected = true;
+      sel.appendChild(o);
+    });
+    return sel;
+  }
+
+  const [curH, setH] = [hh, null];
+  const [curM, setM] = [mm, null];
+
+  const hourSel = makeSelect(HOURS, hh, e => {
+    const parts = state.responses[key].split(':');
+    setResponse(key, e.target.value + ':' + parts[1]);
+  });
+  const minSel = makeSelect(MINS, mm, e => {
+    const parts = state.responses[key].split(':');
+    setResponse(key, parts[0] + ':' + e.target.value);
+  });
+
+  const display = h('div', { className: 'time-display', 'aria-live': 'polite' },
+    value + ' น.');
+
+  // keep display in sync without full re-render
+  hourSel.addEventListener('change', () => {
+    display.textContent = state.responses[key] + ' น.';
+  });
+  minSel.addEventListener('change', () => {
+    display.textContent = state.responses[key] + ' น.';
+  });
+
+  return h('div', {},
+    h('div', { className: 'time-wrap' },
+      h('div', { className: 'time-col' },
+        h('label', {}, 'ชั่วโมง'),
+        hourSel,
+      ),
+      h('div', { className: 'time-sep' }, ':'),
+      h('div', { className: 'time-col' },
+        h('label', {}, 'นาที'),
+        minSel,
+      ),
+    ),
+    display,
+  );
+}
+
+// ── Disturbance grid ────────────────────────────────────────────
+function makeDisturbanceGrid() {
+  const ITEMS = [
+    { key: 'q9_1', label: 'นอนหลับไม่ได้ภายใน 30 นาที' },
+    { key: 'q9_2', label: 'ตื่นกลางดึกหรือตื่นเช้ากว่าปกติ' },
+    { key: 'q9_3', label: 'ต้องลุกไปห้องน้ำ' },
+    { key: 'q9_4', label: 'หายใจไม่สะดวก / อึดอัด' },
+    { key: 'q9_5', label: 'ไอหรือกรน' },
+    { key: 'q9_6', label: 'รู้สึกหนาวเกินไป' },
+    { key: 'q9_7', label: 'รู้สึกร้อนเกินไป' },
+    { key: 'q9_8', label: 'ฝันร้าย' },
+    { key: 'q9_9', label: 'เจ็บปวดหรือรู้สึกไม่สบายตัว' },
+  ];
+  const FREQS = [
+    { v: 0, short: 'ไม่เคย' },
+    { v: 1, short: '<1×/สัปดาห์' },
+    { v: 2, short: '1–2×/สัปดาห์' },
+    { v: 3, short: '≥3×/สัปดาห์' },
+  ];
+
+  const table = h('table', { className: 'dist-table', role: 'grid' });
+  const thead = h('thead', {},
+    h('tr', {},
+      h('th', { scope: 'col', style: { width: '38%' } }, 'สาเหตุ'),
+      ...FREQS.map(f => h('th', { scope: 'col' }, f.short))
+    )
+  );
+  const tbody = h('tbody', {});
+
+  ITEMS.forEach(item => {
+    const tr = h('tr', {});
+    tr.appendChild(h('td', {}, item.label));
+    FREQS.forEach(f => {
+      const cur = state.responses[item.key];
+      const selected = cur === f.v;
+      const btn = h('button', {
+        className: 'radio-btn' + (selected ? ' selected' : ''),
+        'aria-label': item.label + ': ' + f.short,
+        'aria-checked': String(selected),
+        role: 'radio',
+        onClick: () => setDisturbance(item.key, f.v),
+      });
+      tr.appendChild(h('td', {}, btn));
+    });
+    tbody.appendChild(tr);
+  });
+
+  table.appendChild(thead);
+  table.appendChild(tbody);
+
+  const legend = h('div', { className: 'dist-legend' },
+    h('span', {}, 'ไม่เคย = 0'),
+    h('span', {}, '<1×/สัปดาห์ = 1'),
+    h('span', {}, '1–2×/สัปดาห์ = 2'),
+    h('span', {}, '≥3×/สัปดาห์ = 3'),
+  );
+
+  return h('div', { className: 'overflow-x' }, table, legend);
+}
+
+// ── Chip select ────────────────────────────────────────────────
+function makeChipSelect() {
+  const CHIPS = ['เสียงรบกวน', 'แสงรบกวน', 'ความเครียด', 'โทรศัพท์/หน้าจอ', 'อื่นๆ'];
+  const selected = state.responses.q9_10_chips;
+  return h('div', {},
+    h('div', { className: 'chips-wrap' },
+      ...CHIPS.map(c => {
+        const sel = selected.includes(c);
+        return h('button', {
+          className: 'chip' + (sel ? ' selected' : ''),
+          role: 'checkbox',
+          'aria-checked': String(sel),
+          onClick: () => toggleChip(c),
+        }, sel ? '✓ ' + c : c);
+      })
+    ),
+    selected.length > 0
+      ? h('p', { style: { fontSize: '12px', color: '#1D9E75', marginTop: '8px' } },
+          `เลือกแล้ว ${selected.length} รายการ`)
+      : null,
+  );
+}
+
+// ═══════════════════════════════════════════════════════════════
+// SCREENS
+// ═══════════════════════════════════════════════════════════════
+
+function renderIntro() {
+  return h('div', { className: 'screen intro' },
+    h('div', { className: 'intro-icon' }, '🌙'),
+    h('h1', {}, 'แบบประเมินคุณภาพการนอน'),
+    h('p', { className: 'subtitle' }, 'PSQI · Pittsburgh Sleep Quality Index'),
+
+    h('div', { className: 'card card-teal' },
+      h('p', {},
+        'แบบประเมินนี้ช่วยให้เราเข้าใจคุณภาพการนอนหลับในช่วง ',
+        h('strong', {}, '1 เดือนที่ผ่านมา'),
+        ' ผลที่ได้จะช่วยให้รู้ว่าการนอนส่งผลต่อสุขภาพและอารมณ์อย่างไร'
+      ),
+    ),
+
+    h('div', { className: 'card card-gray' },
+      h('div', { className: 'row' },
+        h('span', { className: 'icon' }, '⏱'),
+        h('p', {}, 'ใช้เวลาประมาณ ', h('strong', {}, '3–5 นาที')),
+      ),
+    ),
+
+    h('div', { className: 'card card-gray' },
+      h('div', { className: 'row' },
+        h('span', { className: 'icon' }, '🔒'),
+        h('p', {},
+          'ข้อมูลของคุณจะถูกเก็บเป็น', h('strong', {}, 'ความลับ'),
+          ' ใช้เพื่อการวิจัยในภาพรวม ไม่มีการระบุตัวตน'
+        ),
+      ),
+    ),
+
+    h('div', { style: { flex: 1 } }),
+    h('button', { className: 'btn btn-primary', onClick: goNext }, 'เริ่มประเมิน'),
+    h('p', {
+      style: { fontSize: '12px', color: '#94a3b8', textAlign: 'center', marginTop: '12px', lineHeight: '1.5' }
+    }, 'การทำแบบประเมินนี้เป็นความสมัครใจ คุณสามารถหยุดได้ทุกเมื่อ'),
+  );
+}
+
+function renderResult() {
+  const { scores, tier } = state;
+  const TIER_LABELS = {
+    good: { icon: '🌙', title: 'การนอนหลับดี', range: '≤5', cssClass: 'ag-good',
+      msg: 'การนอนของเราอยู่ในเกณฑ์ดี',
+      actions: [
+        'รักษาเวลานอน-ตื่นให้สม่ำเสมอ (แตกต่างไม่เกิน 1 ชม. แม้วันหยุด)',
+        'ลดหน้าจอก่อนนอน 30 นาที (blue light ชะลอ melatonin)',
+        'สังเกตตัวเองเป็นประจำ — การนอนมักเปลี่ยนแปลงก่อนที่จะเกิดภาวะอารมณ์เด่นๆ จนสังเกตได้',
+      ]},
+    fair: { icon: '☁️', title: 'การนอนหลับพอปรับได้', range: '6–10', cssClass: 'ag-fair',
+      msg: 'การนอนของเรายังปรับได้',
+      actions: [
+        'สร้าง routine ก่อนนอน 15 นาที (ควรทำทุกคืน)',
+        'หลีกเลี่ยงคาเฟอีนหลังบ่าย 3 (เช่น ชานม/น้ำอัดลม/ชาเขียวฯลฯ)',
+        'ลองหายใจ 4-7-8 ก่อนนอน (เข้า 4 วิ / กลั้น 7 วิ / ออก 8 วิ)',
+        'ถ้า 2 สัปดาห์ยังไม่ดีขึ้น ลองปรึกษาครูแนะแนวดู',
+      ]},
+    poor: { icon: '🌧', title: 'การนอนหลับต้องดูแล', range: '≥11', cssClass: 'ag-poor',
+      msg: 'การนอนส่งผลต่อร่างกายและอารมณ์ของเรา',
+      actions: [
+        'กำหนดเวลาตื่นให้แน่นอนก่อน (เวลานอนจะตามมาเอง)',
+        'ใช้เตียงเพื่อนอนเท่านั้น (ไม่เล่นโทรศัพท์/ทำการบ้านบนเตียง)',
+        'จดสิ่งที่ค้างในหัวก่อนนอน (วางไว้ข้างนอก ค่อยคิดพรุ่งนี้)',
+        'พูดคุยกับครูแนะแนวหรือผู้ใหญ่ที่ไว้ใจได้เกี่ยวกับความกังวลหรือสิ่งที่ค้างคาใจที่ทำให้นอนไม่หลับ',
+      ]},
+  };
+  const t = TIER_LABELS[tier];
+
+  // Score card
+  const tierScoreLabel = {
+    good: `การนอนดี (${t.range})`,
+    fair: `การนอนปรับได้ (${t.range})`,
+    poor: `การนอนต้องดูแล (${t.range})`,
+  }[tier];
+
+  const scoreCard = h('div', { className: `score-card tier-${tier}` },
+    h('div', { style: { flexShrink: 0, textAlign: 'center' } },
+      h('div', { className: 'score-num' }, String(scores.global)),
+      h('div', { className: 'score-denom' }, 'จาก 21'),
+    ),
+    h('div', {},
+      h('div', { className: 'score-label' }, 'คะแนนรวม PSQI'),
+      h('div', { className: 'score-tier' }, tierScoreLabel),
+      h('div', { className: 'score-note' }, 'คะแนนสูง = คุณภาพการนอนต่ำลง'),
+    ),
+  );
+
+  // Component breakdown
+  const COMP_LABELS = [
+    ['C1', 'คุณภาพการนอน'], ['C2', 'การใช้เวลาหลับ'],
+    ['C3', 'ระยะเวลานอน'], ['C4', 'ประสิทธิภาพ'],
+    ['C5', 'ปัญหาระหว่างนอน'], ['C6', 'ยานอนหลับ'], ['C7', 'การทำงานกลางวัน'],
+  ];
+  const breakdown = h('details', { style: { marginBottom: '16px' } },
+    h('summary', {}, 'ดูรายละเอียดแต่ละองค์ประกอบ ', h('span', {}, '▾')),
+    h('div', { className: 'components-grid' },
+      ...COMP_LABELS.map(([key, label]) =>
+        h('div', { className: 'comp-card' },
+          h('div', { className: 'comp-name' }, label),
+          h('div', { className: 'comp-score' }, String(scores[key]),
+            h('span', {}, '/3'),
+          ),
+        )
+      )
+    ),
+  );
+
+  // Action guide
+  const guide = h('div', { className: `action-guide ${t.cssClass}` },
+    h('div', { className: 'ag-title' }, t.icon + ' ' + t.title),
+    h('div', { className: 'ag-msg' }, t.msg),
+    h('ul', {},
+      ...t.actions.map((a, i) =>
+        h('li', {},
+          h('span', { className: 'num' }, String(i + 1) + '.'),
+          h('span', {}, a),
+        )
+      )
+    ),
+  );
+
+  // Chatbot CTA
+  const chatbot = h('div', { className: 'chatbot-card' },
+    h('p', {}, 'อยากคุยเรื่องการนอน หรือมีคำถามเพิ่มเติม?'),
+    h('button', {
+      className: 'btn btn-line',
+      onClick: () => {
+        const msg = `สวัสดีน้องฮัก ฉันเพิ่งทำแบบประเมินการนอน ได้คะแนน ${scores.global}/21 อยากขอคำแนะนำเพิ่มเติม`;
+        window.open('https://line.me/R/oaMessage/@nonghug/?' + encodeURIComponent(msg), '_blank');
+      },
+    },
+      '💬 คุยกับน้องฮักบน LINE',
+    ),
+  );
+
+  return h('div', { className: 'screen' },
+    h('h1', { style: { fontSize: '20px', fontWeight: '700', color: '#0f172a', marginBottom: '4px' } }, 'ผลการประเมิน'),
+    h('p', { style: { fontSize: '13px', color: '#94a3b8', marginBottom: '20px' } }, 'Pittsburgh Sleep Quality Index'),
+    scoreCard,
+    breakdown,
+    guide,
+    chatbot,
+    h('button', {
+      className: 'btn btn-ghost', style: { marginTop: '8px' },
+      onClick: reset,
+    }, 'ทำแบบประเมินใหม่'),
+    h('p', { className: 'disclaimer' },
+      'ผลนี้เป็นการประเมินเบื้องต้นเท่านั้น ไม่ใช่การวินิจฉัยทางการแพทย์'
+    ),
+  );
+}
+
+function renderQuestion(stepIdx) {
+  const s = state.step;
+  const r = state.responses;
+
+  const header = (qText, subText) => [
+    ...makeProgressHeader(stepIdx),
+    h('div', { style: { marginBottom: '20px' } },
+      h('p', { className: 'q-label' }, `ข้อ ${stepIdx}`),
+      h('h2', { className: 'q-text' }, qText),
+      subText ? h('p', { className: 'q-sub' }, subText) : null,
+    ),
+  ];
+
+  if (s === 'q1') {
+    return h('div', { className: 'screen' },
+      ...header('ปกติคุณเข้านอน (ปิดไฟนอน) กี่โมง?', 'ในช่วง 1 เดือนที่ผ่านมา เวลาปกติที่เข้านอน'),
+      h('div', { className: 'q-content' }, makeTimeInput('q1_bedtime', r.q1_bedtime)),
+      makeNavRow(goBack, goNext),
+    );
+  }
+
+  if (s === 'q2') {
+    return h('div', { className: 'screen' },
+      ...header('ปกติใช้เวลานานแค่ไหนกว่าจะหลับ?', 'นับตั้งแต่ปิดไฟจนกว่าจะหลับได้จริงๆ'),
+      h('div', { className: 'q-content' },
+        makeOptions([
+          { value: 0, label: 'น้อยกว่า 15 นาที' },
+          { value: 1, label: '15–30 นาที' },
+          { value: 2, label: '31–60 นาที' },
+          { value: 3, label: 'มากกว่า 60 นาที' },
+        ], r.q2_latency, 'q2_latency'),
+      ),
+      makeNavRow(goBack, goNext, 'ถัดไป', r.q2_latency === null),
+    );
+  }
+
+  if (s === 'q3') {
+    return h('div', { className: 'screen' },
+      ...header('ปกติตื่นนอนกี่โมง?', 'ในช่วง 1 เดือนที่ผ่านมา เวลาตื่นนอนปกติ'),
+      h('div', { className: 'q-content' }, makeTimeInput('q3_waketime', r.q3_waketime)),
+      makeNavRow(goBack, goNext),
+    );
+  }
+
+  if (s === 'q4') {
+    return h('div', { className: 'screen' },
+      ...header('ปกติในคืนหนึ่ง นอนหลับจริงๆ กี่ชั่วโมง?', 'ไม่นับเวลาที่นอนเฉยๆ แต่ยังไม่หลับ'),
+      h('div', { className: 'q-content' },
+        makeOptions([
+          { value: 0, label: 'มากกว่า 7 ชั่วโมง', sub: '> 7 ชม.' },
+          { value: 1, label: '6–7 ชั่วโมง' },
+          { value: 2, label: '5–6 ชั่วโมง' },
+          { value: 3, label: 'น้อยกว่า 5 ชั่วโมง', sub: '< 5 ชม.' },
+        ], r.q4_duration, 'q4_duration'),
+      ),
+      makeNavRow(goBack, goNext, 'ถัดไป', r.q4_duration === null),
+    );
+  }
+
+  if (s === 'q5') {
+    return h('div', { className: 'screen' },
+      ...header('โดยรวม คุณรู้สึกว่าการนอนหลับของคุณเป็นอย่างไร?', 'ในช่วง 1 เดือนที่ผ่านมา'),
+      h('div', { className: 'q-content' },
+        makeOptions([
+          { value: 0, label: 'ดีมาก' },
+          { value: 1, label: 'ดี' },
+          { value: 2, label: 'ไม่ค่อยดี' },
+          { value: 3, label: 'ไม่ดีเลย' },
+        ], r.q5_quality, 'q5_quality'),
+      ),
+      makeNavRow(goBack, goNext, 'ถัดไป', r.q5_quality === null),
+    );
+  }
+
+  if (s === 'q6') {
+    return h('div', { className: 'screen' },
+      ...header('ในช่วง 1 เดือนที่ผ่านมา คุณใช้ยานอนหลับบ้างไหม?', 'ทั้งยาที่แพทย์สั่งและยาที่ซื้อเอง'),
+      h('div', { className: 'q-content' },
+        makeOptions([
+          { value: 0, label: 'ไม่เคยเลย' },
+          { value: 1, label: 'น้อยกว่า 1 ครั้ง/สัปดาห์' },
+          { value: 2, label: '1–2 ครั้ง/สัปดาห์' },
+          { value: 3, label: '3 ครั้งขึ้นไป/สัปดาห์' },
+        ], r.q6_medication, 'q6_medication'),
+      ),
+      makeNavRow(goBack, goNext, 'ถัดไป', r.q6_medication === null),
+    );
+  }
+
+  if (s === 'q7') {
+    return h('div', { className: 'screen' },
+      ...header('คุณรู้สึกง่วงหรือเพลียระหว่างวันบ่อยแค่ไหน?', 'ในช่วง 1 เดือน เช่น ง่วงตอนเรียน ระหว่างทำงาน'),
+      h('div', { className: 'q-content' },
+        makeOptions([
+          { value: 0, label: 'ไม่เคยเลย' },
+          { value: 1, label: 'น้อยกว่า 1 ครั้ง/สัปดาห์' },
+          { value: 2, label: '1–2 ครั้ง/สัปดาห์' },
+          { value: 3, label: '3 ครั้งขึ้นไป/สัปดาห์' },
+        ], r.q7_sleepiness, 'q7_sleepiness'),
+      ),
+      makeNavRow(goBack, goNext, 'ถัดไป', r.q7_sleepiness === null),
+    );
+  }
+
+  if (s === 'q8') {
+    return h('div', { className: 'screen' },
+      ...header('ความง่วงส่งผลต่อแรงจูงใจในการทำกิจกรรมต่างๆ มากแค่ไหน?', 'เช่น การเรียน กิจกรรม หรือการพบปะผู้คน'),
+      h('div', { className: 'q-content' },
+        makeOptions([
+          { value: 0, label: 'ไม่เป็นปัญหาเลย' },
+          { value: 1, label: 'เป็นปัญหาเล็กน้อย' },
+          { value: 2, label: 'เป็นปัญหาพอสมควร' },
+          { value: 3, label: 'เป็นปัญหามาก' },
+        ], r.q8_motivation, 'q8_motivation'),
+      ),
+      makeNavRow(goBack, goNext, 'ถัดไป', r.q8_motivation === null),
+    );
+  }
+
+  if (s === 'q9') {
+    return h('div', { className: 'screen' },
+      ...makeProgressHeader(stepIdx),
+      h('p', { className: 'q-label' }, `ข้อ ${stepIdx}`),
+      h('h2', { className: 'q-text' }, 'สิ่งต่อไปนี้รบกวนการนอนบ่อยแค่ไหน?'),
+      h('p', { className: 'q-sub', style: { marginBottom: '16px' } }, 'ในช่วง 1 เดือนที่ผ่านมา'),
+      h('div', { className: 'q-content' },
+        makeDisturbanceGrid(),
+        h('div', { className: 'section-divider' },
+          h('div', { className: 'section-label' }, 'สิ่งอื่นที่ทำให้นอนหลับยาก (ไม่บังคับ)'),
+          makeChipSelect(),
+        ),
+      ),
+      makeNavRow(goBack, submit, 'ดูผล'),
+    );
+  }
+
+  return null;
+}
+
+// ═══════════════════════════════════════════════════════════════
+// RENDER LOOP
+// ═══════════════════════════════════════════════════════════════
+
+function render() {
+  const app = document.getElementById('app');
+  app.innerHTML = '';
+
+  let el;
+  if (state.step === 'intro') {
+    el = renderIntro();
+  } else if (state.step === 'result') {
+    el = renderResult();
+  } else {
+    const stepIdx = Q_STEPS.indexOf(state.step) + 1;
+    el = renderQuestion(stepIdx);
+  }
+
+  if (el) app.appendChild(el);
+}
+
+// ── Boot ──────────────────────────────────────────────────────
+render();
+</script>
+</body>
+</html>
