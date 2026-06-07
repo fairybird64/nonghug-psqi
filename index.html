@@ -1,976 +1,2691 @@
-<!DOCTYPE html>
 <html lang="th">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>แบบประเมินคุณภาพการนอน — Nong Hug</title>
-<style>
-  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-  html { font-size: 16px; }
-  body {
-    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-    background: #f8fafc;
-    color: #1e293b;
-    min-height: 100vh;
-    display: flex;
-    justify-content: center;
-  }
-  #app {
-    width: 100%;
-    max-width: 560px;
-    min-height: 100vh;
-    background: #fff;
-    position: relative;
-  }
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Minna Journey — มินนา เส้นทางของใจ</title>
+  <link href="https://fonts.googleapis.com/css2?family=Sarabun:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400;1,500&display=swap" rel="stylesheet">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+  <style>
+    :root {
+      --cream:        #FFF8F0;
+      --cream-mid:    #F5EDE0;
+      --cream-dark:   #EDD9C0;
+      --tan:          #D4A87A;
+      --brown-light:  #C4895A;
+      --brown:        #8B5E3C;
+      --text-dark:    #3A2414;
+      --text-mid:     #6B4830;
+      --text-soft:    #9B7555;
+      --inner-bg:     #FAF0E0;
+      --inner-border: #D4B08A;
+      --hint-bg:      #F0E8FA;
+      --hint-border:  #C4A0E0;
+      --hint-text:    #5A3880;
+      --good-bg:      #EEF7EE;
+      --good-border:  #7BBF7A;
+      --good-text:    #245424;
+      --ok-bg:        #FFF9EC;
+      --ok-border:    #D4A840;
+      --ok-text:      #6A4C10;
+      --stuck-bg:     #FDF0EE;
+      --stuck-border: #D48870;
+      --stuck-text:   #6A2C1A;
+    }
 
-  /* ── Utility ── */
-  .flex { display: flex; }
-  .flex-col { flex-direction: column; }
-  .items-center { align-items: center; }
-  .items-start { align-items: flex-start; }
-  .justify-center { justify-content: center; }
-  .gap-2 { gap: 8px; }
-  .gap-3 { gap: 12px; }
-  .w-full { width: 100%; }
-  .text-center { text-align: center; }
-  .font-bold { font-weight: 700; }
-  .font-semibold { font-weight: 600; }
-  .font-medium { font-weight: 500; }
-  .hidden { display: none !important; }
-  .mt-1 { margin-top: 4px; }
-  .mt-2 { margin-top: 8px; }
-  .mt-3 { margin-top: 12px; }
-  .mt-4 { margin-top: 16px; }
-  .mt-6 { margin-top: 24px; }
-  .mb-1 { margin-bottom: 4px; }
-  .mb-2 { margin-bottom: 8px; }
-  .mb-3 { margin-bottom: 12px; }
-  .mb-4 { margin-bottom: 16px; }
-  .mb-6 { margin-bottom: 24px; }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
 
-  /* ── Screen base ── */
-  .screen {
-    padding: 28px 20px 32px;
-    min-height: 100vh;
-    display: flex;
-    flex-direction: column;
-  }
+    html { scroll-behavior: smooth; }
 
-  /* ── Buttons ── */
-  .btn {
-    display: flex; align-items: center; justify-content: center;
-    min-height: 44px; border-radius: 16px; border: none;
-    font-size: 15px; font-weight: 600; cursor: pointer;
-    transition: background 0.15s, opacity 0.15s;
-    padding: 12px 20px; width: 100%;
-    font-family: inherit;
-  }
-  .btn:active { opacity: 0.85; }
-  .btn-primary { background: #1D9E75; color: #fff; }
-  .btn-primary:hover { background: #178a64; }
-  .btn-primary:disabled { background: #e2e8f0; color: #94a3b8; cursor: not-allowed; }
-  .btn-secondary {
-    background: #fff; color: #475569;
-    border: 2px solid #e2e8f0;
-    flex: none; padding: 12px 16px; width: auto;
-    font-weight: 500;
-  }
-  .btn-secondary:hover { background: #f8fafc; }
-  .btn-line { background: #06C755; color: #fff; }
-  .btn-line:hover { background: #05b34c; }
-  .btn-ghost {
-    background: #fff; color: #94a3b8;
-    border: 2px solid #e2e8f0;
-    font-weight: 500; font-size: 14px;
-  }
-  .btn-ghost:hover { background: #f8fafc; }
+    body {
+      background: var(--cream);
+      font-family: 'Sarabun', sans-serif;
+      color: var(--text-dark);
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+    }
 
-  /* ── Cards ── */
-  .card {
-    border-radius: 16px; padding: 16px;
-    margin-bottom: 12px;
-  }
-  .card-teal { background: #f0fdf9; border: 1.5px solid #99e6cf; }
-  .card-gray { background: #f8fafc; border: 1.5px solid #e2e8f0; }
+    #app {
+      width: 100%;
+      max-width: 480px;
+      min-height: 100vh;
+      background: var(--cream);
+      display: flex;
+      flex-direction: column;
+      position: relative;
+    }
 
-  /* ── Intro ── */
-  .intro-icon {
-    width: 72px; height: 72px; border-radius: 50%;
-    background: #f0fdf9; display: flex; align-items: center; justify-content: center;
-    margin: 16px auto 20px; font-size: 36px;
-  }
-  .intro h1 { font-size: 22px; font-weight: 700; color: #0f172a; text-align: center; }
-  .intro .subtitle { font-size: 13px; color: #94a3b8; text-align: center; margin: 4px 0 20px; }
-  .card p { font-size: 14px; color: #334155; line-height: 1.6; }
-  .card .row { display: flex; align-items: center; gap: 10px; }
-  .card .row .icon { font-size: 22px; flex: none; }
+    /* ── Progress ── */
+    .progress-bar {
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      height: 3px;
+      background: var(--cream-dark);
+    }
+    .progress-fill {
+      height: 100%;
+      background: var(--tan);
+      transition: width 0.6s ease;
+    }
 
-  /* ── Progress ── */
-  .progress-bar-wrap {
-    width: 100%; height: 5px; background: #f1f5f9; border-radius: 99px;
-    margin-bottom: 14px; overflow: hidden;
-  }
-  .progress-bar-fill {
-    height: 100%; background: #1D9E75; border-radius: 99px;
-    transition: width 0.3s ease;
-  }
-  .stepper-dots {
-    display: flex; gap: 6px; justify-content: center; margin-bottom: 22px;
-  }
-  .dot {
-    height: 6px; border-radius: 99px; transition: all 0.25s;
-    background: #e2e8f0;
-  }
-  .dot.past { width: 6px; background: #86efce; }
-  .dot.current { width: 16px; background: #1D9E75; }
-  .dot.future { width: 6px; background: #e2e8f0; }
+    /* ── Header ── */
+    .game-header {
+      padding: 20px 20px 0;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .game-logo {
+      width: 36px;
+      height: 36px;
+      background: var(--cream-mid);
+      border: 1.5px solid var(--cream-dark);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 18px;
+      flex-shrink: 0;
+    }
+    .game-title-small {
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--text-soft);
+      line-height: 1.4;
+    }
 
-  /* ── Question header ── */
-  .q-label { font-size: 12px; font-weight: 600; color: #1D9E75; margin-bottom: 4px; }
-  .q-text { font-size: 17px; font-weight: 700; color: #0f172a; line-height: 1.4; }
-  .q-sub { font-size: 13px; color: #64748b; margin-top: 4px; }
+    /* ── Scene wrapper ── */
+    .scene {
+      display: flex;
+      flex-direction: column;
+      padding-bottom: 48px;
+      animation: fadeUp 0.5s ease both;
+    }
 
-  /* ── Option buttons ── */
-  .options { display: flex; flex-direction: column; gap: 10px; }
-  .opt-btn {
-    width: 100%; text-align: left; padding: 14px 16px;
-    border-radius: 14px; border: 2px solid #e2e8f0;
-    background: #fff; cursor: pointer; transition: all 0.15s;
-    font-family: inherit; min-height: 44px;
-  }
-  .opt-btn:hover { border-color: #99e6cf; background: #f0fdf9; }
-  .opt-btn.selected { border-color: #1D9E75; background: #f0fdf9; }
-  .opt-btn .opt-label { font-size: 14px; font-weight: 500; color: #1e293b; }
-  .opt-btn.selected .opt-label { color: #0d6e50; }
-  .opt-btn .opt-sub { font-size: 12px; color: #94a3b8; margin-top: 2px; }
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(12px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
 
-  /* ── Time input ── */
-  .time-wrap { display: flex; align-items: center; justify-content: center; gap: 12px; margin: 8px 0 0; }
-  .time-col { display: flex; flex-direction: column; align-items: center; gap: 6px; }
-  .time-col label { font-size: 11px; color: #94a3b8; font-weight: 500; }
-  .time-select {
-    font-size: 26px; font-weight: 700; color: #0f172a;
-    background: #f8fafc; border: 2px solid #e2e8f0;
-    border-radius: 14px; padding: 10px 14px;
-    text-align: center; cursor: pointer; appearance: none;
-    min-height: 44px; font-family: inherit;
-    transition: border-color 0.15s;
-  }
-  .time-select:focus { outline: none; border-color: #1D9E75; }
-  .time-sep { font-size: 30px; font-weight: 700; color: #cbd5e1; padding-bottom: 4px; }
-  .time-display {
-    text-align: center; font-size: 18px; font-weight: 600;
-    color: #1D9E75; margin-top: 10px;
-  }
+    /* ── Image ── */
+    .scene-image-wrap {
+      position: relative;
+      width: 100%;
+      aspect-ratio: 4 / 3;
+      background: var(--cream-mid);
+      overflow: hidden;
+    }
+    .scene-image {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+    .scene-image-placeholder {
+      width: 100%;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--text-soft);
+      font-size: 14px;
+    }
 
-  /* ── Disturbance grid ── */
-  .dist-table { width: 100%; border-collapse: collapse; }
-  .dist-table th {
-    font-size: 11px; color: #94a3b8; font-weight: 500;
-    padding: 4px 4px 8px; text-align: center;
-  }
-  .dist-table th:first-child { text-align: left; padding-left: 6px; }
-  .dist-table td { padding: 6px 4px; vertical-align: middle; }
-  .dist-table td:first-child {
-    font-size: 12px; color: #334155; line-height: 1.4;
-    padding-left: 6px; padding-right: 6px;
-  }
-  .dist-table tr:nth-child(even) td { background: #f8fafc; }
-  .dist-table tr:nth-child(even) td:first-child { border-radius: 8px 0 0 8px; }
-  .dist-table tr:nth-child(even) td:last-child { border-radius: 0 8px 8px 0; }
-  .radio-btn {
-    width: 32px; height: 32px; border-radius: 50%;
-    border: 2px solid #cbd5e1; background: #fff;
-    cursor: pointer; display: flex; align-items: center; justify-content: center;
-    margin: 0 auto; transition: all 0.15s; min-width: 32px;
-    /* ensure min tap target via padding trick on mobile */
-    position: relative;
-  }
-  .radio-btn::after {
-    content: ''; position: absolute;
-    top: -6px; left: -6px; right: -6px; bottom: -6px;
-  }
-  .radio-btn:hover { border-color: #86efce; }
-  .radio-btn.selected { border-color: #1D9E75; background: #1D9E75; }
-  .radio-btn.selected::before {
-    content: ''; width: 10px; height: 10px;
-    border-radius: 50%; background: #fff; display: block;
-  }
-  .dist-legend {
-    display: flex; flex-wrap: wrap; gap: 6px 16px;
-    margin-top: 10px;
-  }
-  .dist-legend span { font-size: 11px; color: #94a3b8; }
+    /* ── Content ── */
+    .scene-content {
+      padding: 22px 20px 0;
+    }
 
-  /* ── Chip select ── */
-  .chips-wrap { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 10px; }
-  .chip {
-    padding: 9px 16px; border-radius: 99px; border: 2px solid #e2e8f0;
-    background: #fff; font-size: 13px; font-weight: 500; color: #475569;
-    cursor: pointer; transition: all 0.15s; min-height: 44px;
-    display: flex; align-items: center; font-family: inherit;
-  }
-  .chip:hover { border-color: #99e6cf; }
-  .chip.selected { border-color: #1D9E75; background: #f0fdf9; color: #0d6e50; }
+    /* Badge */
+    .badge {
+      display: inline-block;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.8px;
+      text-transform: uppercase;
+      color: var(--brown);
+      background: var(--cream-mid);
+      border: 1px solid var(--cream-dark);
+      border-radius: 20px;
+      padding: 3px 11px;
+      margin-bottom: 10px;
+    }
 
-  /* ── Nav row ── */
-  .nav-row { display: flex; gap: 10px; margin-top: 20px; }
-  .nav-row .btn-primary { flex: 1; }
+    /* Title */
+    .scene-title {
+      font-size: 22px;
+      font-weight: 700;
+      color: var(--text-dark);
+      line-height: 1.45;
+      margin-bottom: 14px;
+    }
 
-  /* ── Result ── */
-  .score-card {
-    border-radius: 18px; border: 2px solid; padding: 20px 22px;
-    display: flex; align-items: center; gap: 16px; margin-bottom: 20px;
-  }
-  .score-num { font-size: 52px; font-weight: 800; line-height: 1; }
-  .score-denom { font-size: 12px; font-weight: 400; margin-top: 2px; }
-  .score-label { font-size: 13px; }
-  .score-tier { font-size: 16px; font-weight: 700; margin-top: 4px; }
-  .score-note { font-size: 11px; margin-top: 4px; }
+    /* Divider */
+    .divider {
+      height: 1px;
+      background: var(--cream-dark);
+      margin-bottom: 16px;
+    }
 
-  .tier-good .score-card { background: #f0fdf9; border-color: #99e6cf; color: #0d6e50; }
-  .tier-fair .score-card { background: #fffbeb; border-color: #fcd34d; color: #92400e; }
-  .tier-poor .score-card { background: #fff1ee; border-color: #fca89a; color: #9b1c1c; }
+    /* Story text */
+    .scene-text {
+      font-size: 15px;
+      font-weight: 400;
+      line-height: 2;
+      color: var(--text-mid);
+      margin-bottom: 16px;
+    }
 
-  /* ── Details / breakdown ── */
-  details summary {
-    font-size: 13px; font-weight: 500; color: #475569;
-    cursor: pointer; list-style: none; display: flex; align-items: center; gap: 4px;
-    padding: 10px 0;
-  }
-  details summary::-webkit-details-marker { display: none; }
-  .components-grid {
-    display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-top: 8px;
-  }
-  .comp-card {
-    background: #f8fafc; border-radius: 12px; padding: 10px 14px;
-  }
-  .comp-card .comp-name { font-size: 11px; color: #94a3b8; }
-  .comp-card .comp-score {
-    font-size: 22px; font-weight: 700; color: #1e293b; margin-top: 2px;
-  }
-  .comp-card .comp-score span { font-size: 12px; font-weight: 400; color: #94a3b8; }
+    /* Inner voice */
+    .inner-voice {
+      position: relative;
+      background: var(--inner-bg);
+      border-left: 3px solid var(--inner-border);
+      border-radius: 0 10px 10px 0;
+      padding: 12px 14px 12px 16px;
+      margin-bottom: 14px;
+    }
+    .inner-label {
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      color: var(--brown-light);
+      margin-bottom: 5px;
+    }
+    .inner-text {
+      font-size: 14px;
+      font-style: italic;
+      color: var(--text-mid);
+      line-height: 1.75;
+    }
 
-  /* ── Action guide ── */
-  .action-guide {
-    border-radius: 16px; border: 2px solid; padding: 18px 18px 16px;
-    margin-bottom: 20px;
-  }
-  .action-guide .ag-title {
-    display: flex; align-items: center; gap: 8px;
-    font-size: 16px; font-weight: 700; margin-bottom: 6px;
-  }
-  .action-guide .ag-msg { font-size: 13px; font-weight: 600; margin-bottom: 14px; }
-  .action-guide ul { list-style: none; display: flex; flex-direction: column; gap: 10px; }
-  .action-guide li { display: flex; gap: 8px; font-size: 13px; color: #334155; line-height: 1.5; }
-  .action-guide li .num { font-weight: 700; flex: none; }
+    /* Dialogue box (Minna speaking to protagonist) */
+    .dialogue-voice {
+      position: relative;
+      background: #F0F5FF;
+      border-left: 3px solid #8EB4E3;
+      border-radius: 0 10px 10px 0;
+      padding: 12px 14px 12px 16px;
+      margin-bottom: 14px;
+    }
+    .dialogue-voice .inner-label {
+      color: #5A7AB8;
+    }
+    .dialogue-voice .inner-text {
+      color: #3A5080;
+    }
 
-  .ag-good { background: #f0fdf9; border-color: #99e6cf; }
-  .ag-good .ag-title, .ag-good .ag-msg, .ag-good li .num { color: #0d6e50; }
-  .ag-fair { background: #fffbeb; border-color: #fcd34d; }
-  .ag-fair .ag-title, .ag-fair .ag-msg, .ag-fair li .num { color: #92400e; }
-  .ag-poor { background: #fff1ee; border-color: #fca89a; }
-  .ag-poor .ag-title, .ag-poor .ag-msg, .ag-poor li .num { color: #9b1c1c; }
+    /* Summary ending card — mission box */
+    .ending-mission-box {
+      background: var(--inner-bg);
+      border: 1px solid var(--inner-border);
+      border-radius: 10px;
+      padding: 14px 16px;
+      margin-top: 14px;
+      font-size: 14px;
+      color: var(--text-dark);
+      line-height: 1.85;
+      white-space: pre-line;
+    }
+    .ending-bridge {
+      font-size: 13px;
+      color: var(--text-soft);
+      line-height: 1.8;
+      margin-top: 12px;
+      font-style: italic;
+      white-space: pre-line;
+    }
 
-  /* ── Chatbot CTA ── */
-  .chatbot-card {
-    background: #f8fafc; border-radius: 16px; padding: 16px;
-    margin-bottom: 12px;
-  }
-  .chatbot-card p { font-size: 13px; color: #475569; margin-bottom: 12px; }
+    /* Heart reaction button on track card */
+    .track-heart-btn {
+      display: flex;
+      align-items: center;
+      gap: 3px;
+      background: none;
+      border: none;
+      cursor: pointer;
+      font-size: 13px;
+      color: var(--text-soft);
+      padding: 2px 0;
+      font-family: inherit;
+      -webkit-tap-highlight-color: transparent;
+    }
+    .track-heart-btn.liked { color: #e05c7a; }
 
-  .disclaimer {
-    font-size: 11px; color: #94a3b8; text-align: center;
-    margin-top: 16px; line-height: 1.5; padding: 0 4px;
-  }
+    /* Hint */
+    .hint-box {
+      background: var(--hint-bg);
+      border: 1px solid var(--hint-border);
+      border-radius: 10px;
+      padding: 12px 14px;
+      margin-bottom: 16px;
+    }
+    .hint-label {
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      color: var(--hint-text);
+      margin-bottom: 5px;
+      opacity: 0.75;
+    }
+    .hint-text {
+      font-size: 13.5px;
+      color: var(--hint-text);
+      line-height: 1.75;
+    }
 
-  /* ── Q9 section divider ── */
-  .section-divider {
-    border-top: 1px solid #f1f5f9; margin: 20px 0 16px; padding-top: 16px;
-  }
-  .section-label { font-size: 12px; font-weight: 600; color: #64748b; margin-bottom: 8px; }
-  .overflow-x { overflow-x: auto; }
+    /* Choices */
+    .choices-section {
+      margin-top: 20px;
+    }
+    .choices-label {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      color: var(--text-soft);
+      margin-bottom: 10px;
+    }
+    .choices {
+      display: flex;
+      flex-direction: column;
+      gap: 9px;
+    }
 
-  /* ── Scrollable question content ── */
-  .q-content { flex: 1; overflow-y: auto; }
-</style>
+    .choice-btn {
+      background: white;
+      border: 1.5px solid var(--cream-dark);
+      border-radius: 12px;
+      padding: 14px 16px;
+      text-align: left;
+      font-family: 'Sarabun', sans-serif;
+      font-size: 15px;
+      font-weight: 400;
+      color: var(--text-dark);
+      cursor: pointer;
+      line-height: 1.65;
+      transition: background 0.18s, border-color 0.18s, transform 0.12s;
+      -webkit-tap-highlight-color: transparent;
+    }
+    .choice-btn:not(:disabled):hover {
+      background: var(--cream-mid);
+      border-color: var(--tan);
+      transform: translateY(-1px);
+    }
+    .choice-btn:not(:disabled):active {
+      transform: translateY(0);
+    }
+    .choice-btn:disabled {
+      cursor: default;
+      opacity: 0.55;
+    }
+
+    .choice-btn.picked-good  { background: var(--good-bg);  border-color: var(--good-border);  color: var(--good-text);  opacity: 1 !important; }
+    .choice-btn.picked-ok    { background: var(--ok-bg);    border-color: var(--ok-border);    color: var(--ok-text);    opacity: 1 !important; }
+    .choice-btn.picked-else  { background: var(--ok-bg);    border-color: var(--ok-border);    color: var(--ok-text);    opacity: 1 !important; }
+    .choice-btn.picked-stuck { background: var(--stuck-bg); border-color: var(--stuck-border); color: var(--stuck-text); opacity: 1 !important; }
+
+    /* Outcome */
+    .outcome {
+      display: none;
+      margin-top: 18px;
+      padding: 16px;
+      background: white;
+      border: 1px solid var(--cream-dark);
+      border-radius: 12px;
+      animation: fadeUp 0.35s ease both;
+    }
+    .outcome.visible { display: block; }
+
+    .outcome-arrow {
+      font-size: 12px;
+      color: var(--text-soft);
+      margin-bottom: 7px;
+      font-weight: 600;
+      letter-spacing: 0.5px;
+    }
+    .outcome-text {
+      font-size: 15px;
+      color: var(--text-mid);
+      line-height: 1.85;
+      margin-bottom: 12px;
+    }
+    .outcome-tag {
+      display: inline-block;
+      font-size: 12px;
+      font-weight: 600;
+      padding: 4px 11px;
+      border-radius: 20px;
+      line-height: 1.5;
+    }
+    .tag-good  { background: var(--good-bg);  color: var(--good-text);  border: 1px solid var(--good-border); }
+    .tag-ok    { background: var(--ok-bg);    color: var(--ok-text);    border: 1px solid var(--ok-border); }
+    .tag-else  { background: var(--ok-bg);    color: var(--ok-text);    border: 1px solid var(--ok-border); }
+    .tag-stuck { background: var(--stuck-bg); color: var(--stuck-text); border: 1px solid var(--stuck-border); }
+
+    /* Next button */
+    .next-btn {
+      display: none;
+      width: 100%;
+      margin-top: 14px;
+      padding: 15px 20px;
+      background: var(--brown-light);
+      color: white;
+      border: none;
+      border-radius: 12px;
+      font-family: 'Sarabun', sans-serif;
+      font-size: 16px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background 0.18s, transform 0.12s;
+      -webkit-tap-highlight-color: transparent;
+    }
+    .next-btn:hover { background: var(--brown); transform: translateY(-1px); }
+    .next-btn:active { transform: translateY(0); }
+    .next-btn.visible { display: block; animation: fadeUp 0.3s ease both; }
+
+    /* Narrative auto-advance skip button */
+    .narrative-skip-btn {
+      display: block;
+      margin-left: auto;
+      margin-top: 16px;
+      background: none;
+      border: none;
+      cursor: pointer;
+      font-family: 'Sarabun', sans-serif;
+      font-size: 13px;
+      color: var(--text-soft);
+      opacity: 0;
+      padding: 4px 2px;
+      transition: opacity 0.3s ease;
+      -webkit-tap-highlight-color: transparent;
+    }
+    .narrative-skip-btn:hover { opacity: 1 !important; }
+
+    /* End screen */
+    .end-screen {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      padding: 60px 28px 48px;
+      animation: fadeUp 0.6s ease both;
+    }
+    .end-ornament {
+      font-size: 42px;
+      margin-bottom: 22px;
+      line-height: 1;
+    }
+    .end-badge {
+      display: inline-block;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      color: var(--brown);
+      background: var(--cream-mid);
+      border: 1px solid var(--cream-dark);
+      border-radius: 20px;
+      padding: 3px 14px;
+      margin-bottom: 14px;
+    }
+    .end-title {
+      font-size: 24px;
+      font-weight: 700;
+      color: var(--text-dark);
+      margin-bottom: 14px;
+      line-height: 1.4;
+    }
+    .end-text {
+      font-size: 15px;
+      color: var(--text-mid);
+      line-height: 2;
+      max-width: 320px;
+    }
+    .end-restart {
+      margin-top: 32px;
+      padding: 13px 32px;
+      background: transparent;
+      color: var(--brown-light);
+      border: 1.5px solid var(--tan);
+      border-radius: 12px;
+      font-family: 'Sarabun', sans-serif;
+      font-size: 15px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.18s;
+    }
+    .end-restart:hover {
+      background: var(--cream-mid);
+      border-color: var(--brown-light);
+    }
+
+    /* Ending card */
+    .ending-card {
+      width: 100%;
+      max-width: 360px;
+      background: white;
+      border: 1px solid var(--cream-dark);
+      border-radius: 16px;
+      padding: 22px 20px;
+      margin-top: 28px;
+      text-align: left;
+    }
+    .ending-card-title {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      color: var(--brown);
+      margin-bottom: 14px;
+    }
+    .ending-insight-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    .ending-insight-list li {
+      font-size: 14.5px;
+      color: var(--text-mid);
+      line-height: 1.75;
+      padding-left: 14px;
+      position: relative;
+    }
+    .ending-insight-list li::before {
+      content: '·';
+      position: absolute;
+      left: 0;
+      color: var(--tan);
+      font-weight: 700;
+    }
+    .ending-divider {
+      height: 1px;
+      background: var(--cream-dark);
+      margin: 16px 0;
+    }
+    .ending-question {
+      font-size: 14px;
+      font-style: italic;
+      color: var(--text-dark);
+      line-height: 1.85;
+    }
+
+    /* Inner voice multi-line (B3) */
+    .inner-line {
+      font-size: 14px;
+      font-style: italic;
+      color: var(--text-mid);
+      line-height: 1.75;
+    }
+    .inner-line + .inner-line {
+      margin-top: 5px;
+      padding-top: 5px;
+      border-top: 1px dashed var(--inner-border);
+    }
+
+    /* Insight box (B3) */
+    .insight-box {
+      background: var(--hint-bg);
+      border: 1px solid var(--hint-border);
+      border-radius: 10px;
+      padding: 14px 16px;
+      margin-bottom: 16px;
+    }
+    .insight-title {
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 0.5px;
+      color: var(--hint-text);
+      margin-bottom: 8px;
+    }
+    .insight-body {
+      font-size: 14px;
+      color: var(--hint-text);
+      line-height: 1.8;
+      margin-bottom: 8px;
+    }
+    .insight-note {
+      font-size: 13px;
+      font-style: italic;
+      color: var(--hint-text);
+      opacity: 0.8;
+      line-height: 1.7;
+      padding-top: 8px;
+      border-top: 1px solid var(--hint-border);
+    }
+
+    /* Chooser note box (B4) */
+    .chooser-box {
+      background: var(--cream-mid);
+      border: 1px solid var(--cream-dark);
+      border-radius: 10px;
+      padding: 12px 16px;
+      margin-bottom: 16px;
+    }
+    .chooser-label {
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      color: var(--brown);
+      margin-bottom: 5px;
+    }
+    .chooser-text {
+      font-size: 13.5px;
+      color: var(--text-mid);
+      line-height: 1.75;
+      font-style: italic;
+    }
+
+    /* Joyful choice type (B4 C) */
+    .choice-btn.picked-joyful { background: #FFF0F6; border-color: #D4789A; color: #7A2045; opacity: 1 !important; }
+    .tag-joyful { background: #FFF0F6; color: #7A2045; border: 1px solid #D4789A; }
+
+    /* Summary screen */
+    .summary-screen {
+      padding: 28px 20px 48px;
+      animation: fadeUp 0.6s ease both;
+    }
+    .summary-closing {
+      text-align: center;
+      padding: 20px 0 24px;
+      border-bottom: 1px solid var(--cream-dark);
+      margin-bottom: 24px;
+    }
+    .summary-closing-ornament {
+      font-size: 32px;
+      margin-bottom: 12px;
+    }
+    .summary-closing-title {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      color: var(--brown);
+      margin-bottom: 8px;
+    }
+    .summary-closing-text {
+      font-size: 14.5px;
+      color: var(--text-mid);
+      line-height: 2;
+    }
+    .summary-section-label {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      color: var(--text-soft);
+      margin-bottom: 12px;
+    }
+    .summary-choices {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      margin-bottom: 20px;
+    }
+    .summary-choice-row {
+      background: white;
+      border: 1px solid var(--cream-dark);
+      border-radius: 12px;
+      padding: 12px 14px;
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+    }
+    .summary-scene-badge {
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.5px;
+      color: var(--brown);
+      background: var(--cream-mid);
+      border: 1px solid var(--cream-dark);
+      border-radius: 20px;
+      padding: 2px 8px;
+      white-space: nowrap;
+      flex-shrink: 0;
+      margin-top: 2px;
+    }
+    .summary-choice-detail { flex: 1; min-width: 0; }
+    .summary-choice-text {
+      font-size: 13.5px;
+      color: var(--text-mid);
+      line-height: 1.65;
+      margin-bottom: 6px;
+    }
+    .summary-type-badge {
+      display: inline-block;
+      font-size: 11px;
+      font-weight: 600;
+      padding: 2px 9px;
+      border-radius: 20px;
+      line-height: 1.5;
+    }
+    .summary-reflection {
+      background: var(--inner-bg);
+      border-left: 3px solid var(--inner-border);
+      border-radius: 0 10px 10px 0;
+      padding: 14px 16px;
+      margin-bottom: 20px;
+    }
+    .summary-reflection-title {
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--brown-light);
+      margin-bottom: 8px;
+    }
+    .summary-reflection-text {
+      font-size: 14px;
+      color: var(--text-mid);
+      line-height: 1.9;
+    }
+    .summary-buttons {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      margin-top: 24px;
+    }
+    .summary-btn-primary {
+      width: 100%;
+      padding: 15px 20px;
+      background: var(--brown-light);
+      color: white;
+      border: none;
+      border-radius: 12px;
+      font-family: 'Sarabun', sans-serif;
+      font-size: 16px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background 0.18s, transform 0.12s;
+      -webkit-tap-highlight-color: transparent;
+    }
+    .summary-btn-primary:hover { background: var(--brown); transform: translateY(-1px); }
+    .summary-btn-primary:active { transform: translateY(0); }
+    .summary-btn-secondary {
+      width: 100%;
+      padding: 13px 20px;
+      background: transparent;
+      color: var(--text-soft);
+      border: 1.5px solid var(--cream-dark);
+      border-radius: 12px;
+      font-family: 'Sarabun', sans-serif;
+      font-size: 15px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.18s;
+      -webkit-tap-highlight-color: transparent;
+    }
+    .summary-btn-secondary:hover { background: var(--cream-mid); border-color: var(--tan); }
+
+    /* Feedback widget */
+    .feedback-widget {
+      background: white;
+      border: 1px solid var(--cream-dark);
+      border-radius: 16px;
+      padding: 20px;
+      margin-top: 20px;
+      transition: opacity 1.5s ease;
+    }
+    .feedback-widget-title {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      color: var(--brown);
+      margin-bottom: 16px;
+    }
+    .feedback-q {
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--text-dark);
+      margin-bottom: 10px;
+      line-height: 1.5;
+    }
+    .feedback-emoji-row {
+      display: flex;
+      gap: 6px;
+      justify-content: space-between;
+      margin-bottom: 18px;
+    }
+    .fb-emoji-btn {
+      flex: 1;
+      background: none;
+      border: none;
+      border-radius: 12px;
+      padding: 4px 2px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      -webkit-tap-highlight-color: transparent;
+    }
+    .fb-emoji-btn img {
+      width: 64px;
+      height: 64px;
+      object-fit: cover;
+      border-radius: 50%;
+      opacity: 0.5;
+      transform: scale(1);
+      transition: opacity 0.2s, transform 0.2s, box-shadow 0.2s;
+    }
+    .fb-emoji-btn:hover img  { opacity: 1; transform: scale(1.1); }
+    .fb-emoji-btn.selected img { opacity: 1; transform: scale(1.2); box-shadow: 0 0 0 3px #f5a623, 0 4px 14px rgba(245,166,35,0.45); }
+    .fb-textarea {
+      width: 100%;
+      border: 1.5px solid var(--cream-dark);
+      border-radius: 10px;
+      padding: 11px 12px;
+      font-family: 'Sarabun', sans-serif;
+      font-size: 14px;
+      color: var(--text-dark);
+      background: var(--cream);
+      resize: none;
+      outline: none;
+      line-height: 1.7;
+      min-height: 76px;
+      transition: border-color 0.15s;
+      display: block;
+    }
+    .fb-textarea:focus { border-color: var(--tan); }
+    .fb-char-count {
+      font-size: 11px;
+      color: var(--text-soft);
+      text-align: right;
+      margin-top: 4px;
+      margin-bottom: 18px;
+    }
+    .fb-pair-btns {
+      display: flex;
+      gap: 8px;
+      margin-bottom: 18px;
+    }
+    .fb-pair-btn {
+      flex: 1;
+      background: var(--cream);
+      border: 1.5px solid var(--cream-dark);
+      border-radius: 10px;
+      padding: 11px 6px;
+      font-family: 'Sarabun', sans-serif;
+      font-size: 13.5px;
+      font-weight: 500;
+      color: var(--text-mid);
+      cursor: pointer;
+      line-height: 1.4;
+      transition: border-color 0.15s, background 0.15s;
+      -webkit-tap-highlight-color: transparent;
+    }
+    .fb-pair-btn:hover   { border-color: var(--tan); background: var(--cream-mid); }
+    .fb-pair-btn.selected { border-color: var(--brown-light); background: var(--inner-bg); color: var(--text-dark); }
+    .fb-submit {
+      width: 100%;
+      padding: 14px;
+      background: var(--brown-light);
+      color: white;
+      border: none;
+      border-radius: 12px;
+      font-family: 'Sarabun', sans-serif;
+      font-size: 15px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background 0.18s, transform 0.12s;
+      -webkit-tap-highlight-color: transparent;
+      margin-top: 2px;
+    }
+    .fb-submit:disabled { opacity: 0.4; cursor: not-allowed; transform: none; }
+    .fb-submit:not(:disabled):hover { background: var(--brown); transform: translateY(-1px); }
+    .feedback-thankyou {
+      text-align: center;
+      font-size: 16px;
+      font-weight: 600;
+      color: var(--brown-light);
+      padding: 10px 0;
+      line-height: 1.7;
+    }
+
+    /* Replay panel */
+    .replay-panel {
+      padding: 28px 20px 48px;
+      animation: fadeUp 0.4s ease both;
+    }
+    .replay-panel-title {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      color: var(--text-soft);
+      margin-bottom: 6px;
+    }
+    .replay-panel-sub {
+      font-size: 15px;
+      color: var(--text-mid);
+      line-height: 1.7;
+      margin-bottom: 20px;
+    }
+    .replay-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+    }
+    .replay-scene-btn {
+      background: white;
+      border: 1.5px solid var(--cream-dark);
+      border-radius: 12px;
+      padding: 16px 12px;
+      font-family: 'Sarabun', sans-serif;
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--text-dark);
+      cursor: pointer;
+      text-align: center;
+      line-height: 1.5;
+      transition: border-color 0.15s, background 0.15s, transform 0.12s;
+      -webkit-tap-highlight-color: transparent;
+    }
+    .replay-scene-btn:hover  { border-color: var(--tan); background: var(--cream-mid); transform: translateY(-1px); }
+    .replay-scene-btn:active { transform: translateY(0); }
+
+    /* Responsive refinements */
+    @media (min-width: 480px) {
+      #app { box-shadow: 0 0 40px rgba(100, 60, 20, 0.08); }
+    }
+
+    /* Badge modal */
+    .badge-modal-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(58, 36, 20, 0.45);
+      z-index: 1000;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+    }
+    .badge-modal-card {
+      background: var(--cream);
+      border-radius: 16px;
+      padding: 24px 20px 20px;
+      max-width: 340px;
+      width: 100%;
+      position: relative;
+      box-shadow: 0 8px 32px rgba(58, 36, 20, 0.18);
+    }
+    .badge-modal-close {
+      position: absolute;
+      top: 12px;
+      right: 14px;
+      background: none;
+      border: none;
+      font-size: 16px;
+      color: var(--text-soft);
+      cursor: pointer;
+      line-height: 1;
+      padding: 4px 6px;
+    }
+    .badge-modal-label {
+      font-size: 15px;
+      font-weight: 700;
+      color: var(--text-dark);
+      margin-bottom: 12px;
+      padding-right: 28px;
+    }
+    .badge-modal-desc {
+      font-size: 14px;
+      color: var(--text-mid);
+      line-height: 1.85;
+    }
+    #share-capture-area {
+      background: var(--cream);
+      border-radius: 10px;
+      padding: 32px;
+      min-height: 320px;
+      box-sizing: border-box;
+    }
+    .badge-modal-branding {
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 2px;
+      color: var(--text-soft);
+      margin-bottom: 16px;
+      text-align: center;
+    }
+    #badge-modal-img {
+      display: block;
+      margin: 0 auto 16px;
+    }
+    .badge-modal-track {
+      font-size: 11px;
+      color: var(--text-soft);
+      margin-top: 12px;
+      text-align: right;
+    }
+    .badge-share-btn {
+      display: block;
+      width: 100%;
+      margin-top: 14px;
+      padding: 10px;
+      background: var(--cream-mid);
+      border: 1.5px solid var(--cream-dark);
+      border-radius: 10px;
+      font-family: 'Sarabun', sans-serif;
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--text-dark);
+      cursor: pointer;
+      -webkit-tap-highlight-color: transparent;
+    }
+    .badge-share-btn:active { opacity: 0.75; }
+
+    /* ── Cork Board Room ── */
+    .cork-board-wrap {
+      position: relative;
+      width: 100%;
+      aspect-ratio: 5/4;
+      overflow: hidden;
+      max-width: 560px;
+    }
+    .cork-board-fallback {
+      position: absolute;
+      inset: 0;
+      background: #C88A50;
+      background-image:
+        radial-gradient(ellipse at 1px 1px, rgba(140,80,20,0.35) 1px, transparent 0);
+      background-size: 6px 6px;
+      border-radius: 6px;
+    }
+    .cork-bg {
+      position: absolute;
+      inset: 0;
+      width: 100%; height: 100%;
+      object-fit: cover;
+      border-radius: 6px;
+    }
+    .cork-grid {
+      position: absolute;
+      top: 8%; left: 6%; right: 6%; bottom: 8%;
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      grid-template-rows: repeat(4, 1fr);
+      gap: 6px;
+    }
+    .cork-slot {
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      min-height: 0;
+      overflow: hidden;
+    }
+    .cork-slot-empty {
+      width: 82%;
+      height: 82%;
+      border-radius: 4px;
+      background: rgba(0,0,0,0.15);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: rgba(255,255,255,0.38);
+      font-size: 14px;
+      font-weight: 700;
+      pointer-events: none;
+    }
+    .cork-slot img.cork-badge {
+      width: 100%;
+      height: 100%;
+      max-height: 100%;
+      object-fit: contain;
+      border-radius: 5px;
+      box-shadow: 0 3px 10px rgba(0,0,0,0.38), 0 1px 3px rgba(0,0,0,0.18);
+      display: block;
+      transition: transform 150ms ease;
+    }
+    .cork-slot:hover img.cork-badge { transform: scale(1.08); }
+    .cork-pin {
+      position: absolute;
+      top: -5px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: radial-gradient(circle at 35% 35%, #FF7070, #C42020);
+      box-shadow: 0 1px 4px rgba(0,0,0,0.5), inset 0 -1px 0 rgba(0,0,0,0.15);
+      z-index: 3;
+    }
+    .cork-pin::after {
+      content: '';
+      position: absolute;
+      bottom: -5px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 2px;
+      height: 6px;
+      background: linear-gradient(to bottom, #8B5E3C, #5C3A1E);
+      border-radius: 0 0 1px 1px;
+    }
+    @keyframes slotEntry {
+      0%   { transform: scale(2.5); opacity: 0; filter: brightness(1.6); }
+      60%  { transform: scale(0.9);  opacity: 1; filter: brightness(1.1); }
+      100% { transform: scale(1);    opacity: 1; filter: brightness(1); }
+    }
+    .cork-slot.just-earned {
+      animation: slotEntry 0.8s ease-out both;
+      animation-delay: 0.12s;
+    }
+
+    /* ── Badge Room popup ── */
+    #room-badge-popup {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.45);
+      z-index: 500;
+      align-items: center;
+      justify-content: center;
+    }
+
+    /* ── Scene transition ── */
+    @keyframes sceneFadeIn {
+      from { opacity: 0; }
+      to   { opacity: 1; }
+    }
+    .scene-fade-in {
+      animation: sceneFadeIn 400ms ease-in-out;
+    }
+
+    /* ── Badge fly animation ── */
+    @keyframes badgePulse {
+      0%   { transform: scale(1);   box-shadow: 0 0 0px 0px  rgba(212,168,122,0);    }
+      50%  { transform: scale(1.2); box-shadow: 0 0 22px 10px rgba(212,168,122,0.5); }
+      100% { transform: scale(1);   box-shadow: 0 0 0px 0px  rgba(212,168,122,0);    }
+    }
+
+    /* ── Share Card button ── */
+    .share-card-btn {
+      display: block;
+      width: 100%;
+      padding: 12px;
+      margin-top: 10px;
+      background: #FFF8F0;
+      color: #3A2414;
+      border: 1.5px solid #D4A87A;
+      border-radius: 12px;
+      font-family: 'Sarabun', sans-serif;
+      font-size: 14px;
+      font-weight: 600;
+      cursor: pointer;
+      text-align: center;
+      transition: background 0.15s, border-color 0.15s;
+      -webkit-tap-highlight-color: transparent;
+    }
+    .share-card-btn:hover  { background: #F5EDE0; border-color: #C4895A; }
+    .share-card-btn:active { background: #EDD9C0; }
+  </style>
 </head>
 <body>
-<div id="app"></div>
 
+<div id="app">
+  <div class="progress-bar"><div class="progress-fill" id="progress-fill"></div></div>
+  <div id="scene-container"></div>
+  <div id="badge-modal" class="badge-modal-overlay" style="display:none" onclick="closeBadgeModal()">
+    <div class="badge-modal-card" onclick="event.stopPropagation()">
+      <button class="badge-modal-close" onclick="closeBadgeModal()">✕</button>
+      <div id="share-capture-area">
+        <div class="badge-modal-branding">MINNA JOURNEY</div>
+        <div id="badge-modal-img"></div>
+        <div class="badge-modal-label" id="badge-modal-label"></div>
+        <div class="badge-modal-desc" id="badge-modal-desc"></div>
+        <div class="badge-modal-track" id="badge-modal-track"></div>
+      </div>
+      <button id="badge-share-btn" class="badge-share-btn" onclick="shareBadgeWeb()">&#128279; แชร์ความรู้สึกนี้</button>
+    </div>
+  </div>
+</div>
+
+<script src="assets/js/tracks.js"></script>
 <script>
-// ═══════════════════════════════════════════════════════════════
-// SCORING ENGINE (ported from psqiScoring.ts)
-// ═══════════════════════════════════════════════════════════════
 
-function parseTimeToMinutes(t) {
-  const [h, m] = t.split(':').map(Number);
-  return h * 60 + m;
+const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbwRIKhQ6LsVWcF4ksUJ5mJMmA-9GCCkbPd0yOt3Ax2yecLEhzulWuI44XmpdUzaoFjO/exec';  // ← วาง URL ของ Apps Script Web App ที่นี่
+
+// ── Share Card Feature Flag ──────────────────────────────────────────────────
+// 'off'     → hide all share UI; no dead buttons
+// 'preview' → show quote card preview in room popup (DOM only, no export)
+// 'live'    → enable export/share (not implemented yet)
+const SHARE_CARD_MODE = 'off';
+// ─────────────────────────────────────────────────────────────────────────────
+
+// Hide share UI immediately when mode is 'off' (DOM is ready; script is at end of body)
+if (SHARE_CARD_MODE === 'off') {
+  const _shareBtn = document.getElementById('badge-share-btn');
+  if (_shareBtn) _shareBtn.style.display = 'none';
 }
 
-function calcTimeInBedHours(bedtime, waketime) {
-  const bed = parseTimeToMinutes(bedtime);
-  const wake = parseTimeToMinutes(waketime);
-  const diff = wake >= bed ? wake - bed : 1440 - bed + wake;
-  return diff / 60;
+let currentScene = 0;
+let currentTrack  = 1;
+let playerChoices = [];
+let currentScenes = [];
+let feedbackState = { rating: null, freeText: '', recommend: null, returnIntent: null, favoriteTrack: null };
+let _roomJustEarned  = -1;   // track id of badge earned this session, for slot entry animation
+let _currentRoomTab = 'minna'; // active tab in badge room
+let sessionStartTime = null;
+let sessionStuckCount = 0;
+let _autoAdvanceTimer = null;
+let _replayMode = null; // { savedChoices: [...] } when replaying a single scene
+
+function updateProgress() {
+  const pct = ((currentScene + 1) / currentScenes.length) * 100;
+  document.getElementById('progress-fill').style.width = pct + '%';
 }
 
-function q4ScoreToHours(score) {
-  return [7.5, 6.5, 5.5, 4.5][score];
+function toggleHeart(trackId, event) {
+  event.stopPropagation();
+  const likedKey = 'heart_liked_' + trackId;
+  const countKey = 'heart_' + trackId;
+  const wasLiked = localStorage.getItem(likedKey) === '1';
+  const count = parseInt(localStorage.getItem(countKey) || '0');
+  const newLiked = !wasLiked;
+  const newCount = newLiked ? count + 1 : Math.max(0, count - 1);
+  localStorage.setItem(likedKey, newLiked ? '1' : '0');
+  localStorage.setItem(countKey, String(newCount));
+  const btn = document.getElementById('heart-btn-' + trackId);
+  const countEl = document.getElementById('heart-count-' + trackId);
+  if (btn) {
+    btn.classList.toggle('liked', newLiked);
+    btn.childNodes[0].textContent = newLiked ? '♥ ' : '♡ ';
+  }
+  if (countEl) countEl.textContent = newCount > 0 ? newCount : '';
 }
 
-function calcC2(q2, q91) {
-  const s = q2 + q91;
-  if (s === 0) return 0;
-  if (s <= 2) return 1;
-  if (s <= 4) return 2;
-  return 3;
+function showHome() {
+  if (_autoAdvanceTimer) { clearTimeout(_autoAdvanceTimer); _autoAdvanceTimer = null; }
+  document.getElementById('progress-fill').style.width = '0%';
+
+  const allTrackData = {
+    1:  { emoji: '&#128049;', title: 'มินนากับมะม่วง',           tagline: 'เมื่อแมวไม่แยแส ความรู้สึกจะบอกอะไร?' },
+    2:  { emoji: '&#127800;', title: 'มิตรภาพใหม่',               tagline: 'เมื่อกลัวการปฏิเสธ แต่ยังอยากรู้จักกัน' },
+    4:  { emoji: '&#128153;', title: 'วันที่เพื่อนล้อ',          tagline: 'เมื่อสิ่งที่ชอบถูกหัวเราะเยาะ ความรู้สึกไปไหน?' },
+    5:  { emoji: '&#127968;', title: 'ความสัมพันธ์ในครอบครัว',   tagline: 'บ้านคือที่ที่ปลอดภัยเสมอไหม?' },
+    6:  { emoji: '&#127807;', title: 'โมเน่กับวันเสาร์ที่บ้าน',  tagline: 'วันหยุดไม่ได้แปลว่าว่างเสมอไป' },
+    7:  { emoji: '&#128153;', title: 'หมอน้อย',                   tagline: 'ติดตามหยกและเพื่อนๆ ในโครงการจิตอาสา' },
+    8:  { emoji: '&#129293;', title: 'มินนากับวันหลังจากนั้น',    tagline: 'เมื่อวานพูดพลาด — วันนี้จะเริ่มยังไง' },
+    9:  { emoji: '&#127183;', title: 'ใบบัวกับไพ่ที่วางไม่ลง',   tagline: 'เมื่อความกังวลวนซ้ำ — วางลงได้ยังไง' },
+    10: { emoji: '&#127769;', title: 'ห้องของมินนา',              tagline: 'คืนก่อนเปิดเทอม มินนามองย้อนกลับไป' },
+    11: { emoji: '&#129293;', title: 'วันที่โมเน่นั่งเงียบ',       tagline: 'เมื่อรู้จักตัวเองดีแล้ว — แต่โลกข้างนอกยังไม่รู้',       cover: 'story11_b1.jpg' },
+    12: { emoji: '&#127807;', title: 'ใบบัวกับฟีดที่ไม่มีวันหมด', tagline: 'เมื่อทุกคนดูเหมือนมีชีวิตอยู่ — และเราแค่ดูอยู่',        cover: 'story12_b1.jpg' },
+    13: { emoji: '&#129719;', title: 'วันที่หยกต้องสมบูรณ์แบบ',   tagline: 'เมื่อความสมบูรณ์แบบไม่ได้มาจากความขยัน แต่มาจากความกลัว', cover: 'story13_b1.jpg' },
+    14: { emoji: '&#127819;', title: 'วันที่หยกรับคำชมไม่ได้',    tagline: 'เมื่อคำชมทำให้รู้สึกไม่สบาย — มันบอกอะไรเกี่ยวกับตัวเรา?', cover: 'story14_b1.jpg' },
+    15: { emoji: '&#127968;', title: 'คืนที่บ้านมินนา',           tagline: 'เมื่อกตัญญูคือความกลัวแฝง หรือสิ่งที่ส่งต่อด้วยใจ?',       cover: 'story15_b1.jpg' },
+    16: { emoji: '&#128221;', title: 'ใบบัวกับเสียงในใจ',          tagline: 'เมื่อเสียงในหัวบอกว่าอย่าทำ — แต่ใบบัวทำไปแล้ว',            cover: 'story16_b1.jpg' },
+    17: { emoji: '&#128095;', title: 'วันที่โมเน่รู้แล้ว',          tagline: 'เมื่อสอบพลาด — แต่ก็ยังรู้ว่าจะเริ่มจากตรงไหน',             cover: 'story17_b1.jpg' },
+    18: { emoji: '&#127861;', title: 'เช้าที่ใบบัวเห็นยาย',         tagline: 'วันที่ใบบัวหยุดดิ้นรน',                                       cover: 'story18_b1.jpg' },
+  };
+
+  const characterSections = [
+    {
+      id: 'minna', name: 'มินนา',
+      trackIds: [1, 2, 8, 10],
+      placeholders: [{ label: 'T-มินนา' }]
+    },
+    {
+      id: 'mone', name: 'โมเน่',
+      trackIds: [4, 6, 11, 17],
+      placeholders: []
+    },
+    {
+      id: 'yok', name: 'หยก',
+      trackIds: [7, 13, 14],
+      placeholders: [{ label: 'บทหยก' }, { label: 'บทหยก' }]
+    },
+    {
+      id: 'baibua', name: 'ใบบัว',
+      trackIds: [9, 12, 16, 18],
+      placeholders: [{ label: 'บทใบบัว' }]
+    },
+    {
+      id: 'special', name: 'บทพิเศษ',
+      trackIds: [5, 15],
+      placeholders: [{ label: 'T20' }, { label: 'นิทาน ep1' }, { label: 'นิทาน ep2' }]
+    }
+  ];
+
+  function buildTrackCard(id) {
+    const t = allTrackData[id];
+    if (!t || (tracks[id] && tracks[id].hidden)) return '';
+    const heartCount = parseInt(localStorage.getItem('heart_' + id) || '0');
+    const liked = localStorage.getItem('heart_liked_' + id) === '1';
+    return `
+    <div style="background:white; border:1.5px solid var(--tan); border-radius:14px; overflow:hidden; display:flex; flex-direction:column;">
+      <div onclick="selectTrack(${id})" style="cursor:pointer; -webkit-tap-highlight-color:transparent;">
+        <div style="aspect-ratio:16/9; overflow:hidden; background:var(--cream-mid);">
+          <img src="${t.cover || ('story' + id + '_b1.jpg')}" alt="${t.title}" style="width:100%; height:100%; object-fit:cover; display:block;"
+               onerror="this.style.display='none'">
+        </div>
+        <div style="padding:10px 12px 6px;">
+          <div style="font-size:22px; margin-bottom:4px;">${t.emoji}</div>
+          <div style="font-size:13px; font-weight:600; color:var(--text-dark); margin-bottom:3px; line-height:1.3;">${t.title}</div>
+          <div style="font-size:11px; color:var(--text-soft); line-height:1.5;">${t.tagline}</div>
+        </div>
+      </div>
+      <div style="padding:4px 12px 10px; display:flex; justify-content:flex-end;">
+        <button class="track-heart-btn${liked ? ' liked' : ''}" id="heart-btn-${id}" onclick="toggleHeart(${id}, event)">
+          ${liked ? '♥' : '♡'} <span id="heart-count-${id}">${heartCount > 0 ? heartCount : ''}</span>
+        </button>
+      </div>
+    </div>`;
+  }
+
+  function buildPlaceholder(label) {
+    return `
+    <div style="background:var(--cream-mid); border:1.5px dashed var(--tan); border-radius:14px; overflow:hidden; display:flex; flex-direction:column; opacity:0.6;">
+      <div style="aspect-ratio:16/9; background:var(--cream-dark); display:flex; align-items:center; justify-content:center;">
+        <span style="font-size:28px; color:var(--text-soft);">?</span>
+      </div>
+      <div style="padding:10px 12px 12px;">
+        <div style="font-size:11px; font-weight:700; letter-spacing:1px; color:var(--text-soft); margin-bottom:4px;">เร็วๆนี้</div>
+        <div style="font-size:12px; color:var(--text-soft); line-height:1.4;">${label}</div>
+      </div>
+    </div>`;
+  }
+
+  function buildSection(sec) {
+    const open = sec.id === 'minna';
+    const cards = sec.trackIds.map(id => buildTrackCard(id)).join('');
+    const placeholders = sec.placeholders.map(p => buildPlaceholder(p.label)).join('');
+    return `
+    <div style="margin-bottom:20px;">
+      <div onclick="toggleCharSection('${sec.id}')"
+           style="display:flex; align-items:center; justify-content:space-between; padding:10px 14px; background:var(--cream-mid); border-radius:12px; cursor:pointer; -webkit-tap-highlight-color:transparent; margin-bottom:10px;">
+        <span style="font-size:15px; font-weight:700; color:var(--text-dark);">${sec.name}</span>
+        <span id="char-arrow-${sec.id}" style="font-size:11px; color:var(--text-soft); transition:transform 0.2s;${open ? '' : ' transform:rotate(-90deg);'}">&#9660;</span>
+      </div>
+      <div id="char-body-${sec.id}" style="display:${open ? 'grid' : 'none'}; grid-template-columns:1fr 1fr; gap:12px;">
+        ${cards}${placeholders}
+      </div>
+    </div>`;
+  }
+
+  const sectionsHTML = characterSections.map(buildSection).join('');
+
+  document.getElementById('scene-container').innerHTML = `
+    <div style="padding:24px 16px 48px;">
+      <div style="text-align:center; margin-bottom:20px;">
+        <div style="font-size:12px; font-weight:700; letter-spacing:2px; color:var(--text-soft); margin-bottom:6px;">MINNA JOURNEY</div>
+        <h1 style="font-size:24px; font-weight:700; color:var(--text-dark); line-height:1.4;">มินนา — เส้นทางของใจ</h1>
+      </div>
+      <div style="background:var(--cream-mid); border-radius:14px; padding:16px 18px; margin-bottom:24px; text-align:center; line-height:1.9; font-size:14px; color:var(--text-mid);">
+        บางวันง่าย บางวันยาก — ทุกวันมีเรื่องเล่า<br>มินนาและเพื่อนๆ อยู่ที่นี่เสมอ &#127793;
+      </div>
+      ${sectionsHTML}
+      <div style="margin-top:16px; padding-top:16px; border-top:1px solid var(--cream-dark);">
+        <button onclick="showBadgeRoom()" style="width:100%; padding:14px; background:white; border:1.5px solid var(--tan); border-radius:14px; font-size:15px; font-weight:600; font-family:inherit; color:var(--text-dark); cursor:pointer; display:flex; align-items:center; justify-content:center; gap:8px; -webkit-tap-highlight-color:transparent;">
+          &#127968; ${getRoomLabel(currentTrack)}
+        </button>
+      </div>
+    </div>
+  `;
 }
 
-function calcC5(r) {
-  const s = r.q9_2 + r.q9_3 + r.q9_4 + r.q9_5 + r.q9_6 + r.q9_7 + r.q9_8 + r.q9_9;
-  if (s === 0) return 0;
-  if (s <= 9) return 1;
-  if (s <= 18) return 2;
-  return 3;
+function toggleCharSection(id) {
+  const body = document.getElementById('char-body-' + id);
+  const arrow = document.getElementById('char-arrow-' + id);
+  if (!body || !arrow) return;
+  const isOpen = body.style.display !== 'none';
+  body.style.display = isOpen ? 'none' : 'grid';
+  arrow.style.transform = isOpen ? 'rotate(-90deg)' : 'rotate(0deg)';
 }
 
-function calcC7(q7, q8) {
-  const s = q7 + q8;
-  if (s === 0) return 0;
-  if (s <= 2) return 1;
-  if (s <= 4) return 2;
-  return 3;
+function preloadTrackImages(trackId) {
+  const t = tracks[trackId];
+  if (!t) return;
+  const scenesArr = Array.isArray(t.scenes) ? t.scenes : Object.values(t.scenes);
+  scenesArr.forEach(s => {
+    if (s.image) {
+      const img = new Image();
+      img.src = s.image;
+    }
+  });
 }
 
-function calcPSQIScores(r) {
-  const C1 = r.q5_quality ?? 0;
-  const C2 = calcC2(r.q2_latency ?? 0, r.q9_1 ?? 0);
-  const C3 = r.q4_duration ?? 0;
-  const actualH = q4ScoreToHours(r.q4_duration ?? 0);
-  const tib = calcTimeInBedHours(r.q1_bedtime, r.q3_waketime);
-  const eff = tib > 0 ? (actualH / tib) * 100 : 0;
-  const C4 = eff >= 85 ? 0 : eff >= 75 ? 1 : eff >= 65 ? 2 : 3;
-  const C5 = calcC5(r);
-  const C6 = r.q6_medication ?? 0;
-  const C7 = calcC7(r.q7_sleepiness ?? 0, r.q8_motivation ?? 0);
-  const global = C1 + C2 + C3 + C4 + C5 + C6 + C7;
-  return { C1, C2, C3, C4, C5, C6, C7, global };
+function selectTrack(trackId) {
+  preloadTrackImages(trackId);
+  startGame(trackId);
 }
 
-function getSleepTier(global) {
-  if (global <= 5) return 'good';
-  if (global <= 10) return 'fair';
-  return 'poor';
+function startGame(trackId) {
+  currentTrack = trackId || 1;
+  const rawScenes = tracks[currentTrack].scenes;
+  currentScenes = Array.isArray(rawScenes) ? rawScenes : normalizeNewSchemaScenes(rawScenes, currentTrack);
+  currentScene = 0;
+  playerChoices = [];
+  feedbackState = { rating: null, freeText: '', recommend: null, returnIntent: null, favoriteTrack: null };
+  sessionStartTime = null;
+  sessionStuckCount = 0;
+  showOnboarding(currentTrack);
 }
 
-// ═══════════════════════════════════════════════════════════════
-// STATE
-// ═══════════════════════════════════════════════════════════════
+function normalizeNewSchemaScenes(scenesObj, trackId) {
+  const track = tracks[trackId];
+  const badge = track.badge;
+  return Object.entries(scenesObj).map(([key, scene], i) => {
+    const sceneId = 'B' + (i + 1);
+    const textParts = [];
+    const innerLines = [];
+    (scene.content || []).forEach(item => {
+      if (item.type === 'text') {
+        textParts.push(item.text);
+      } else if (item.type === 'dialogue') {
+        textParts.push(item.speaker + ': ' + item.text);
+      } else if (item.type === 'innerVoice') {
+        (item.lines || []).forEach(l => innerLines.push(l));
+      }
+    });
+    const choices = (scene.choices || []).map(c => {
+      const pb = c.badge;
+      return {
+        text:    c.text,
+        type:    c.tag,
+        outcome: pb ? pb.desc : (badge[c.tag] ? badge[c.tag].desc : ''),
+        tag:     pb ? pb.label : (badge[c.tag] ? badge[c.tag].label : c.tag),
+        desc:    pb ? pb.desc : null
+      };
+    });
+    return {
+      id:         sceneId,
+      badge:      sceneId,
+      title:      scene.setting || '',
+      image:      scene.image   || '',
+      text:       textParts.join('<br><br>'),
+      innerVoice: innerLines.length > 0 ? innerLines : '',
+      voiceLabel: null,
+      hint:       null,
+      choices
+    };
+  });
+}
 
-const STEPS = ['intro','q1','q2','q3','q4','q5','q6','q7','q8','q9','result'];
-const Q_STEPS = STEPS.filter(s => s !== 'intro' && s !== 'result');
-const TOTAL_Q = Q_STEPS.length;
-
-let state = {
-  step: 'intro',
-  responses: {
-    q1_bedtime: '22:00',
-    q2_latency: null,
-    q3_waketime: '06:00',
-    q4_duration: null,
-    q5_quality: null,
-    q6_medication: null,
-    q7_sleepiness: null,
-    q8_motivation: null,
-    q9_1: 0, q9_2: 0, q9_3: 0, q9_4: 0, q9_5: 0,
-    q9_6: 0, q9_7: 0, q9_8: 0, q9_9: 0,
-    q9_10_chips: [],
-  },
-  scores: null,
-  tier: null,
+const trackIntros = {
+  1: { emoji: '&#128049;', title: 'มินนากับมะม่วง',         protagonist: 'ติดตามมินนาในวันที่แมวไม่แยแส',             blurb: 'บางทีเราพยายามมากแค่ไหน อีกฝ่ายก็ไม่ตอบสนอง<br>ความรู้สึกในตอนนั้น — มันบอกอะไรเราอยู่?' },
+  2: { emoji: '&#127800;', title: 'มิตรภาพใหม่',             protagonist: 'ติดตามมินนาในวันที่อยากรู้จักใครสักคน',      blurb: 'อยากทัก แต่ก็กลัว<br>ความตื่นเต้นและความกังวลอยู่ด้วยกันได้ — และนั่นปกติมาก' },
+  3: { emoji: '&#127807;', title: 'วันที่ดีแบบเรียบง่าย',   protagonist: 'ติดตามมินนาในวันธรรมดาวันหนึ่ง',             blurb: 'ไม่ต้องมีอะไรพิเศษ<br>บางทีวันที่เห็นตัวเองชัดขึ้นนิดนึง ก็นับว่าดีแล้ว' },
+  4: { emoji: '&#128153;', title: 'วันที่เพื่อนล้อ',         protagonist: 'ติดตามโมเน่ในวันที่ยากวันหนึ่ง',              blurb: 'เมื่อสิ่งที่รักถูกล้อเลียน — และมันไม่ได้จบแค่ในห้องเรียน ใจเราไปอยู่ที่ไหน?' },
+  5: { emoji: '&#127968;', title: 'ความสัมพันธ์ในครอบครัว',   protagonist: 'ติดตามมินนาและครอบครัวในวันหยุดวันหนึ่ง',   blurb: 'แต่ละคนในบ้านมีความรู้สึกของตัวเอง<br>ลองดูว่าวันนั้นทุกคนอยู่กับตัวเองยังไง' },
+  6: { emoji: '&#127807;', title: 'โมเน่กับวันเสาร์ที่บ้าน',  protagonist: 'ติดตามโมเน่ในวันที่แม่ต้องการคนช่วย',           blurb: 'วันเสาร์ที่แม่ฝากงานบ้านไว้ — พี่มินนาหายไปกับมือถือ มะพร้าวไม่ยอมอยู่นิ่ง และโมเน่ก็ไม่ได้อยากทำเลยสักนิด แต่ก็ยังช่วยแม่' },
+  7: { emoji: '&#128153;', title: 'หมอน้อย',                   protagonist: 'ติดตามหยกในวันแรกที่ก้าวออกจากความคุ้นเคย',    blurb: 'โรงเรียนของหยกมีโครงการร่วมกับ รพ.สต. ในชุมชน หยกเคยเห็นทีมเยี่ยมบ้านผ่านหน้าบ้านบ่อยๆ<br>วันนี้เธอชวนมินนาและใบบัวมาลองด้วยกัน — และนี่คือวันแรกที่พวกเธอได้ออกภาคสนามจริงๆ' },
+  8: { emoji: '&#129293;', title: 'มินนากับวันหลังจากนั้น',    protagonist: 'ติดตามมินนาในวันที่พูดพลาดกับเพื่อน',           blurb: 'เมื่อวานมินนาพูดอะไรบางอย่างในกลุ่ม แล้วใบบัวเงียบไปเลย<br>มินนาไม่ได้ตั้งใจ — แต่คำพูดนั้นยังวนอยู่ในหัว วันนี้เธอไม่รู้จะเริ่มยังไง' },
+  9: { emoji: '&#127183;', title: 'ใบบัวกับไพ่ที่วางไม่ลง',   protagonist: 'ติดตามใบบัวในวันที่ความกังวลวนซ้ำ',              blurb: 'ใบบัวเปิดไพ่ดูดวงซ้ำๆ มาหลายรอบแล้ว — ทุกครั้งที่ได้ผล ก็อยากเปิดอีก<br>เหมือนถ้ารู้ก่อนว่าจะเป็นยังไง อย่างน้อยก็เตรียมใจได้' },
+  10: { emoji: '&#127769;', title: 'ห้องของมินนา',              protagonist: 'ติดตามมินนาในคืนที่เธอมองย้อนกลับไป',            blurb: 'คืนก่อนเปิดเทอมใหม่ มินนานอนอยู่ในห้อง — มองรูปหมู่บนผนัง แล้วนึกถึงคนที่อยู่ในรูปนั้นทีละคน' },
+  11: { emoji: '&#129293;', title: 'วันที่โมเน่นั่งเงียบ',       protagonist: 'ติดตามโมเน่ในวันที่เขาแบกเรื่องนี้คนเดียว',            blurb: 'โมเน่เป็นเด็กผู้ชายที่เงียบๆ อ่อนโยน และสังเกตทุกอย่างรอบข้างเสมอ<br>เขารู้มาสักพักแล้วว่าตัวเองชอบผู้ชายด้วยกัน — มันไม่ได้ทำให้เขากลัวตัวเอง แต่ทำให้เขากลัวในสิ่งที่ยิ่งใหญ่กว่า' },
+  12: { emoji: '&#127807;', title: 'ใบบัวกับฟีดที่ไม่มีวันหมด', protagonist: 'ติดตามใบบัวในคืนที่ฟีดไม่มีวันหมด',                    blurb: 'ใบบัวไม่ใช่คนที่ตามเทรนด์ เขาสังเกตทุกอย่างเงียบๆ และคิดลึกกว่าที่พูดออกมาเสมอ<br>แต่มีบางคืนที่เปิดฟีดแล้วรู้สึกว่า — ทุกคนกำลังเดินไปข้างหน้า และตัวเองยืนอยู่ที่เดิม' },
+  13: { emoji: '&#129719;', title: 'วันที่หยกต้องสมบูรณ์แบบ',   protagonist: 'ติดตามหยกในวันที่ความสมบูรณ์แบบพาเธอให้ยืนอยู่คนเดียว', blurb: 'หยกทำงานเสร็จแล้ว ทุกคนบอกว่าดีมาก — แต่หยกยังนั่งอยู่<br>เพราะมีบางอย่างในใจที่บอกว่ายังไม่พอ และหยกก็ไม่แน่ใจว่าเสียงนั้นเป็นของใคร' },
+  14: { emoji: '&#127819;', title: 'วันที่หยกรับคำชมไม่ได้',    protagonist: 'ติดตามหยกในวันที่คำชมกลายเป็นสิ่งที่รับไม่ได้', blurb: 'ครูบอกว่าหยกทำได้ดีมาก — แต่หยกกลับสงสัยว่ามันจริงไหม<br>วันนี้หยกจะได้เรียนรู้ว่าทำไมการรับคำชมถึงยากกว่าที่คิด' },
+  15: { emoji: '&#127968;', title: 'คืนที่บ้านมินนา',           protagonist: 'ติดตามมินนาในคืนที่บ้านกลายเป็นสถานที่ค้นพบ',          blurb: 'หยกกับใบบัวมาค้างคืนที่บ้านมินนา — ดูเหมือนเป็นคืนธรรมดา<br>แต่บทสนทนาเรื่องกตัญญูทำให้ทุกคนได้เห็นบางอย่างที่ไม่เคยนึกถึงมาก่อน' },
+  16: { emoji: '&#128221;', title: 'ใบบัวกับเสียงในใจ',          protagonist: 'ติดตามใบบัวในวันที่เสียงในหัวพูดดังที่สุด',                  blurb: 'ใบบัวโตมากับคำสอนที่บอกว่าต้องเรียบร้อย ต้องไม่ทำให้ใครเดือดร้อน<br>แต่วันนี้เธอบอกความรู้สึกออกไป — และโลกก็ไม่ได้พัง' },
+  17: { emoji: '&#128095;', title: 'วันที่โมเน่รู้แล้ว',          protagonist: 'ติดตามโมเน่ในวันที่สอบพลาด',                                  blurb: 'โมเน่รู้ตั้งแต่ต้นว่าสอบครั้งนี้ไม่ได้เริ่มดี<br>แต่ก็ยังทำในสิ่งที่ทำได้ — และรู้ว่าจะเริ่มจากตรงไหนครั้งหน้า' },
+  18: { emoji: '&#127861;', title: 'เช้าที่ใบบัวเห็นยาย',         protagonist: 'ติดตามใบบัวในเช้าที่บ้านเงียบ ก่อนที่ทุกคนจะตื่น',           blurb: 'เช้าที่บ้านเงียบ ก่อนที่ทุกคนจะตื่น' },
 };
 
-function goNext() {
-  const idx = STEPS.indexOf(state.step);
-  state.step = STEPS[idx + 1];
-  render();
-  window.scrollTo(0, 0);
+function showOnboarding(trackId) {
+  const key = 'seen_intro_track_' + trackId;
+  if (localStorage.getItem(key)) {
+    showTrackIntro(trackId);
+    return;
+  }
+  document.getElementById('scene-container').innerHTML = `
+    <div class="game-header">
+      <div class="game-logo">&#x1F43E;</div>
+      <div class="game-title-small">Minna Journey<br>มินนา เส้นทางของใจ</div>
+    </div>
+    <div class="scene">
+      <div class="scene-content" style="padding-top: 24px;">
+        <h1 class="scene-title" style="margin-bottom: 20px;">ก่อนเริ่ม — อ่านสักครู่นะ &#127793;</h1>
+        <div class="divider"></div>
+        <div style="margin-top: 20px; font-size: 15px; color: var(--text-dark); line-height: 1.9;">
+          <p style="margin-bottom: 18px;">แต่ละฉากมีสามทางเลือก</p>
+          <p style="margin-bottom: 18px;">เลือกตามที่รู้สึกจริงๆ ในตอนนั้น<br>ไม่มีถูกหรือผิด — ไม่มีคำตอบที่ดีกว่ากัน</p>
+          <p style="color: var(--text-soft); font-size: 14px;">แต่ละแบบเป็นแค่กระจกเล็กๆ<br>ที่ช่วยให้เราเห็นตัวเองชัดขึ้นนิดนึง</p>
+        </div>
+        <button class="next-btn visible" style="margin-top: 28px;" onclick="startTrackAfterOnboarding(${trackId})">เริ่มเลย →</button>
+      </div>
+    </div>
+  `;
+  window.scrollTo({ top: 0 });
 }
 
-function goBack() {
-  const idx = STEPS.indexOf(state.step);
-  if (idx > 0) { state.step = STEPS[idx - 1]; render(); window.scrollTo(0, 0); }
+function startTrackAfterOnboarding(trackId) {
+  localStorage.setItem('seen_intro_track_' + trackId, '1');
+  showTrackIntro(trackId);
 }
 
-function submit() {
-  state.scores = calcPSQIScores(state.responses);
-  state.tier = getSleepTier(state.scores.global);
-  state.step = 'result';
-  render();
-  window.scrollTo(0, 0);
+function showTrackIntro(trackId) {
+  const intro = trackIntros[trackId];
+  if (!intro) { renderScene(0); return; }
+  document.getElementById('scene-container').innerHTML = `
+    <div class="game-header">
+      <div class="game-logo">&#x1F43E;</div>
+      <div class="game-title-small">Minna Journey<br>มินนา เส้นทางของใจ</div>
+    </div>
+    <div class="scene">
+      <div class="scene-content" style="padding-top: 24px;">
+        <div style="text-align:center; margin-bottom: 20px;">
+          <div style="font-size: 48px; margin-bottom: 10px;">${intro.emoji}</div>
+          <h1 class="scene-title">${intro.title}</h1>
+        </div>
+        <div class="divider"></div>
+        <div style="margin-top: 20px; font-size: 15px; color: var(--text-dark); line-height: 1.9;">
+          <p style="font-style:italic; color:var(--text-soft); margin-bottom: 18px;">${intro.protagonist}</p>
+          <p>${intro.blurb}</p>
+        </div>
+        <button class="next-btn visible" style="margin-top: 28px;" onclick="renderScene(0)">เริ่มเลย →</button>
+      </div>
+    </div>
+  `;
+  window.scrollTo({ top: 0 });
 }
 
-function reset() {
-  state = {
-    step: 'intro',
-    responses: {
-      q1_bedtime: '22:00', q2_latency: null, q3_waketime: '06:00', q4_duration: null,
-      q5_quality: null, q6_medication: null, q7_sleepiness: null, q8_motivation: null,
-      q9_1: 0, q9_2: 0, q9_3: 0, q9_4: 0, q9_5: 0,
-      q9_6: 0, q9_7: 0, q9_8: 0, q9_9: 0, q9_10_chips: [],
-    },
-    scores: null, tier: null,
-  };
-  render();
+function renderScene(index) {
+  if (_autoAdvanceTimer) { clearTimeout(_autoAdvanceTimer); _autoAdvanceTimer = null; }
+  if (index === 0) sessionStartTime = Date.now();
+  const s = currentScenes[index];
+  updateProgress();
+
+  const isNarrative = !s.choices || s.choices.length === 0;
+
+  // Inner voice: string or array of lines
+  const innerBodyHTML = Array.isArray(s.innerVoice)
+    ? s.innerVoice.map((line, i) =>
+        `<div class="inner-line" style="padding-left:${i * 8}px">${line}</div>`
+      ).join('')
+    : `<div class="inner-text">${s.innerVoice}</div>`;
+
+  const hintHTML = s.hint
+    ? `<div class="hint-box">
+         <div class="hint-label">สังเกต</div>
+         <div class="hint-text">${s.hint}</div>
+       </div>`
+    : '';
+
+  const insightHTML = s.insight
+    ? `<div class="insight-box">
+         <div class="insight-title">&#x2736; ${s.insight.title}</div>
+         <div class="insight-body">${s.insight.body}</div>
+         <div class="insight-note">${s.insight.note}</div>
+       </div>`
+    : '';
+
+  const chooserHTML = s.chooserNote
+    ? `<div class="chooser-box">
+         <div class="chooser-label">ผู้เลือก</div>
+         <div class="chooser-text">${s.chooserNote}</div>
+       </div>`
+    : '';
+
+  const shuffledChoices = s.choices.map((c, i) => ({ c, i }));
+  for (let k = shuffledChoices.length - 1; k > 0; k--) {
+    const j = Math.floor(Math.random() * (k + 1));
+    [shuffledChoices[k], shuffledChoices[j]] = [shuffledChoices[j], shuffledChoices[k]];
+  }
+  const choicesHTML = isNarrative ? '' : shuffledChoices.map(({ c, i }) =>
+    `<button class="choice-btn" data-index="${i}" onclick="selectChoice(${i})">${c.text}</button>`
+  ).join('');
+
+  const interactionHTML = isNarrative
+    ? `<button class="narrative-skip-btn" id="narrative-skip">ข้าม ›</button>`
+    : `<div class="choices-section">
+         <div class="choices-label">เลือกสักทาง</div>
+         <div class="choices">${choicesHTML}</div>
+       </div>
+       <div class="outcome" id="outcome">
+         <div class="outcome-arrow">&#x25B6; ผลที่ตามมา</div>
+         <div class="outcome-text" id="outcome-text"></div>
+         <span class="outcome-tag" id="outcome-tag"></span>
+       </div>
+       <button class="next-btn" id="next-btn" onclick="nextScene()">
+         ${index < currentScenes.length - 1 ? 'ไปต่อ ›' : 'จบบทนี้'}
+       </button>`;
+
+  const html = `
+    <div class="game-header">
+      <div class="game-logo">&#x1F43E;</div>
+      <div class="game-title-small">Minna Journey<br>มินนา เส้นทางของใจ</div>
+    </div>
+    <div class="scene scene-fade-in">
+      <div class="scene-image-wrap" style="margin-top:16px;">
+        <img class="scene-image" src="${s.image}" alt="${s.title}"
+             onerror="this.parentNode.innerHTML='<div class=\\'scene-image-placeholder\\'>[ ${s.title} ]</div>'">
+      </div>
+      <div class="scene-content">
+        <span class="badge">${s.badge}</span>
+        <h1 class="scene-title">${s.title}</h1>
+        <div class="divider"></div>
+        <p class="scene-text">${s.text}</p>
+        <div class="${s.voiceLabel ? 'dialogue-voice' : 'inner-voice'}">
+          <div class="inner-label">${s.voiceLabel || 'เสียงในใจ'}</div>
+          ${innerBodyHTML}
+        </div>
+        ${hintHTML}
+        ${insightHTML}
+        ${chooserHTML}
+        ${interactionHTML}
+      </div>
+    </div>
+  `;
+
+  document.getElementById('scene-container').innerHTML = html;
+  window.scrollTo({ top: 0 });
+
+  if (isNarrative) {
+    const skipBtn = document.getElementById('narrative-skip');
+    if (skipBtn) {
+      // Fade in skip button after scene fade-in completes (400ms)
+      setTimeout(() => { skipBtn.style.opacity = '0.7'; }, 420);
+      skipBtn.addEventListener('click', () => {
+        if (_autoAdvanceTimer) { clearTimeout(_autoAdvanceTimer); _autoAdvanceTimer = null; }
+        nextScene();
+      });
+    }
+    _autoAdvanceTimer = setTimeout(() => {
+      _autoAdvanceTimer = null;
+      nextScene();
+    }, 3000);
+  }
 }
 
-function setResponse(key, val) {
-  state.responses[key] = val;
-  render();
-}
+function selectChoice(index) {
+  const s = currentScenes[currentScene];
+  const choice = s.choices[index];
 
-function toggleChip(val) {
-  const chips = state.responses.q9_10_chips;
-  if (chips.includes(val)) {
-    state.responses.q9_10_chips = chips.filter(c => c !== val);
+  if (choice.type === 'stuck') sessionStuckCount++;
+  playerChoices.push({
+    sceneId: s.id,
+    choiceText: choice.text,
+    type: choice.type,
+    tag: choice.tag,
+    desc: choice.desc || null
+  });
+
+  document.querySelectorAll('.choice-btn').forEach((btn, i) => {
+    btn.disabled = true;
+    if (i === index) {
+      btn.classList.add('picked-' + choice.type);
+    }
+  });
+
+  const outcomeEl   = document.getElementById('outcome');
+  const outcomeText = document.getElementById('outcome-text');
+  const outcomeTag  = document.getElementById('outcome-tag');
+  const nextBtn     = document.getElementById('next-btn');
+
+  outcomeText.textContent = choice.outcome;
+  outcomeTag.textContent  = choice.tag;
+  outcomeTag.className    = 'outcome-tag tag-' + choice.type;
+  if (choice.desc) {
+    outcomeTag.style.cursor = 'pointer';
+    outcomeTag.title = 'แตะเพื่ออ่านเพิ่มเติม';
+    outcomeTag.onclick = () => openBadgeModal(choice.tag, choice.desc, choice.type);
   } else {
-    state.responses.q9_10_chips = [...chips, val];
+    outcomeTag.style.cursor = '';
+    outcomeTag.title = '';
+    outcomeTag.onclick = null;
   }
-  render();
+  outcomeEl.classList.add('visible');
+  nextBtn.classList.add('visible');
+
+  setTimeout(() => {
+    outcomeEl.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+  }, 80);
 }
 
-function setDisturbance(key, val) {
-  state.responses[key] = val;
-  render();
+function nextScene() {
+  if (_replayMode) {
+    // Fill in saved choices for all subsequent scenes, then go to summary
+    const saved = _replayMode.savedChoices;
+    _replayMode = null;
+    const remaining = saved.slice(playerChoices.length);
+    playerChoices = playerChoices.concat(remaining);
+    showSummary();
+    return;
+  }
+  currentScene++;
+  if (currentScene < currentScenes.length) {
+    renderScene(currentScene);
+  } else {
+    showSummary();
+  }
 }
 
-// ═══════════════════════════════════════════════════════════════
-// HTML BUILDERS
-// ═══════════════════════════════════════════════════════════════
+function openBadgeModal(label, desc, type) {
+  document.getElementById('badge-modal-label').textContent = label;
+  document.getElementById('badge-modal-desc').textContent  = desc;
+  const trackTitle = tracks[currentTrack] ? tracks[currentTrack].title : '';
+  document.getElementById('badge-modal-track').textContent = trackTitle;
+  document.getElementById('badge-modal-img').innerHTML = buildQuoteCardHTML(currentTrack);
+  document.getElementById('badge-modal').style.display = 'flex';
+}
 
-function h(tag, attrs, ...children) {
-  const el = document.createElement(tag);
-  for (const [k, v] of Object.entries(attrs || {})) {
-    if (k === 'className') el.className = v;
-    else if (k === 'style') Object.assign(el.style, v);
-    else if (k.startsWith('on')) el.addEventListener(k.slice(2).toLowerCase(), v);
-    else el.setAttribute(k, v);
+function shareBadge() {
+  if (SHARE_CARD_MODE !== 'live') return; // export not available in this mode
+}
+
+function shareBadgeWeb() {
+  if (SHARE_CARD_MODE === 'off') return;
+  const label = document.getElementById('badge-modal-label').textContent;
+  const desc  = document.getElementById('badge-modal-desc').textContent;
+  const url   = window.location.href;
+  const text  = `วันนี้ฉันได้เรียนรู้: ${label}\n${desc}\nมาสำรวจใจกับมินนาได้ที่: ${url}`;
+  if (navigator.share) {
+    navigator.share({ text }).catch(() => {});
+  } else {
+    navigator.clipboard.writeText(text).then(() => {
+      const btn = document.querySelector('.badge-share-btn');
+      if (btn) { btn.textContent = '✓ คัดลอกแล้ว!'; setTimeout(() => { btn.innerHTML = '&#128279; แชร์ความรู้สึกนี้'; }, 2000); }
+    }).catch(() => {});
   }
-  for (const child of children.flat()) {
-    if (child == null) continue;
-    if (typeof child === 'string' || typeof child === 'number') {
-      el.appendChild(document.createTextNode(String(child)));
+}
+
+function closeBadgeModal() {
+  document.getElementById('badge-modal').style.display = 'none';
+}
+
+const typeLabels = {
+  good:   'เชื่อมใจ',
+  ok:     'พอไหว',
+  stuck:  'ติดขัด',
+  joyful: 'อบอุ่น'
+};
+
+function getReflection(choices) {
+  const counts = {};
+  choices.forEach(c => { counts[c.type] = (counts[c.type] || 0) + 1; });
+  const stuck   = counts.stuck  || 0;
+  const goodish = (counts.good  || 0) + (counts.joyful || 0);
+
+  if (currentTrack === 5) {
+    if (stuck === 0) {
+      return { title: 'ครอบครัวนี้รับรู้ความรู้สึกของกันและกันได้ดีมาก', text: 'การเห็นว่าความขัดแย้งเป็นส่วนหนึ่งของความรัก ต้องอาศัยความเข้าใจที่ลึกกว่าที่คิด' };
+    } else if (stuck === 1) {
+      return { title: 'ครอบครัวกำลังเรียนรู้ภาษาของกันและกัน', text: 'บางก้าวเล็ก บางก้าวใหญ่ แต่ทุกครั้งที่กลับมานั่งด้วยกันได้ ก็ถือว่าก้าวหน้าแล้ว' };
     } else {
-      el.appendChild(child);
+      return { title: 'บางวันบ้านก็ต้องการเวลาเหมือนกัน', text: 'ความรู้สึกอึดอัดในบ้านเป็นเรื่องจริง และพูดได้ — การที่ยังอยู่ด้วยกันได้คือสิ่งสำคัญที่สุด' };
     }
   }
-  return el;
-}
 
-function makeProgressHeader(stepIdx) {
-  const pct = (stepIdx / TOTAL_Q) * 100;
-  const dots = Q_STEPS.map((_, i) => {
-    let cls = 'dot ';
-    if (i + 1 < stepIdx) cls += 'past';
-    else if (i + 1 === stepIdx) cls += 'current';
-    else cls += 'future';
-    return h('div', { className: cls });
-  });
-  return [
-    h('div', { className: 'progress-bar-wrap' },
-      h('div', { className: 'progress-bar-fill', style: { width: pct + '%' } })
-    ),
-    h('div', { className: 'stepper-dots' }, ...dots),
-  ];
-}
-
-function makeNavRow(onBack, onNext, nextLabel = 'ถัดไป', nextDisabled = false) {
-  const row = h('div', { className: 'nav-row' });
-  if (onBack) {
-    row.appendChild(h('button', { className: 'btn btn-secondary', onClick: onBack }, '← ย้อนกลับ'));
-  }
-  const nextBtn = h('button', {
-    className: 'btn btn-primary',
-    onClick: onNext,
-  }, nextLabel);
-  if (nextDisabled) nextBtn.disabled = true;
-  row.appendChild(nextBtn);
-  return row;
-}
-
-// ── Option select ────────────────────────────────────────────────
-function makeOptions(opts, currentVal, key) {
-  return h('div', { className: 'options' }, ...opts.map(opt => {
-    const selected = currentVal === opt.value;
-    const btn = h('button', {
-      className: 'opt-btn' + (selected ? ' selected' : ''),
-      onClick: () => setResponse(key, opt.value),
-      role: 'radio',
-      'aria-checked': String(selected),
-    });
-    btn.appendChild(h('div', { className: 'opt-label' }, opt.label));
-    if (opt.sub) btn.appendChild(h('div', { className: 'opt-sub' }, opt.sub));
-    return btn;
-  }));
-}
-
-// ── Time input ────────────────────────────────────────────────────
-function makeTimeInput(key, value) {
-  const [hh, mm] = value.split(':');
-  const HOURS = Array.from({length: 24}, (_, i) => String(i).padStart(2, '0'));
-  const MINS = Array.from({length: 12}, (_, i) => String(i * 5).padStart(2, '0'));
-
-  function makeSelect(options, current, onChange) {
-    const sel = h('select', { className: 'time-select', onChange });
-    options.forEach(opt => {
-      const o = h('option', { value: opt }, opt);
-      if (opt === current) o.selected = true;
-      sel.appendChild(o);
-    });
-    return sel;
+  if (currentTrack === 4) {
+    if (stuck === 0) {
+      return { title: 'โมเน่รับรู้ความรู้สึกของตัวเองได้อย่างชัดเจน', text: 'การยืนหยัดในสิ่งที่ตัวเองชอบโดยไม่ต้องแก้ตัวให้ใคร ต้องอาศัยความกล้าที่หลายคนยังหาไม่เจอ' };
+    } else if (stuck >= 2) {
+      return { title: 'เสียงข้างในของโมเน่ยังต้องใช้เวลา', text: 'การปกป้องตัวเองด้วยการเงียบหรือยิ้มเป็นเรื่องธรรมชาติ ไม่มีอะไรผิด — แค่รู้ว่ามีอีกเสียงหนึ่งอยู่ข้างในก็เป็นจุดเริ่มต้นแล้ว' };
+    } else {
+      return { title: 'โมเน่กำลังเรียนรู้ว่าสิ่งที่ชอบไม่ต้องซ่อนไว้', text: 'บางก้าวเล็ก บางก้าวใหญ่ แต่ทุกครั้งที่โมเน่รับรู้ว่าตัวเองรู้สึกอะไร ก็ถือว่าก้าวหน้าแล้ว' };
+    }
   }
 
-  const [curH, setH] = [hh, null];
-  const [curM, setM] = [mm, null];
+  if (currentTrack === 3) {
+    if (stuck === 0) {
+      return { title: 'มินนารับรู้ความรู้สึกของตัวเองได้ดีมาก', text: 'การหยุดสังเกตสิ่งที่ค้างอยู่ในใจ แทนที่จะผลักมันออกไป คือสิ่งที่ต้องอาศัยความกล้ามากกว่าที่คิด' };
+    } else {
+      return { title: 'ความรู้สึกที่อึดอัดก็มีที่มาเสมอ', text: 'ไม่ต้องรีบเข้าใจทุกอย่างในทีเดียว แค่รู้ว่ามันอยู่ที่นั่น ก็ถือว่าเริ่มต้นแล้ว' };
+    }
+  }
 
-  const hourSel = makeSelect(HOURS, hh, e => {
-    const parts = state.responses[key].split(':');
-    setResponse(key, e.target.value + ':' + parts[1]);
-  });
-  const minSel = makeSelect(MINS, mm, e => {
-    const parts = state.responses[key].split(':');
-    setResponse(key, parts[0] + ':' + e.target.value);
-  });
+  if (currentTrack === 2) {
+    if (choices.length === 4 && choices[3].type === 'joyful') {
+      return {
+        title: 'มินนาเปิดใจอย่างเต็มที่ &#127800;',
+        text:  'การยิ้มกว้างๆ แบบนั้นต้องอาศัยความกล้าพอสมควรนะ มินนาทำให้ใบบัวรู้สึกว่าตัวเองก็มีคนอยากนั่งด้วยเช่นกัน'
+      };
+    }
+    if (stuck === 0) {
+      return {
+        title: 'มินนาก้าวผ่านความกลัวได้อย่างงดงาม',
+        text:  'ตลอดเรื่องมินนาเลือกที่จะเผชิญแทนที่จะหนี นั่นไม่ใช่เรื่องเล็กน้อย การเริ่มต้นมิตรภาพใหม่ต้องอาศัยความกล้าที่หลายคนไม่ยอมใช้'
+      };
+    } else if (stuck >= 3) {
+      return {
+        title: 'วันนี้ความกลัวดังกว่าเสียงอื่น และมันก็โอเคนะ',
+        text:  'ความกลัวการถูกปฏิเสธเป็นเรื่องปกติมาก มินนาไม่ได้อ่อนแอ แค่กำลังเรียนรู้ว่าจะอยู่กับความรู้สึกนั้นอย่างไร วันไหนพร้อม ก้าวนั้นก็จะมาเอง'
+      };
+    } else if (goodish >= 2) {
+      return {
+        title: 'มินนาเลือกที่จะกล้า แม้จะไม่แน่ใจ',
+        text:  'ไม่มีใครมั่นใจ 100% ก่อนเริ่มมิตรภาพใหม่ แต่มินนาเลือกเดินหน้า สิ่งสำคัญไม่ใช่ผลลัพธ์ แต่คือการที่มินนาเชื่อใจตัวเองพอที่จะลอง'
+      };
+    } else {
+      return {
+        title: 'มินนากำลังเรียนรู้ว่าการเชื่อมใจต้องอาศัยความกล้า',
+        text:  'บางก้าวรู้สึกหนัก บางก้าวรู้สึกง่าย ทุกครั้งที่มินนาสังเกตเห็นความรู้สึกของตัวเองก็นับว่าก้าวหน้าแล้ว'
+      };
+    }
+  }
 
-  const display = h('div', { className: 'time-display', 'aria-live': 'polite' },
-    value + ' น.');
+  if (currentTrack === 7) {
+    if (stuck === 0) {
+      return { title: 'วันนี้ได้อะไรหลายอย่าง', text: 'เห็นคนอื่น เข้าใจตัวเอง — และรู้ว่าสิ่งเล็กๆ ก็มีความหมาย' };
+    } else if (stuck >= 2) {
+      return { title: 'วันนี้หนักไปหน่อย', text: 'ก้าวแรกไม่ต้องสมบูรณ์แบบ — การมาก็คือความกล้าแบบหนึ่งแล้ว' };
+    } else {
+      return { title: 'เริ่มเห็นบางอย่าง', text: 'สังเกตเห็นคนรอบข้างมากขึ้น — นั่นคือจุดเริ่มต้นของการเข้าใจ' };
+    }
+  }
 
-  // keep display in sync without full re-render
-  hourSel.addEventListener('change', () => {
-    display.textContent = state.responses[key] + ' น.';
-  });
-  minSel.addEventListener('change', () => {
-    display.textContent = state.responses[key] + ' น.';
-  });
+  if (currentTrack === 8) {
+    if (stuck >= 3) {
+      return { title: 'วันที่หนักที่สุด', text: 'การยอมรับว่าพลาดต้องใช้ความกล้ามาก — และวันนี้เราทำได้แล้ว' };
+    } else if (goodish >= 3) {
+      return { title: 'กล้าแม้จะกลัว', text: 'ผิดพลาดได้ แก้ไขได้ — นั่นคือสิ่งที่ควรทำเพื่อเติบโต' };
+    } else {
+      return { title: 'ก้าวเล็กๆ ที่สำคัญ', text: 'ความผิดพลาดไม่ได้จบที่ตรงนั้น — มันพาเราไปหาบางอย่างที่ดีกว่า' };
+    }
+  }
 
-  return h('div', {},
-    h('div', { className: 'time-wrap' },
-      h('div', { className: 'time-col' },
-        h('label', {}, 'ชั่วโมง'),
-        hourSel,
-      ),
-      h('div', { className: 'time-sep' }, ':'),
-      h('div', { className: 'time-col' },
-        h('label', {}, 'นาที'),
-        minSel,
-      ),
-    ),
-    display,
-  );
+  if (currentTrack === 9) {
+    if (stuck >= 3) {
+      return { title: 'ก้าวแรกจากคืนที่หนัก', text: 'หยุดวงจรได้คืนเดียว ก็คือก้าวแรกแล้ว — ไม่ต้องหายทั้งหมดในคืนเดียว' };
+    } else if (goodish >= 3) {
+      return { title: 'ลื่นไหลไปกับใจ', text: 'ปล่อยให้ชีวิตเป็นไปตามธรรมชาติของมัน — เหมือนสายน้ำที่ไหลไปตามทาง' };
+    } else {
+      return { title: 'เบาสบาย แม้ไม่รู้คำตอบ', text: 'ความสงบไม่ต้องรอให้ทุกอย่างชัดเจน — แค่ใจที่ยอมรับก็พอแล้ว' };
+    }
+  }
+
+  if (currentTrack === 10) {
+    if (stuck >= 3) {
+      return { title: 'ยังอยู่ระหว่างทาง', text: 'การเติบโตไม่ต้องรีบ — แค่ยังเดินอยู่ก็พอ' };
+    } else if (goodish >= 3) {
+      return { title: 'รูปหมู่บนผนัง', text: 'ทุกคนในรูปนั้นเติบโตมาด้วยกัน — และเธอก็อยู่ตรงนั้นด้วย' };
+    } else {
+      return { title: 'เริ่มมองเห็น', text: 'เห็นคนอื่น เห็นตัวเอง — นั่นคือจุดเริ่มต้นของการเข้าใจ' };
+    }
+  }
+
+  if (currentTrack === 6) {
+    if (stuck >= 3) {
+      return { title: 'วันที่หนักที่สุด', text: 'ทำคนเดียวทั้งวันโดยไม่มีใครเห็น — นั่นต้องใช้ความกล้ามากกว่าที่คิด' };
+    } else if (goodish >= 3) {
+      return { title: 'กล้าเงียบๆ', text: 'ไม่ต้องให้ใครรู้ ไม่ต้องให้ใครเห็น — แค่รู้ว่าตัวเองทำได้ก็พอ' };
+    } else {
+      return { title: 'ก้าวเล็กๆ ที่สำคัญ', text: 'ความรู้สึกไม่แฟร์นั้นจริง — แต่โมเน่ก็ยังเลือกทำต่อได้' };
+    }
+  }
+
+  if (currentTrack === 11) {
+    if (stuck >= 3) {
+      return { title: 'โมเน่ยังแบกอยู่คนเดียว', text: 'แต่ก็รู้แล้วว่าตัวเองรู้สึกอะไร — และนั่นก็ไม่ใช่เรื่องเล็กๆ เลย' };
+    } else if (goodish >= 3) {
+      return { title: 'โมเน่เริ่มเปิดประตูให้ใครสักคน', text: 'นั่นต้องใช้ความกล้ามาก — และโมเน่ก็ทำได้' };
+    } else {
+      return { title: 'โมเน่รู้ว่าอยากแบ่งปัน แต่ยังไม่พร้อม', text: 'และนั่นก็โอเคแล้ว — ไม่มีจังหวะที่ถูกหรือผิด' };
+    }
+  }
+
+  if (currentTrack === 12) {
+    if (stuck >= 3) {
+      return { title: 'ใบบัวยังอยู่กับเสียงที่บอกว่าไม่ดีพอ', text: 'แต่ก็เริ่มรู้แล้วว่ามันมาจากไหน — และนั่นคือจุดเริ่มต้น' };
+    } else if (goodish >= 3) {
+      return { title: 'ใบบัวเริ่มรู้แล้วว่าเสียงนั้นไม่ใช่ของตัวเอง', text: 'นั่นคือก้าวที่เปลี่ยนทุกอย่างได้ — แม้จะยังต้องใช้เวลา' };
+    } else {
+      return { title: 'ใบบัวเริ่มสังเกตเห็นเสียงในหัว', text: 'แม้จะยังไม่รู้จะทำอะไรกับมัน — แค่รู้ว่ามันอยู่ที่นั่นก็พอแล้วสำหรับวันนี้' };
+    }
+  }
+
+  if (currentTrack === 13) {
+    if (stuck >= 3) {
+      return { title: 'หยกยังอยู่กับมาตรฐานที่ไม่มีวันพอ', text: 'แต่เริ่มเห็นแล้วว่าตัวเองอยู่ตรงนี้ — และนั่นก็คือความกล้าแบบหนึ่ง' };
+    } else if (goodish >= 3) {
+      return { title: 'หยกเริ่มถามว่าทำเพราะอยากทำ หรือเพราะกลัว', text: 'และนั่นคือก้าวแรกของการเข้าใจตัวเองอย่างแท้จริง' };
+    } else {
+      return { title: 'หยกเริ่มสังเกตเสียงในหัว', text: 'รู้ว่ามีบางอย่างที่ต้องคุยกับตัวเอง — และนั่นก็ไม่ใช่จุดเล็กๆ เลย' };
+    }
+  }
+
+  if (currentTrack === 14) {
+    return { title: 'หยกทำสิ่งที่ถูกต้องมาตลอด', text: 'แต่วันนี้หยกเริ่มถามว่าทำเพื่ออะไร — ไม่มีคำตอบที่ผิด แค่การถามก็คือก้าวแรกแล้ว' };
+  }
+
+  if (currentTrack === 15) {
+    return { title: 'คืนนี้ไม่มีใครได้คำตอบที่สมบูรณ์', text: 'แต่ทุกคนได้ยินอะไรบางอย่างที่รอมานาน และบางทีนั่นก็พอแล้ว' };
+  }
+
+  if (currentTrack === 16) {
+    const ref = tracks[16].summaryReflection.replace(/\n/g, '<br>');
+    return { title: 'ใบบัวฟังเสียงในใจ — แล้วเลือกว่าจะถือหรือวาง', text: ref };
+  }
+
+  if (currentTrack === 17) {
+    const ref = tracks[17].summaryReflection.replace(/\n/g, '<br>');
+    return { title: 'โมเน่รู้แล้วว่าจะเริ่มจากตรงไหน', text: ref };
+  }
+
+  if (currentTrack === 18) {
+    const ref = tracks[18].summaryReflection.replace(/\n/g, '<br>');
+    return { title: 'ใบบัวเริ่มเห็นสิ่งที่ไม่เคยมองเห็น', text: ref };
+  }
+
+  // Track 1
+  if (choices.length === 4 && choices[3].type === 'joyful') {
+    return {
+      title: 'การได้กอดมะม่วงทำให้ใจมินนาอุ่นขึ้นจริงๆ &#129505;',
+      text:  'แต่ตีสองที่ต้องลุกมาทำการบ้าน... มินนารู้สึกยังไงกับตัวเองตอนนั้นนะ?'
+    };
+  }
+  if (stuck === 0) {
+    return {
+      title: 'มินนาเดินทางได้อย่างนุ่มนวลมาก',
+      text:  'ตลอดวันนี้มินนารับรู้ความรู้สึกของตัวเองและดูแลความสัมพันธ์ไปพร้อมกัน สิ่งที่มินนาทำอาจดูเล็กน้อย แต่มันสะท้อนความใส่ใจที่ลึกมาก'
+    };
+  } else if (stuck >= 3) {
+    return {
+      title: 'วันนี้หนักหน่อย และมันก็โอเคนะ',
+      text:  'บางวันเราก็ติดอยู่กับความรู้สึกนานกว่าปกติ ไม่ได้แปลว่าเราผิดพลาด แค่แปลว่าเราเป็นคนธรรมดาที่ยังเรียนรู้อยู่ เหมือนมะม่วงที่บางทีก็ต้องการพื้นที่ เราก็ต้องการแบบนั้นบ้าง'
+    };
+  } else if (goodish >= 2) {
+    return {
+      title: 'มินนาสังเกตและเลือกได้ดีมาก',
+      text:  'มินนาไม่ได้ทำทุกอย่างได้สมบูรณ์แบบ แต่สังเกตเห็นความรู้สึกและเลือกทางออกที่ดูแลทั้งตัวเองและความสัมพันธ์ได้ นั่นคือสิ่งที่สำคัญที่สุด'
+    };
+  } else {
+    return {
+      title: 'มินนากำลังเรียนรู้อยู่',
+      text:  'ทุกครั้งที่เราสังเกตเห็นว่าตัวเองทำอะไรไป ก็ถือว่าก้าวหน้าแล้ว ไม่มีทางเลือกไหนผิดหรือถูกตลอดไป มีแค่ทางที่เราเรียนรู้จากมัน'
+    };
+  }
 }
 
-// ── Disturbance grid ────────────────────────────────────────────
-function makeDisturbanceGrid() {
-  const ITEMS = [
-    { key: 'q9_1', label: 'นอนหลับไม่ได้ภายใน 30 นาที' },
-    { key: 'q9_2', label: 'ตื่นกลางดึกหรือตื่นเช้ากว่าปกติ' },
-    { key: 'q9_3', label: 'ต้องลุกไปห้องน้ำ' },
-    { key: 'q9_4', label: 'หายใจไม่สะดวก / อึดอัด' },
-    { key: 'q9_5', label: 'ไอหรือกรน' },
-    { key: 'q9_6', label: 'รู้สึกหนาวเกินไป' },
-    { key: 'q9_7', label: 'รู้สึกร้อนเกินไป' },
-    { key: 'q9_8', label: 'ฝันร้าย' },
-    { key: 'q9_9', label: 'เจ็บปวดหรือรู้สึกไม่สบายตัว' },
-  ];
-  const FREQS = [
-    { v: 0, short: 'ไม่เคย' },
-    { v: 1, short: '<1×/สัปดาห์' },
-    { v: 2, short: '1–2×/สัปดาห์' },
-    { v: 3, short: '≥3×/สัปดาห์' },
-  ];
+function showSummary() {
+  if (_autoAdvanceTimer) { clearTimeout(_autoAdvanceTimer); _autoAdvanceTimer = null; }
+  document.getElementById('progress-fill').style.width = '100%';
+  const reflection = getReflection(playerChoices);
+  const { closingTitle, closingText, insights, question } = tracks[currentTrack].summary;
 
-  const table = h('table', { className: 'dist-table', role: 'grid' });
-  const thead = h('thead', {},
-    h('tr', {},
-      h('th', { scope: 'col', style: { width: '38%' } }, 'สาเหตุ'),
-      ...FREQS.map(f => h('th', { scope: 'col' }, f.short))
-    )
-  );
-  const tbody = h('tbody', {});
+  const choicesHTML = playerChoices.map(c => `
+    <div class="summary-choice-row">
+      <span class="summary-scene-badge">${c.sceneId}</span>
+      <div class="summary-choice-detail">
+        <div class="summary-choice-text">${c.choiceText}</div>
+        <span class="summary-type-badge tag-${c.type}"${c.desc ? ` style="cursor:pointer" data-label="${c.tag.replace(/&/g,'&amp;').replace(/"/g,'&quot;')}" data-desc="${c.desc.replace(/&/g,'&amp;').replace(/"/g,'&quot;')}" data-type="${c.type}" onclick="openBadgeModal(this.dataset.label,this.dataset.desc,this.dataset.type)"` : ''}>${c.tag}</span>
+      </div>
+    </div>
+  `).join('');
 
-  ITEMS.forEach(item => {
-    const tr = h('tr', {});
-    tr.appendChild(h('td', {}, item.label));
-    FREQS.forEach(f => {
-      const cur = state.responses[item.key];
-      const selected = cur === f.v;
-      const btn = h('button', {
-        className: 'radio-btn' + (selected ? ' selected' : ''),
-        'aria-label': item.label + ': ' + f.short,
-        'aria-checked': String(selected),
-        role: 'radio',
-        onClick: () => setDisturbance(item.key, f.v),
-      });
-      tr.appendChild(h('td', {}, btn));
-    });
-    tbody.appendChild(tr);
+  document.getElementById('scene-container').innerHTML = `
+    <div class="game-header">
+      <div class="game-logo">&#x1F43E;</div>
+      <div class="game-title-small">Minna Journey<br>มินนา เส้นทางของใจ</div>
+    </div>
+    <div class="summary-screen">
+      <div class="summary-closing">
+        <div class="summary-closing-ornament">&#x2736;</div>
+        <div class="summary-closing-title">${closingTitle}</div>
+        <p class="summary-closing-text">${closingText}</p>
+      </div>
+
+      <div class="summary-section-label">สิ่งที่${tracks[currentTrack].protagonist}เลือกวันนี้</div>
+      <div class="summary-choices">${choicesHTML}</div>
+
+      <div class="summary-reflection">
+        <div class="summary-reflection-title">${reflection.title}</div>
+        <div class="summary-reflection-text">${reflection.text}</div>
+      </div>
+
+      <div class="ending-card">
+        <div class="ending-card-title">วันนี้${tracks[currentTrack].protagonist}เรียนรู้ว่า...</div>
+        ${currentTrack === 13 ? `
+          <p class="ending-question" style="font-style:normal; color:var(--text-mid);">ความสมบูรณ์แบบไม่ได้เกิดจากความขยัน<br>มันเกิดจากความกลัว — กลัวว่าถ้าไม่ดีพอ จะไม่ได้รับความรัก<br><br>หยกไม่ได้ทำงานเพื่อตัวเอง<br>เธอทำเพื่อเสียงที่เรียนรู้มาตั้งแต่เด็กว่า<br>"ดี = ได้รับความรัก"</p>
+          <div class="ending-mission-box">ภารกิจเล็กๆ ของหยก:\nครั้งหน้าที่ทำอะไรเสร็จแล้ว\nก่อนจะแก้ไขต่อ — หยุดถามตัวเองก่อนว่า\n"ฉันแก้เพราะมันไม่ดีจริงๆ\nหรือเพราะยังรู้สึกไม่ปลอดภัย?"</div>
+          <p class="ending-bridge">และถ้าวันไหนหยกเริ่มสังเกตว่า\nตัวเองช่วยคนอื่นเยอะมาก\nอาจถึงเวลาถามคำถามเดิมอีกครั้ง</p>
+        ` : currentTrack === 18 ? `
+          <ul class="ending-insight-list">
+            ${insights.map(i => `<li>${i}</li>`).join('')}
+          </ul>
+          <div class="ending-divider"></div>
+          <p class="ending-question">${question}</p>
+          <p class="ending-bridge">ถ้าเรื่องนี้ทำให้นึกถึงอะไรในใจ<br>ลองกลับไปคุยกับน้องฮักต่อได้นะ</p>
+        ` : `
+          <ul class="ending-insight-list">
+            ${insights.map(i => `<li>${i}</li>`).join('')}
+          </ul>
+          <div class="ending-divider"></div>
+          <p class="ending-question">${question}</p>
+        `}
+      </div>
+
+      <div id="post-animation-section" style="display:none; opacity:0; margin-top:20px;">
+        <button class="summary-btn-primary" onclick="showBadgeRoom()">&#127968; ${getRoomLabel(currentTrack)}</button>
+      </div>
+
+      <div class="summary-buttons">
+        <button class="summary-btn-primary" onclick="showReplayPanel()">เลือกใหม่อีกครั้ง</button>
+        <button class="summary-btn-secondary" onclick="showHome()">กลับหน้าหลัก</button>
+      </div>
+    </div>
+  `;
+  window.scrollTo({ top: 0 });
+
+  const typeCounts = {};
+  playerChoices.forEach(c => { typeCounts[c.type] = (typeCounts[c.type] || 0) + 1; });
+  const stuckCount   = typeCounts.stuck || 0;
+  const goodishCount = (typeCounts.good || 0) + (typeCounts.joyful || 0);
+  let badgeState;
+  if (stuckCount >= 3)        badgeState = 'stuck';
+  else if (goodishCount >= 3) badgeState = 'good';
+  else                        badgeState = 'else';
+
+  triggerBadgeAnimation(badgeState);
+}
+
+function selectEmoji(n) {
+  feedbackState.rating = n;
+  document.querySelectorAll('.fb-emoji-btn').forEach((btn, i) => {
+    btn.classList.toggle('selected', i + 1 === n);
   });
-
-  table.appendChild(thead);
-  table.appendChild(tbody);
-
-  const legend = h('div', { className: 'dist-legend' },
-    h('span', {}, 'ไม่เคย = 0'),
-    h('span', {}, '<1×/สัปดาห์ = 1'),
-    h('span', {}, '1–2×/สัปดาห์ = 2'),
-    h('span', {}, '≥3×/สัปดาห์ = 3'),
-  );
-
-  return h('div', { className: 'overflow-x' }, table, legend);
+  updateSubmitBtn();
 }
 
-// ── Chip select ────────────────────────────────────────────────
-function makeChipSelect() {
-  const CHIPS = ['เสียงรบกวน', 'แสงรบกวน', 'ความเครียด', 'โทรศัพท์/หน้าจอ', 'อื่นๆ'];
-  const selected = state.responses.q9_10_chips;
-  return h('div', {},
-    h('div', { className: 'chips-wrap' },
-      ...CHIPS.map(c => {
-        const sel = selected.includes(c);
-        return h('button', {
-          className: 'chip' + (sel ? ' selected' : ''),
-          role: 'checkbox',
-          'aria-checked': String(sel),
-          onClick: () => toggleChip(c),
-        }, sel ? '✓ ' + c : c);
-      })
-    ),
-    selected.length > 0
-      ? h('p', { style: { fontSize: '12px', color: '#1D9E75', marginTop: '8px' } },
-          `เลือกแล้ว ${selected.length} รายการ`)
-      : null,
-  );
+function selectPair(field, val) {
+  feedbackState[field] = val;
+  const prefix = field === 'recommend' ? 'fb-rec' : 'fb-ret';
+  document.getElementById(prefix + '-yes').classList.toggle('selected', val === 'yes');
+  document.getElementById(prefix + '-no').classList.toggle('selected',  val === 'uncertain');
+  updateSubmitBtn();
 }
 
-// ═══════════════════════════════════════════════════════════════
-// SCREENS
-// ═══════════════════════════════════════════════════════════════
-
-function renderIntro() {
-  return h('div', { className: 'screen intro' },
-    h('div', { className: 'intro-icon' }, '🌙'),
-    h('h1', {}, 'แบบประเมินคุณภาพการนอน'),
-    h('p', { className: 'subtitle' }, 'PSQI · Pittsburgh Sleep Quality Index'),
-
-    h('div', { className: 'card card-teal' },
-      h('p', {},
-        'แบบประเมินนี้ช่วยให้เราเข้าใจคุณภาพการนอนหลับในช่วง ',
-        h('strong', {}, '1 เดือนที่ผ่านมา'),
-        ' ผลที่ได้จะช่วยให้รู้ว่าการนอนส่งผลต่อสุขภาพและอารมณ์อย่างไร'
-      ),
-    ),
-
-    h('div', { className: 'card card-gray' },
-      h('div', { className: 'row' },
-        h('span', { className: 'icon' }, '⏱'),
-        h('p', {}, 'ใช้เวลาประมาณ ', h('strong', {}, '3–5 นาที')),
-      ),
-    ),
-
-    h('div', { className: 'card card-gray' },
-      h('div', { className: 'row' },
-        h('span', { className: 'icon' }, '🔒'),
-        h('p', {},
-          'ข้อมูลของคุณจะถูกเก็บเป็น', h('strong', {}, 'ความลับ'),
-          ' ใช้เพื่อการวิจัยในภาพรวม ไม่มีการระบุตัวตน'
-        ),
-      ),
-    ),
-
-    h('div', { style: { flex: 1 } }),
-    h('button', { className: 'btn btn-primary', onClick: goNext }, 'เริ่มประเมิน'),
-    h('p', {
-      style: { fontSize: '12px', color: '#94a3b8', textAlign: 'center', marginTop: '12px', lineHeight: '1.5' }
-    }, 'การทำแบบประเมินนี้เป็นความสมัครใจ คุณสามารถหยุดได้ทุกเมื่อ'),
-  );
+function updateFbText(el) {
+  feedbackState.freeText = el.value;
+  const count = document.getElementById('fb-char-count');
+  if (count) count.textContent = el.value.length + ' / 200';
 }
 
-function renderResult() {
-  const { scores, tier } = state;
-  const TIER_LABELS = {
-    good: { icon: '🌙', title: 'การนอนหลับดี', range: '≤5', cssClass: 'ag-good',
-      msg: 'การนอนของเราอยู่ในเกณฑ์ดี',
-      actions: [
-        'รักษาเวลานอน-ตื่นให้สม่ำเสมอ (แตกต่างไม่เกิน 1 ชม. แม้วันหยุด)',
-        'ลดหน้าจอก่อนนอน 30 นาที (blue light ชะลอ melatonin)',
-        'สังเกตตัวเองเป็นประจำ — การนอนมักเปลี่ยนแปลงก่อนที่จะเกิดภาวะอารมณ์เด่นๆ จนสังเกตได้',
-      ]},
-    fair: { icon: '☁️', title: 'การนอนหลับพอปรับได้', range: '6–10', cssClass: 'ag-fair',
-      msg: 'การนอนของเรายังปรับได้',
-      actions: [
-        'สร้าง routine ก่อนนอน 15 นาที (ควรทำทุกคืน)',
-        'หลีกเลี่ยงคาเฟอีนหลังบ่าย 3 (เช่น ชานม/น้ำอัดลม/ชาเขียวฯลฯ)',
-        'ลองหายใจ 4-7-8 ก่อนนอน (เข้า 4 วิ / กลั้น 7 วิ / ออก 8 วิ)',
-        'ถ้า 2 สัปดาห์ยังไม่ดีขึ้น ลองปรึกษาครูแนะแนวดู',
-      ]},
-    poor: { icon: '🌧', title: 'การนอนหลับต้องดูแล', range: '≥11', cssClass: 'ag-poor',
-      msg: 'การนอนส่งผลต่อร่างกายและอารมณ์ของเรา',
-      actions: [
-        'กำหนดเวลาตื่นให้แน่นอนก่อน (เวลานอนจะตามมาเอง)',
-        'ใช้เตียงเพื่อนอนเท่านั้น (ไม่เล่นโทรศัพท์/ทำการบ้านบนเตียง)',
-        'จดสิ่งที่ค้างในหัวก่อนนอน (วางไว้ข้างนอก ค่อยคิดพรุ่งนี้)',
-        'พูดคุยกับครูแนะแนวหรือผู้ใหญ่ที่ไว้ใจได้เกี่ยวกับความกังวลหรือสิ่งที่ค้างคาใจที่ทำให้นอนไม่หลับ',
-      ]},
+function updateSubmitBtn() {
+  const btn = document.getElementById('fb-submit');
+  if (!btn) return;
+  btn.disabled = !(feedbackState.rating !== null &&
+                   feedbackState.recommend !== null &&
+                   feedbackState.returnIntent !== null);
+}
+
+function submitFeedback() {
+  const payload = {
+    timestamp:     new Date().toISOString(),
+    track:         currentTrack,
+    choicePattern: playerChoices,
+    rating:        feedbackState.rating,
+    freeText:      feedbackState.freeText || '',
+    recommend:     feedbackState.recommend,
+    returnIntent:  feedbackState.returnIntent,
+    favoriteTrack: feedbackState.favoriteTrack || null,
+    stuckCount:    sessionStuckCount,
+    timeSpent:     sessionStartTime ? Math.round((Date.now() - sessionStartTime) / 1000) : null
   };
-  const t = TIER_LABELS[tier];
+  if (APPS_SCRIPT_URL) {
+    fetch(APPS_SCRIPT_URL, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(payload)
+    }).catch(() => {});
+  }
+  const widget = document.getElementById('feedback-widget') || document.getElementById('room-feedback-widget');
+  if (!widget) return;
+  widget.innerHTML = '<div class="feedback-thankyou">ขอบคุณนะ &#127800; มินนาจะจำไว้เสมอ</div>';
+  setTimeout(() => { widget.style.opacity = '0'; }, 1800);
+  setTimeout(() => { widget.style.display = 'none'; }, 3300);
+}
 
-  // Score card
-  const tierScoreLabel = {
-    good: `การนอนดี (${t.range})`,
-    fair: `การนอนปรับได้ (${t.range})`,
-    poor: `การนอนต้องดูแล (${t.range})`,
-  }[tier];
+function showReplayPanel() {
+  document.getElementById('scene-container').innerHTML = `
+    <div class="game-header">
+      <div class="game-logo">&#x1F43E;</div>
+      <div class="game-title-small">Minna Journey<br>มินนา เส้นทางของใจ</div>
+    </div>
+    <div class="replay-panel">
+      <div class="replay-panel-title">เลือกใหม่</div>
+      <p class="replay-panel-sub">อยากย้อนกลับไปตรงไหน?<br>การเลือกก่อนหน้าจะถูกเก็บไว้ให้</p>
+      <div class="replay-grid">
+        ${currentScenes.map((s, i) => `<button class="replay-scene-btn" onclick="replayFrom(${i})">ย้อนกลับ ${s.id.toUpperCase()} · ${s.title}</button>`).join('')}
+      </div>
+    </div>
+  `;
+  window.scrollTo({ top: 0 });
+}
 
-  const scoreCard = h('div', { className: `score-card tier-${tier}` },
-    h('div', { style: { flexShrink: 0, textAlign: 'center' } },
-      h('div', { className: 'score-num' }, String(scores.global)),
-      h('div', { className: 'score-denom' }, 'จาก 21'),
-    ),
-    h('div', {},
-      h('div', { className: 'score-label' }, 'คะแนนรวม PSQI'),
-      h('div', { className: 'score-tier' }, tierScoreLabel),
-      h('div', { className: 'score-note' }, 'คะแนนสูง = คุณภาพการนอนต่ำลง'),
-    ),
-  );
+function replayFrom(sceneIndex) {
+  const savedChoices = [...playerChoices];
+  playerChoices = playerChoices.slice(0, sceneIndex);
+  feedbackState = { rating: null, freeText: '', recommend: null, returnIntent: null, favoriteTrack: null };
+  _replayMode = { savedChoices };
+  currentScene = sceneIndex;
+  renderScene(sceneIndex);
+}
 
-  // Component breakdown
-  const COMP_LABELS = [
-    ['C1', 'คุณภาพการนอน'], ['C2', 'การใช้เวลาหลับ'],
-    ['C3', 'ระยะเวลานอน'], ['C4', 'ประสิทธิภาพ'],
-    ['C5', 'ปัญหาระหว่างนอน'], ['C6', 'ยานอนหลับ'], ['C7', 'การทำงานกลางวัน'],
-  ];
-  const breakdown = h('details', { style: { marginBottom: '16px' } },
-    h('summary', {}, 'ดูรายละเอียดแต่ละองค์ประกอบ ', h('span', {}, '▾')),
-    h('div', { className: 'components-grid' },
-      ...COMP_LABELS.map(([key, label]) =>
-        h('div', { className: 'comp-card' },
-          h('div', { className: 'comp-name' }, label),
-          h('div', { className: 'comp-score' }, String(scores[key]),
-            h('span', {}, '/3'),
-          ),
-        )
-      )
-    ),
-  );
+function replayTrack() {
+  currentScene = 0;
+  playerChoices = [];
+  feedbackState = { rating: null, freeText: '', recommend: null, returnIntent: null, favoriteTrack: null };
+  renderScene(0);
+}
 
-  // Action guide
-  const guide = h('div', { className: `action-guide ${t.cssClass}` },
-    h('div', { className: 'ag-title' }, t.icon + ' ' + t.title),
-    h('div', { className: 'ag-msg' }, t.msg),
-    h('ul', {},
-      ...t.actions.map((a, i) =>
-        h('li', {},
-          h('span', { className: 'num' }, String(i + 1) + '.'),
-          h('span', {}, a),
-        )
-      )
-    ),
-  );
+function showEnd() {
+  const endContent = currentTrack === 2 ? {
+    badge: 'จบบทที่ 2',
+    title: 'จบบทที่ 2',
+    text: 'ใบบัวไม่ได้รอเพื่อนที่สมบูรณ์แบบ — เธอแค่รอคนที่กล้าเดินเข้ามา<br><br>และมินนาก็เป็นคนนั้น',
+    insights: ['ความกลัวการปฏิเสธเป็นเรื่องปกติมาก', 'ก้าวแรกไม่ต้องสมบูรณ์ แค่ต้องกล้า', 'มิตรภาพเริ่มจากการที่ใครสักคนตัดสินใจก่อน'],
+    question: 'มีใครสักคนในชีวิตที่เราอยากรู้จักมากกว่านี้ แต่ยังไม่กล้าเริ่มบ้างไหม?'
+  } : {
+    badge: 'จบบทที่ 1',
+    title: 'จบบทที่ 1',
+    text: 'มะม่วงไม่ได้งอนมินนา — มันแค่รอให้มินนากลับมาจริงๆ<br><br>ความสัมพันธ์เล็กๆ ก็สอนเราเรื่องใหญ่ๆ ได้เสมอ',
+    insights: ['ความรู้สึกเล็กๆ มีความหมายเสมอ', 'การสังเกตคือของขวัญที่ให้ได้ทุกวัน', 'บางทีแค่เติมน้ำในชาม ก็คือการบอกรัก'],
+    question: 'วันนี้มีใครรอบข้างที่อาจกำลังรอบางอย่างจากเราอยู่บ้างไหม?'
+  };
+  document.getElementById('progress-fill').style.width = '100%';
+  document.getElementById('scene-container').innerHTML = `
+    <div class="game-header">
+      <div class="game-logo">&#x1F43E;</div>
+      <div class="game-title-small">Minna Journey<br>มินนา เส้นทางของใจ</div>
+    </div>
+    <div class="end-screen">
+      <div class="end-ornament">&#x2736;</div>
+      <span class="end-badge">${endContent.badge}</span>
+      <h2 class="end-title">${endContent.title}</h2>
+      <p class="end-text">${endContent.text}</p>
+      <div class="ending-card">
+        <div class="ending-card-title">วันนี้${tracks[currentTrack].protagonist}เรียนรู้ว่า...</div>
+        <ul class="ending-insight-list">
+          ${endContent.insights.map(i => `<li>${i}</li>`).join('')}
+        </ul>
+        <div class="ending-divider"></div>
+        <p class="ending-question">${endContent.question}</p>
+      </div>
+      <button class="end-restart" onclick="restart()">เริ่มใหม่อีกครั้ง</button>
+      <button class="end-restart" onclick="showHome()" style="margin-top:10px; border-color:var(--cream-dark); color:var(--text-soft);">กลับไปเลือกเรื่องอื่น</button>
+    </div>
+  `;
+}
 
-  // Chatbot CTA
-  const chatbot = h('div', { className: 'chatbot-card' },
-    h('p', {}, 'อยากคุยเรื่องการนอน หรือมีคำถามเพิ่มเติม?'),
-    h('button', {
-      className: 'btn btn-line',
-      onClick: () => {
-        const msg = `สวัสดีน้องฮัก ฉันเพิ่งทำแบบประเมินการนอน ได้คะแนน ${scores.global}/21 อยากขอคำแนะนำเพิ่มเติม`;
-        window.open('https://line.me/R/oaMessage/@nonghug/?' + encodeURIComponent(msg), '_blank');
-      },
-    },
-      '💬 คุยกับน้องฮักบน LINE',
-    ),
-  );
+function restart() {
+  currentScene = 0;
+  playerChoices = [];
+  feedbackState = { rating: null, freeText: '', recommend: null, returnIntent: null, favoriteTrack: null };
+  renderScene(0);
+}
 
-  return h('div', { className: 'screen' },
-    h('h1', { style: { fontSize: '20px', fontWeight: '700', color: '#0f172a', marginBottom: '4px' } }, 'ผลการประเมิน'),
-    h('p', { style: { fontSize: '13px', color: '#94a3b8', marginBottom: '20px' } }, 'Pittsburgh Sleep Quality Index'),
-    scoreCard,
-    breakdown,
-    guide,
-    chatbot,
-    h('button', {
-      className: 'btn btn-ghost', style: { marginTop: '8px' },
-      onClick: reset,
-    }, 'ทำแบบประเมินใหม่'),
-    h('p', { className: 'disclaimer' },
-      'ผลนี้เป็นการประเมินเบื้องต้นเท่านั้น ไม่ใช่การวินิจฉัยทางการแพทย์'
-    ),
+// ── Badge Room (Cork Board) — per-character tabs ──
+const _charRooms = [
+  { id: 'minna',   name: 'ห้องมินนา', trackIds: [1, 2, 8, 10], t3: true, phCount: 1 },
+  { id: 'mone',    name: 'ห้องโมเน่',  trackIds: [4, 6, 11, 17],          phCount: 1 },
+  { id: 'yok',     name: 'ห้องหยก',    trackIds: [7, 13, 14],             phCount: 2 },
+  { id: 'baibua',  name: 'ห้องใบบัว', trackIds: [9, 12, 16, 18],          phCount: 1 },
+  { id: 'special', name: 'บทพิเศษ',   trackIds: [5, 15],                 phCount: 3 },
+];
+
+const _trackRoomLabel = {
+  1:'ห้องมินนา', 2:'ห้องมินนา', 3:'ห้องมินนา', 8:'ห้องมินนา', 10:'ห้องมินนา', 15:'ห้องมินนา',
+  4:'ห้องโมเน่',  6:'ห้องโมเน่',  11:'ห้องโมเน่',  17:'ห้องโมเน่',
+  7:'ห้องหยก',   13:'ห้องหยก',   14:'ห้องหยก',
+  9:'ห้องใบบัว', 12:'ห้องใบบัว', 16:'ห้องใบบัว', 18:'ห้องใบบัว'
+};
+function getRoomLabel(trackId) {
+  return _trackRoomLabel[trackId] || 'ห้องของฉัน';
+}
+
+function showBadgeRoom() {
+  const justEarned = _roomJustEarned;
+  _roomJustEarned  = -1;
+
+  // Auto-switch to the tab containing the just-earned badge
+  if (justEarned > 0) {
+    for (const room of _charRooms) {
+      if (room.trackIds.includes(justEarned)) { _currentRoomTab = room.id; break; }
+    }
+  }
+
+  const tabBtnsHTML = _charRooms.map(r => `
+    <button id="tab-btn-${r.id}" onclick="switchRoomTab('${r.id}')"
+      style="flex-shrink:0; padding:7px 14px; border-radius:20px; font-size:13px; font-weight:600;
+             font-family:inherit; cursor:pointer; border:1.5px solid rgba(58,36,20,0.2);
+             background:rgba(255,255,255,0.65); color:#3A2414;
+             -webkit-tap-highlight-color:transparent; transition:background 150ms,color 150ms;">
+      ${r.name}
+    </button>`).join('');
+
+  document.getElementById('scene-container').innerHTML = `
+    <div style="min-height:100vh; background:var(--cream);">
+
+      <!-- Header -->
+      <div style="padding:16px 16px 0; display:flex; align-items:center; gap:10px;">
+        <button onclick="showHome()" style="background:rgba(255,255,255,0.65); border:1.5px solid rgba(0,0,0,0.1); border-radius:20px; padding:6px 14px; font-size:13px; font-family:inherit; cursor:pointer; color:#3A2414;">← กลับ</button>
+        <span style="font-size:15px; font-weight:700; color:#3A2414;">${getRoomLabel(currentTrack)}</span>
+        <span id="room-badge-count" style="margin-left:auto; font-size:12px; color:#9B7555;"></span>
+      </div>
+
+      <!-- Tab bar -->
+      <div style="display:flex; gap:8px; overflow-x:auto; padding:12px 16px 0; -webkit-overflow-scrolling:touch; scrollbar-width:none;">
+        ${tabBtnsHTML}
+      </div>
+
+      <!-- Cork board — updated by switchRoomTab -->
+      <div id="room-cork-area"></div>
+
+      <!-- Feedback form (hidden until requested) -->
+      <div id="room-feedback-widget" class="feedback-widget" style="display:none; opacity:0; margin:16px 16px 0;">
+        <div class="feedback-widget-title">บอกความรู้สึกให้หน่อยนะ</div>
+
+        <div class="feedback-q">เล่นแล้วรู้สึกยังไงบ้าง?</div>
+        <div class="feedback-emoji-row">
+          <button class="fb-emoji-btn" onclick="selectEmoji(1)"><img src="assets/mood/mood_1.jpg" alt="ร้องไห้"></button>
+          <button class="fb-emoji-btn" onclick="selectEmoji(2)"><img src="assets/mood/mood_2.jpg" alt="เศร้า"></button>
+          <button class="fb-emoji-btn" onclick="selectEmoji(3)"><img src="assets/mood/mood_3.jpg" alt="เฉย"></button>
+          <button class="fb-emoji-btn" onclick="selectEmoji(4)"><img src="assets/mood/mood_4.jpg" alt="ยิ้มเล็ก"></button>
+          <button class="fb-emoji-btn" onclick="selectEmoji(5)"><img src="assets/mood/mood_5.jpg" alt="สุขมาก"></button>
+        </div>
+
+        <div class="feedback-q">มีอะไรอยากให้เราเพิ่มหรือปรับไหม?</div>
+        <textarea class="fb-textarea" id="fb-text" placeholder="พิมพ์ได้เลยนะ..." maxlength="200" rows="3" oninput="updateFbText(this)"></textarea>
+        <div class="fb-char-count" id="fb-char-count">0 / 200</div>
+
+        <div class="feedback-q">track ไหนที่รู้สึกว่าตรงกับตัวเองมากที่สุด?</div>
+        <select style="width:100%; padding:10px 12px; border:1.5px solid var(--cream-dark); border-radius:10px; font-size:14px; font-family:inherit; color:var(--text-dark); background:white; margin-bottom:16px;" onchange="feedbackState.favoriteTrack=this.value">
+          <option value="">— เลือก track —</option>
+          <option value="1">T1 · มินนากับมะม่วง</option>
+          <option value="2">T2 · มิตรภาพใหม่</option>
+          <option value="3">T3 · วันที่ดีแบบเรียบง่าย</option>
+          <option value="4">T4 · วันที่เพื่อนล้อ</option>
+          <option value="5">T5 · ความสัมพันธ์ในครอบครัว</option>
+          <option value="6">T6 · โมเน่กับวันเสาร์ที่บ้าน</option>
+          <option value="7">T7 · หมอน้อย</option>
+          <option value="8">T8 · มินนากับวันหลังจากนั้น</option>
+          <option value="9">T9 · ใบบัวกับไพ่ที่วางไม่ลง</option>
+          <option value="10">T10 · ห้องของมินนา</option>
+          <option value="11">T11 · วันที่โมเน่นั่งเงียบ</option>
+          <option value="12">T12 · ใบบัวกับฟีดที่ไม่มีวันหมด</option>
+          <option value="13">T13 · วันที่หยกต้องสมบูรณ์แบบ</option>
+          <option value="14">T14 · วันที่หยกรับคำชมไม่ได้</option>
+          <option value="15">T15 · คืนที่บ้านมินนา</option>
+          <option value="16">T16 · ใบบัวกับเสียงในใจ</option>
+          <option value="17">T17 · วันที่โมเน่รู้แล้ว</option>
+          <option value="18">T18 · เช้าที่ใบบัวเห็นยาย</option>
+        </select>
+
+        <div class="feedback-q">อยากชวนเพื่อนมาเล่นด้วยไหม?</div>
+        <div class="fb-pair-btns">
+          <button class="fb-pair-btn" id="fb-rec-yes" onclick="selectPair('recommend','yes')">อยากเลย &#128155;</button>
+          <button class="fb-pair-btn" id="fb-rec-no"  onclick="selectPair('recommend','uncertain')">ยังไม่แน่ใจ</button>
+        </div>
+
+        <div class="feedback-q">อยากกลับมาเล่นเรื่องอื่นอีกไหม?</div>
+        <div class="fb-pair-btns">
+          <button class="fb-pair-btn" id="fb-ret-yes" onclick="selectPair('returnIntent','yes')">อยากมาก &#127775;</button>
+          <button class="fb-pair-btn" id="fb-ret-no"  onclick="selectPair('returnIntent','uncertain')">ขอดูก่อน</button>
+        </div>
+
+        <button class="fb-submit" id="fb-submit" onclick="submitFeedback()" disabled>ส่งความรู้สึก</button>
+      </div>
+
+      <!-- Action buttons -->
+      <div style="margin:16px 16px 0; display:flex; flex-direction:column; gap:10px;">
+        <button id="room-feedback-btn" class="summary-btn-secondary" onclick="showRoomFeedback()">&#128172; บอกความรู้สึก</button>
+        <button class="summary-btn-secondary" onclick="showHome()">กลับหน้าหลัก</button>
+      </div>
+
+      <div style="height:48px;"></div>
+    </div>
+
+    <!-- Badge popup -->
+    <div id="room-badge-popup" onclick="closeRoomBadgePopup()">
+      <div style="background:white; border-radius:18px; padding:24px 22px; margin:24px; max-width:320px; width:100%; box-shadow:0 8px 32px rgba(0,0,0,0.18);" onclick="event.stopPropagation()">
+        <div id="room-badge-img" style="text-align:center; margin-bottom:10px;"></div>
+        <div id="room-badge-title" style="font-size:16px; font-weight:700; text-align:center; color:#3A2414; margin-bottom:4px;"></div>
+        <div id="room-badge-sub" style="font-size:13px; text-align:center; color:#9B7555; margin-bottom:14px;"></div>
+        <div id="room-badge-note" style="font-size:13px; color:#6B4830; line-height:1.8; background:#FFF8F0; border-radius:10px; padding:12px 14px;"></div>
+        <button onclick="closeRoomBadgePopup()" style="margin-top:16px; width:100%; padding:11px; background:#3A2414; color:white; border:none; border-radius:10px; font-size:14px; font-family:inherit; cursor:pointer;">ปิด</button>
+      </div>
+    </div>
+  `;
+
+  switchRoomTab(_currentRoomTab, justEarned > 0 ? justEarned : -1);
+  window.scrollTo({ top: 0 });
+}
+
+function switchRoomTab(tabId, justEarnedId) {
+  _currentRoomTab = tabId;
+  const room   = _charRooms.find(r => r.id === tabId);
+  if (!room) return;
+  const earned = getEarnedBadges();
+
+  // Highlight active tab
+  _charRooms.forEach(r => {
+    const btn = document.getElementById('tab-btn-' + r.id);
+    if (!btn) return;
+    const active = r.id === tabId;
+    btn.style.background   = active ? '#3A2414'              : 'rgba(255,255,255,0.65)';
+    btn.style.color        = active ? 'white'                : '#3A2414';
+    btn.style.borderColor  = active ? '#3A2414'              : 'rgba(58,36,20,0.2)';
+  });
+
+  // Build slot list in numeric order, inserting T3 (faded) for มินนา room
+  const slots = [];
+  const addTrack = (id, isNew) => {
+    const isEarned = earned[id] !== undefined;
+    const state    = earned[id] || 'else';
+    if (isEarned) {
+      slots.push(`<div class="cork-slot${isNew ? ' just-earned' : ''}" id="slot-${id}" onclick="openRoomBadgePopup(${id})"><div class="cork-pin"></div><img class="cork-badge" src="${badgePath(id, state)}" alt=""></div>`);
+    } else {
+      slots.push(`<div class="cork-slot" id="slot-${id}"><div class="cork-slot-empty">?</div></div>`);
+    }
+  };
+
+  room.trackIds.forEach(id => {
+    // Insert T3 faded slot before T8 (its natural numeric position in มินนา)
+    if (room.t3 && id === 8) {
+      slots.push(`<div class="cork-slot" title="บางเรื่องไม่ต้องพิเศษก็มีค่า" style="opacity:0.35;cursor:default;"><div class="cork-slot-empty">?</div></div>`);
+    }
+    addTrack(id, id === justEarnedId);
+  });
+
+  // Locked placeholder slots (future tracks)
+  for (let i = 0; i < room.phCount; i++) {
+    slots.push(`<div class="cork-slot" style="opacity:0.45;cursor:default;"><div class="cork-slot-empty">&#128274;</div></div>`);
+  }
+
+  // 3-column grid; pad to fill the last row with invisible cells
+  const COLS = 3;
+  const rows = Math.ceil(slots.length / COLS);
+  while (slots.length < COLS * rows) {
+    slots.push(`<div class="cork-slot" style="pointer-events:none;visibility:hidden;"></div>`);
+  }
+
+  const corkArea = document.getElementById('room-cork-area');
+  if (corkArea) {
+    corkArea.innerHTML = `
+      <div class="cork-board-wrap" style="margin:12px auto 0; aspect-ratio:unset; height:auto; padding:8% 6%;">
+        <div class="cork-board-fallback"></div>
+        <img class="cork-bg" src="assets/corkboard.jpg" alt="" onerror="this.style.display='none'">
+        <div class="cork-grid" style="position:relative; top:unset; left:unset; right:unset; bottom:unset; grid-template-columns:repeat(${COLS},90px); grid-template-rows:repeat(${rows},90px); gap:8px; justify-content:center; align-content:center;">${slots.join('')}</div>
+      </div>`;
+  }
+
+  // Per-room counter: earned / (real tracks + placeholders); T3 not counted
+  const earnedCount = room.trackIds.filter(id => earned[id] !== undefined).length;
+  const total       = room.trackIds.length + room.phCount;
+  const countEl     = document.getElementById('room-badge-count');
+  if (countEl) countEl.textContent = `🏅 ${earnedCount}/${total}`;
+}
+
+
+function buildQuoteCardHTML(trackId) {
+  const info   = tracks[trackId];
+  const sc     = info && info.shareCard;
+  const emoji  = (sc && sc.emoji)  || '✦';
+  const footer = (sc && sc.footer) || '— Minna Journey';
+  const titleTx = (info && info.title) || '';
+  const b4State = getB4State(trackId);
+  const quote   = (b4State && sc && sc.lines) ? (sc.lines[b4State] || null) : null;
+  return (
+    '<div style="background:#FFF8F0;border:1.5px solid #EDD9C0;border-radius:14px;padding:20px 16px;text-align:center;">' +
+      `<div style="font-size:40px;line-height:1;margin-bottom:10px;">${emoji}</div>` +
+      `<div style="font-size:12px;font-weight:700;color:#9B7555;letter-spacing:0.5px;${quote ? 'margin-bottom:14px;' : ''}">${titleTx}</div>` +
+      (quote ? `<div style="font-size:14px;line-height:1.75;color:#3A2414;margin-bottom:12px;">${quote}</div>` : '') +
+      `<div style="font-size:12px;color:#C4895A;letter-spacing:0.5px;">${footer}</div>` +
+    '</div>'
   );
 }
 
-function renderQuestion(stepIdx) {
-  const s = state.step;
-  const r = state.responses;
+function openRoomBadgePopup(trackId) {
+  const info = tracks[trackId];
+  if (!info) return;
+  const earned = getEarnedBadges();
+  const state  = earned[trackId] || 'else';
+  const data   = badgeData[trackId];
+  const resourceText = (data && data[state]) ? data[state] : ((info.summary && info.summary.closingText) || '');
 
-  const header = (qText, subText) => [
-    ...makeProgressHeader(stepIdx),
-    h('div', { style: { marginBottom: '20px' } },
-      h('p', { className: 'q-label' }, `ข้อ ${stepIdx}`),
-      h('h2', { className: 'q-text' }, qText),
-      subText ? h('p', { className: 'q-sub' }, subText) : null,
-    ),
-  ];
+  const imgEl   = document.getElementById('room-badge-img');
+  const titleEl = document.getElementById('room-badge-title');
+  const subEl   = document.getElementById('room-badge-sub');
 
-  if (s === 'q1') {
-    return h('div', { className: 'screen' },
-      ...header('ปกติคุณเข้านอน (ปิดไฟนอน) กี่โมง?', 'ในช่วง 1 เดือนที่ผ่านมา เวลาปกติที่เข้านอน'),
-      h('div', { className: 'q-content' }, makeTimeInput('q1_bedtime', r.q1_bedtime)),
-      makeNavRow(goBack, goNext),
-    );
+  if (imgEl) imgEl.innerHTML = buildQuoteCardHTML(trackId);
+  if (titleEl) titleEl.style.display = 'none';
+  if (subEl)   subEl.style.display   = 'none';
+
+  document.getElementById('room-badge-note').textContent = (data && data.roomNote) ? data.roomNote : resourceText;
+  document.getElementById('room-badge-popup').style.display = 'flex';
+}
+
+function closeRoomBadgePopup() {
+  const popup = document.getElementById('room-badge-popup');
+  if (popup) popup.style.display = 'none';
+}
+
+function showRoomFeedback() {
+  const btn = document.getElementById('room-feedback-btn');
+  if (btn) btn.style.display = 'none';
+  const widget = document.getElementById('room-feedback-widget');
+  if (!widget) return;
+  widget.style.display = 'block';
+  void widget.offsetWidth;
+  widget.style.transition = 'opacity 400ms ease-in';
+  widget.style.opacity = '1';
+  setTimeout(() => widget.scrollIntoView({ behavior: 'smooth', block: 'start' }), 50);
+}
+
+// ── Badge system ──
+const badgeData = {
+  1: {
+    stuck: 'เธออยู่กับความรู้สึกของตัวเอง — บางวันแค่นั้นก็หนักพอแล้ว',
+    else:  'ยังหาคำตอบไม่เจอ แต่วันนี้ก็ยังอยู่ตรงนี้',
+    good:  'แค่นี้ก็ดีมากแล้ว ไม่ต้องพิเศษกว่านี้ก็ได้',
+    popupName: { good: 'วันนี้แค่ซบก็พอแล้ว', else: 'คำบางคำ...รอก่อนก็ได้' },
+    popupDesc: { good: 'แค่นี้ก็ดีมากแล้ว ไม่ต้องพิเศษกว่านี้ก็ได้', else: 'ยังหาคำตอบไม่เจอ แต่วันนี้ก็ยังอยู่ตรงนี้' }
+  },
+  2: {
+    stuck: 'เธอได้ยินเสียงข้างในตัวเอง — แม้จะยังไม่รู้ว่ามันบอกอะไร',
+    else:  'ข้างในพยายามมาเยอะแล้ว แม้คนอื่นจะยังไม่เห็น',
+    good:  'กลัวอยู่ก็กลัว แต่ก็ยังเดินออกมาแล้ว',
+    popupName: { good: 'สั่นนะ...แต่ก็ทักไปแล้ว', else: 'ซ้อมในใจ...รอบที่ร้อย' },
+    popupDesc: { good: 'กลัวอยู่ก็กลัว แต่ก็ยังเดินออกมาแล้ว', else: 'ข้างในพยายามมาเยอะแล้ว แม้คนอื่นจะยังไม่เห็น' }
+  },
+  3: {
+    stuck: 'แม้วันนั้นจะหนัก — เธอก็ยังอยู่กับมันได้จนผ่านไป',
+    else:  'วันเรียบๆ ก็มีคุณค่า — เธอเริ่มเห็นมันแล้ว',
+    good:  'เธอรู้จักหาความสุขในสิ่งเล็กๆ — และนั่นคือทักษะที่ทรงพลังมาก'
+  },
+  4: {
+    stuck: 'ความโกรธที่รู้สึกอยู่นั้นจริง — และเธอก็ผ่านวันนั้นมาได้',
+    else:  'วันนี้ยังไม่พูดออกมา แต่ก็รู้ว่ามันอยู่ตรงไหน',
+    good:  'เสียงข้างนอกดังแค่ไหน แต่ข้างในยังดีอยู่',
+    popupName: { good: 'ข้างในยัง OK อยู่', else: 'เก็บไว้ในใจ...แต่ไม่ลืม' },
+    popupDesc: { good: 'เสียงข้างนอกดังแค่ไหน แต่ข้างในยังดีอยู่', else: 'วันนี้ยังไม่พูดออกมา แต่ก็รู้ว่ามันอยู่ตรงไหน' }
+  },
+  5: {
+    stuck: 'ความสัมพันธ์ในครอบครัวซับซ้อนได้ — และเธอก็รู้สึกถึงมันได้อย่างซื่อสัตย์',
+    else:  'ยังพูดไม่ครบ แต่มีคนนั่งรอฟังอยู่',
+    good:  'แค่มีคนฟัง...แค่นี้ก็เปลี่ยนความรู้สึกแล้ว',
+    popupName: { good: 'คืนที่ได้ยินกันจริงๆ', else: 'เริ่มแง้มประตูใจ' },
+    popupDesc: { good: 'แค่มีคนฟัง...แค่นี้ก็เปลี่ยนความรู้สึกแล้ว', else: 'ยังพูดไม่ครบ แต่มีคนนั่งรอฟังอยู่' }
+  },
+  6: {
+    stuck: 'ทำคนเดียวทั้งวันโดยไม่มีใครเห็น — นั่นต้องใช้ความกล้ามากกว่าที่คิด',
+    else:  'ทำเสร็จแล้ว แต่ความรู้สึกไม่แฟร์นั้นยังอยู่อีกสักพัก',
+    good:  'ไม่ได้ชอบมัน แต่โมเน่ก็ทำ — เพราะรู้ว่ามันคือหน้าที่',
+    popupName: { good: 'ทำได้ แม้ไม่ชอบ', else: 'ทำไปก็ได้...แต่ใจยังคาอยู่' },
+    popupDesc: { good: 'ไม่ได้ชอบมัน แต่โมเน่ก็ทำ — เพราะรู้ว่ามันคือหน้าที่', else: 'ทำเสร็จแล้ว แต่ความรู้สึกไม่แฟร์นั้นยังอยู่อีกสักพัก' }
+  },
+  7: {
+    stuck: 'ก้าวแรกไม่ต้องสมบูรณ์แบบ — การมาก็คือความกล้าแบบหนึ่งแล้ว',
+    else:  'ยังไม่กล้าเต็มๆ แต่ก็ไม่ได้ถอย',
+    good:  'ไม่ได้ทำเพราะอยากดี — แต่เพราะหัวใจมันพาไป',
+    popupName: { good: 'ใจอ่อนโยนพอที่จะเริ่ม', else: 'ไม่ได้อยากเก่ง...แค่อยากลอง' },
+    popupDesc: { good: 'ไม่ได้ทำเพราะอยากดี — แต่เพราะหัวใจมันพาไป', else: 'ยังไม่กล้าเต็มๆ แต่ก็ไม่ได้ถอย' }
+  },
+  8: {
+    stuck: 'ยังสั่นอยู่แต่ก็พูดออกไปแล้ว — ความกล้าที่แท้จริงคือแบบนี้',
+    else:  'มันยังอยู่ในอก แต่ก็รู้ว่าไม่ต้องถือไปตลอด',
+    good:  'พูดผิดไปแล้ว — แต่ฉันก็แก้ได้',
+    popupName: { good: 'รู้ว่าพลาด แต่ไม่จมอยู่กับมัน', else: 'ยังวางไม่ได้' },
+    popupDesc: { good: 'พูดผิดไปแล้ว — แต่ฉันก็แก้ได้', else: 'มันยังอยู่ในอก แต่ก็รู้ว่าไม่ต้องถือไปตลอด' }
+  },
+  9: {
+    stuck: 'ความกังวลที่รู้สึกอยู่นั้นจริง — และเธอก็อยู่กับมันได้โดยไม่ต้องแก้ทุกอย่าง',
+    else:  'มันไม่ได้หนักตั้งแต่แรก — แต่ถือนานพอก็หนักได้เหมือนกัน',
+    good:  'ไพ่ยังอยู่ตรงนั้น แต่ฉันเลือกที่จะวางมันลง',
+    popupName: { good: 'วางมือ...เพื่อถือใจตัวเอง', else: 'ถือมานานแล้ว' },
+    popupDesc: { good: 'ไพ่ยังอยู่ตรงนั้น แต่ฉันเลือกที่จะวางมันลง', else: 'มันไม่ได้หนักตั้งแต่แรก — แต่ถือนานพอก็หนักได้เหมือนกัน' }
+  },
+  10: {
+    stuck: 'การเติบโตไม่ต้องรีบ — แค่ยังเดินอยู่ก็พอ',
+    else:  'เห็นเพื่อนๆเติบโต แต่ยังไม่แน่ใจว่าตัวเองอยู่ตรงไหน',
+    good:  'มินนามองรอบๆ แล้วรู้สึกว่าการเปลี่ยนแปลงนั้นงดงาม',
+    popupName: { good: 'เห็นแล้ว — ทุกคนต่างก็เติบโต', else: 'เห็นคนอื่นชัด ตัวเองยังพร่า' },
+    popupDesc: { good: 'มินนามองรอบๆ แล้วรู้สึกว่าการเปลี่ยนแปลงนั้นงดงาม', else: 'เห็นเพื่อนๆเติบโต แต่ยังไม่แน่ใจว่าตัวเองอยู่ตรงไหน' }
+  },
+  11: {
+    stuck: 'บางทีการอยู่เงียบๆ ก็เป็นวิธีหนึ่งที่จะรับมือกับสิ่งที่ยังพูดไม่ได้',
+    else:  'ยังไม่พร้อมพูด แต่ก็ไม่ได้หนีความรู้สึก',
+    good:  'รู้จักตัวเองมากขึ้นอีกนิด และยังเป็นคนเดิมอยู่',
+    popupName: { good: 'นี่แหละ...คือฉัน', else: 'เงียบ...เพื่อฟังตัวเอง' },
+    popupDesc: { good: 'รู้จักตัวเองมากขึ้นอีกนิด และยังเป็นคนเดิมอยู่', else: 'ยังไม่พร้อมพูด แต่ก็ไม่ได้หนีความรู้สึก' }
+  },
+  12: {
+    stuck: 'บางครั้งการไม่ลองก็เป็นวิธีหนึ่งที่จะรู้สึกปลอดภัย',
+    else:  'มือยังเลื่อนอยู่ แต่ใจเริ่มรู้ตัวว่าทำอะไร',
+    good:  'ปิดหน้าจอลง แล้วกลับมาอยู่กับลมหายใจ',
+    popupName: { good: 'Log out...เพื่อออกมาหายใจ', else: 'เลื่อนช้าลง...มองเห็นตัวเอง' },
+    popupDesc: { good: 'ปิดหน้าจอลง แล้วกลับมาอยู่กับลมหายใจ', else: 'มือยังเลื่อนอยู่ แต่ใจเริ่มรู้ตัวว่าทำอะไร' }
+  },
+  13: {
+    stuck: 'หยกยังอยู่กับมาตรฐานที่ไม่มีวันสิ้นสุด — แต่ก็รู้แล้วว่าตัวเองอยู่ตรงนี้',
+    else:  'งานอาจมีตำหนิ แต่ตัวฉันไม่ได้มีตำหนิตามงานไปด้วย',
+    good:  'สมบูรณ์พอแล้ว สำหรับใจฉัน',
+    popupName: { good: 'หยุดเพราะพอ ไม่ใช่เพราะแพ้', else: 'ไม่สมบูรณ์...แต่ฉันโอเค' },
+    popupDesc: {
+      good:  'สมบูรณ์พอแล้ว สำหรับใจฉัน',
+      else:  'งานอาจมีตำหนิ แต่ตัวฉันไม่ได้มีตำหนิตามงานไปด้วย',
+      stuck: 'ดอกไม้ที่รอวันบาน — ยังไม่พร้อมก็โอเค'
+    },
+    roomTitle: 'บทที่ 13 — หยก',
+    roomNote: 'เธอสังเกตเห็นคำถามที่ไม่เคยมีใครถาม — นั่นคือจุดเริ่มต้นของการเข้าใจตัวเอง'
+  },
+  14: {
+    stuck: 'หยกยังวิ่งตามเสียงที่บอกว่าไม่ดีพอ — แต่ก็เริ่มเห็นแล้วว่าตัวเองอยู่ตรงนี้',
+    else:  'รับคำชมมาแล้ว แม้จะยังทำตัวไม่ถูกก็ตาม',
+    good:  'รับคำชมมาไว้ในใจ แล้วลองอยู่กับมันดู',
+    popupName: {
+      good:  'เออ...เราก็เก่งเหมือนกันนะ',
+      else:  'รับมาแล้ว...แต่ยังเขินอยู่',
+      stuck: 'กระจกมีรอย'
+    },
+    popupDesc: {
+      good:  'รับคำชมมาไว้ในใจ แล้วลองอยู่กับมันดู',
+      else:  'รับคำชมมาแล้ว แม้จะยังทำตัวไม่ถูกก็ตาม',
+      stuck: 'บางทีการมองตัวเองก็เจ็บเกินไปในวันนั้น'
+    },
+    roomTitle: 'บทที่ 14 — หยก',
+    roomNote: 'เธอเริ่มตั้งคำถามกับเสียงที่บอกว่าไม่ดีพอ — นั่นคือก้าวที่สำคัญที่สุด'
+  },
+  15: {
+    stuck: 'มินนาเห็นทุกอย่างรอบข้าง — แต่ยังไม่เคยหยุดนับว่าตัวเองได้รับอะไรมาบ้าง',
+    else:  'มันยังไม่ดีที่สุด แต่ขอบคุณที่มีคนอยู่ข้างๆ',
+    good:  'ไม่ต้องพูดทุกเรื่อง คืนนี้แค่นี้ก็อุ่นใจแล้ว',
+    popupName: {
+      good:  'ไม่ต้องครบ...แต่พอดี',
+      else:  'ไม่สมบูรณ์...แต่ไม่ลำพัง',
+      stuck: 'นับถอยหลัง'
+    },
+    popupDesc: {
+      good:  'ไม่ต้องพูดทุกเรื่อง คืนนี้แค่นี้ก็อุ่นใจแล้ว',
+      else:  'มันยังไม่ดีที่สุด แต่ขอบคุณที่มีคนอยู่ข้างๆ',
+      stuck: 'พยายามจะเป็นผู้ให้ — แต่ในใจก็แอบนับว่าเหลือพลังอยู่เท่าไร'
+    },
+    roomTitle: 'บทที่ 15 — มินนา',
+    roomNote: 'เพื่อนๆ เห็นสิ่งที่มินนามีมาตลอด — คืนนั้นมินนาก็เริ่มเห็นมันด้วย'
+  },
+  16: {
+    stuck: tracks[16].badge.stuck.desc,
+    else:  tracks[16].badge.else.desc,
+    good:  tracks[16].badge.good.desc,
+    popupName: {
+      good:  tracks[16].badge.good.label,
+      else:  tracks[16].badge.else.label,
+      stuck: tracks[16].badge.stuck.label
+    },
+    popupDesc: {
+      good:  tracks[16].badge.good.desc,
+      else:  tracks[16].badge.else.desc,
+      stuck: tracks[16].badge.stuck.desc
+    },
+    roomTitle: 'บทที่ 16 — ใบบัว',
+    roomNote: 'ใบบัวทำสิ่งที่เสียงในหัวบอกว่าอย่าทำ — แล้วโลกก็ไม่ได้พัง'
+  },
+  17: {
+    stuck: tracks[17].badge.stuck.desc,
+    else:  tracks[17].badge.else.desc,
+    good:  tracks[17].badge.good.desc,
+    popupName: {
+      good:  tracks[17].badge.good.label,
+      else:  tracks[17].badge.else.label,
+      stuck: tracks[17].badge.stuck.label
+    },
+    popupDesc: {
+      good:  tracks[17].badge.good.desc,
+      else:  tracks[17].badge.else.desc,
+      stuck: tracks[17].badge.stuck.desc
+    },
+    roomTitle: 'บทที่ 17 — โมเน่',
+    roomNote: 'โมเน่รู้ว่าความผิดพลาดไม่ใช่จุดสิ้นสุด — มันแค่บอกว่าจะเริ่มจากตรงไหนครั้งหน้า'
+  },
+  18: {
+    stuck: tracks[18].badge.stuck.desc,
+    else:  tracks[18].badge.else.desc,
+    good:  tracks[18].badge.good.desc,
+    popupName: {
+      good:  tracks[18].badge.good.label,
+      else:  tracks[18].badge.else.label,
+      stuck: tracks[18].badge.stuck.label
+    },
+    popupDesc: {
+      good:  tracks[18].badge.good.desc,
+      else:  tracks[18].badge.else.desc,
+      stuck: tracks[18].badge.stuck.desc
+    },
+    roomTitle: 'บทที่ 18 — ใบบัว',
+    roomNote: 'ใบบัวเริ่มเห็นยายเป็นคนคนหนึ่ง — ที่กำลังนั่งอยู่กับความเจ็บปวดของตัวเองโดยที่ไม่รู้วิธีบอก'
   }
+};
 
-  if (s === 'q2') {
-    return h('div', { className: 'screen' },
-      ...header('ปกติใช้เวลานานแค่ไหนกว่าจะหลับ?', 'นับตั้งแต่ปิดไฟจนกว่าจะหลับได้จริงๆ'),
-      h('div', { className: 'q-content' },
-        makeOptions([
-          { value: 0, label: 'น้อยกว่า 15 นาที' },
-          { value: 1, label: '15–30 นาที' },
-          { value: 2, label: '31–60 นาที' },
-          { value: 3, label: 'มากกว่า 60 นาที' },
-        ], r.q2_latency, 'q2_latency'),
-      ),
-      makeNavRow(goBack, goNext, 'ถัดไป', r.q2_latency === null),
-    );
+function badgePath(id, state) {
+  const n = Number(id);
+  if (n >= 11) return 'badge_t' + id + '_' + state + '.jpg';
+  return 'assets/badges/badge_t' + id + '_' + state + '.jpg';
+}
+
+function getEarnedBadges() {
+  const data = JSON.parse(localStorage.getItem('minnaEarnedBadges') || '{}');
+  // Migrate old array format to object
+  if (Array.isArray(data)) {
+    const obj = {};
+    data.forEach(id => { obj[id] = 'else'; });
+    localStorage.setItem('minnaEarnedBadges', JSON.stringify(obj));
+    return obj;
   }
+  return data;
+}
+function hasEarnedBadge(trackId) {
+  return getEarnedBadges()[trackId] !== undefined;
+}
+function markBadgeEarned(trackId, badgeState) {
+  const earned = getEarnedBadges();
+  if (earned[trackId] === undefined) earned[trackId] = badgeState;
+  localStorage.setItem('minnaEarnedBadges', JSON.stringify(earned));
+  return Object.keys(earned).length;
+}
+function triggerBadgeAnimation(badgeState) {
+  const isNew = !hasEarnedBadge(currentTrack);
+  const SIZE  = 52;
+  const vw    = window.innerWidth;
+  const vh    = window.innerHeight;
 
-  if (s === 'q3') {
-    return h('div', { className: 'screen' },
-      ...header('ปกติตื่นนอนกี่โมง?', 'ในช่วง 1 เดือนที่ผ่านมา เวลาตื่นนอนปกติ'),
-      h('div', { className: 'q-content' }, makeTimeInput('q3_waketime', r.q3_waketime)),
-      makeNavRow(goBack, goNext),
-    );
-  }
+  // Create badge that pulses at screen center then fades out
+  const flyEl = document.createElement('div');
+  flyEl.style.cssText = `
+    position:fixed;
+    left:${(vw - SIZE) / 2}px;
+    top:${(vh - SIZE) / 2}px;
+    width:${SIZE}px;
+    height:${SIZE}px;
+    font-size:${SIZE}px;
+    line-height:1;
+    pointer-events:none;
+    z-index:9999;
+    animation:badgePulse 600ms ease-in-out forwards;
+  `;
+  flyEl.textContent = '🏅';
+  document.body.appendChild(flyEl);
 
-  if (s === 'q4') {
-    return h('div', { className: 'screen' },
-      ...header('ปกติในคืนหนึ่ง นอนหลับจริงๆ กี่ชั่วโมง?', 'ไม่นับเวลาที่นอนเฉยๆ แต่ยังไม่หลับ'),
-      h('div', { className: 'q-content' },
-        makeOptions([
-          { value: 0, label: 'มากกว่า 7 ชั่วโมง', sub: '> 7 ชม.' },
-          { value: 1, label: '6–7 ชั่วโมง' },
-          { value: 2, label: '5–6 ชั่วโมง' },
-          { value: 3, label: 'น้อยกว่า 5 ชั่วโมง', sub: '< 5 ชม.' },
-        ], r.q4_duration, 'q4_duration'),
-      ),
-      makeNavRow(goBack, goNext, 'ถัดไป', r.q4_duration === null),
-    );
-  }
+  // After pulse: fade out in place
+  setTimeout(() => {
+    flyEl.style.animation  = 'none';
+    void flyEl.offsetWidth;
+    flyEl.style.transition = 'opacity 400ms ease-in, transform 400ms ease-in';
+    flyEl.style.opacity    = '0';
+    flyEl.style.transform  = 'scale(0.5)';
 
-  if (s === 'q5') {
-    return h('div', { className: 'screen' },
-      ...header('โดยรวม คุณรู้สึกว่าการนอนหลับของคุณเป็นอย่างไร?', 'ในช่วง 1 เดือนที่ผ่านมา'),
-      h('div', { className: 'q-content' },
-        makeOptions([
-          { value: 0, label: 'ดีมาก' },
-          { value: 1, label: 'ดี' },
-          { value: 2, label: 'ไม่ค่อยดี' },
-          { value: 3, label: 'ไม่ดีเลย' },
-        ], r.q5_quality, 'q5_quality'),
-      ),
-      makeNavRow(goBack, goNext, 'ถัดไป', r.q5_quality === null),
-    );
-  }
+    // After fade: mark badge, show popup, reveal post-animation section
+    setTimeout(() => {
+      flyEl.remove();
+      if (isNew) { markBadgeEarned(currentTrack, badgeState); _roomJustEarned = currentTrack; }
+      // Save B4 state separately for share card (always update to reflect most recent completion)
+      const _b4raw = playerChoices && playerChoices[3] ? playerChoices[3].type : null;
+      if (_b4raw) markB4State(currentTrack, normalizeB4State(_b4raw));
+      const bd = badgeData[currentTrack];
+      if (bd && (bd.name || bd.popupName) && bd.popupDesc) {
+        setTimeout(() => {
+          const label = bd.popupName ? (bd.popupName[badgeState] || bd.popupName.else) : bd.name;
+          openBadgeModal(label, bd.popupDesc[badgeState] || bd.popupDesc.else, badgeState);
+        }, 200);
+      }
+      const pas = document.getElementById('post-animation-section');
+      if (pas) {
+        pas.style.display = 'block';
+        void pas.offsetWidth;
+        pas.style.transition = 'opacity 400ms ease-in';
+        pas.style.opacity = '1';
+      }
+    }, 420);
+  }, 620);
+}
 
-  if (s === 'q6') {
-    return h('div', { className: 'screen' },
-      ...header('ในช่วง 1 เดือนที่ผ่านมา คุณใช้ยานอนหลับบ้างไหม?', 'ทั้งยาที่แพทย์สั่งและยาที่ซื้อเอง'),
-      h('div', { className: 'q-content' },
-        makeOptions([
-          { value: 0, label: 'ไม่เคยเลย' },
-          { value: 1, label: 'น้อยกว่า 1 ครั้ง/สัปดาห์' },
-          { value: 2, label: '1–2 ครั้ง/สัปดาห์' },
-          { value: 3, label: '3 ครั้งขึ้นไป/สัปดาห์' },
-        ], r.q6_medication, 'q6_medication'),
-      ),
-      makeNavRow(goBack, goNext, 'ถัดไป', r.q6_medication === null),
-    );
-  }
+// ── Share Card System ──
 
-  if (s === 'q7') {
-    return h('div', { className: 'screen' },
-      ...header('คุณรู้สึกง่วงหรือเพลียระหว่างวันบ่อยแค่ไหน?', 'ในช่วง 1 เดือน เช่น ง่วงตอนเรียน ระหว่างทำงาน'),
-      h('div', { className: 'q-content' },
-        makeOptions([
-          { value: 0, label: 'ไม่เคยเลย' },
-          { value: 1, label: 'น้อยกว่า 1 ครั้ง/สัปดาห์' },
-          { value: 2, label: '1–2 ครั้ง/สัปดาห์' },
-          { value: 3, label: '3 ครั้งขึ้นไป/สัปดาห์' },
-        ], r.q7_sleepiness, 'q7_sleepiness'),
-      ),
-      makeNavRow(goBack, goNext, 'ถัดไป', r.q7_sleepiness === null),
-    );
-  }
-
-  if (s === 'q8') {
-    return h('div', { className: 'screen' },
-      ...header('ความง่วงส่งผลต่อแรงจูงใจในการทำกิจกรรมต่างๆ มากแค่ไหน?', 'เช่น การเรียน กิจกรรม หรือการพบปะผู้คน'),
-      h('div', { className: 'q-content' },
-        makeOptions([
-          { value: 0, label: 'ไม่เป็นปัญหาเลย' },
-          { value: 1, label: 'เป็นปัญหาเล็กน้อย' },
-          { value: 2, label: 'เป็นปัญหาพอสมควร' },
-          { value: 3, label: 'เป็นปัญหามาก' },
-        ], r.q8_motivation, 'q8_motivation'),
-      ),
-      makeNavRow(goBack, goNext, 'ถัดไป', r.q8_motivation === null),
-    );
-  }
-
-  if (s === 'q9') {
-    return h('div', { className: 'screen' },
-      ...makeProgressHeader(stepIdx),
-      h('p', { className: 'q-label' }, `ข้อ ${stepIdx}`),
-      h('h2', { className: 'q-text' }, 'สิ่งต่อไปนี้รบกวนการนอนบ่อยแค่ไหน?'),
-      h('p', { className: 'q-sub', style: { marginBottom: '16px' } }, 'ในช่วง 1 เดือนที่ผ่านมา'),
-      h('div', { className: 'q-content' },
-        makeDisturbanceGrid(),
-        h('div', { className: 'section-divider' },
-          h('div', { className: 'section-label' }, 'สิ่งอื่นที่ทำให้นอนหลับยาก (ไม่บังคับ)'),
-          makeChipSelect(),
-        ),
-      ),
-      makeNavRow(goBack, submit, 'ดูผล'),
-    );
-  }
-
+function normalizeB4State(type) {
+  if (type === 'good' || type === 'joyful') return 'good';
+  if (type === 'stuck') return 'stuck';
+  if (type === 'else' || type === 'ok') return 'else';
+  console.warn('[ShareCard] Unknown B4 type:', type);
   return null;
 }
 
-// ═══════════════════════════════════════════════════════════════
-// RENDER LOOP
-// ═══════════════════════════════════════════════════════════════
-
-function render() {
-  const app = document.getElementById('app');
-  app.innerHTML = '';
-
-  let el;
-  if (state.step === 'intro') {
-    el = renderIntro();
-  } else if (state.step === 'result') {
-    el = renderResult();
-  } else {
-    const stepIdx = Q_STEPS.indexOf(state.step) + 1;
-    el = renderQuestion(stepIdx);
-  }
-
-  if (el) app.appendChild(el);
+function markB4State(trackId, b4State) {
+  if (!b4State) return;
+  const data = JSON.parse(localStorage.getItem('minnaB4States') || '{}');
+  data[trackId] = b4State;
+  localStorage.setItem('minnaB4States', JSON.stringify(data));
 }
 
-// ── Boot ──────────────────────────────────────────────────────
-render();
+function getB4State(trackId) {
+  const data = JSON.parse(localStorage.getItem('minnaB4States') || '{}');
+  return data[trackId] || null;
+}
+
+function generateShareCard(trackId, b4State) {
+  // Export/share disabled — live mode not implemented yet
+  if (SHARE_CARD_MODE !== 'live') {
+    console.warn('[ShareCard] generateShareCard() called but SHARE_CARD_MODE is', SHARE_CARD_MODE);
+    return;
+  }
+}
+
+function onSummaryShareCardClick() {
+  if (SHARE_CARD_MODE === 'off') return;
+  if (!playerChoices || playerChoices.length < 4) {
+    console.warn('[ShareCard] playerChoices incomplete');
+    return;
+  }
+  const b4State = normalizeB4State(playerChoices[3].type);
+  if (!b4State) return;
+  generateShareCard(currentTrack, b4State);
+}
+
+function onRoomShareCardClick(trackIdStr) {
+  if (SHARE_CARD_MODE === 'off') return;
+  const trackId = Number(trackIdStr);
+  if (!trackId) return;
+  const b4State = getB4State(trackId);
+  if (!b4State) return;
+  generateShareCard(trackId, b4State);
+}
+
+showHome();
 </script>
 </body>
 </html>
